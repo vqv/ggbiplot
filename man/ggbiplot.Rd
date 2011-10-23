@@ -35,7 +35,8 @@
   \item{ellipse}{draw a normal data ellipse for each
   group?}
 
-  \item{ellipse.prob}{size of the ellipise in probability}
+  \item{ellipse.prob}{size of the ellipse in Normal
+  probability}
 
   \item{labels}{optional vector of labels for the
   observations}

@@ -28,7 +28,7 @@
 #' @param pc.biplot       for compatibility with biplot.princomp()
 #' @param groups          optional factor variable indicating the groups that the observations belong to. If provided the points will be colored according to groups
 #' @param ellipse         draw a normal data ellipse for each group?
-#' @param ellipse.prob    size of the ellipise in probability
+#' @param ellipse.prob    size of the ellipse in Normal probability
 #' @param labels          optional vector of labels for the observations
 #' @param labels.size     size of the text used for the labels
 #' @param alpha           alpha transparency value for the points (0 = TRUEransparent, 1 = opaque)
