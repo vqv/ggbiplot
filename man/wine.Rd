@@ -8,7 +8,7 @@ Chemical composition of three cultivars of wine
 Chemical constituents of wines from three different cultivars grown in the same region in Italy.  The cultivars,
 'barolo', 'barbera', and 'grignolino', are indicated in wine.class.
 }
-\usage{data(wine); data(wine.class)}
+\usage{data(wine)}
 \format{
   The format is:
  chr "wine"
