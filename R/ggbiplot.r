@@ -54,7 +54,10 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                       varname.size = 3, varname.adjust = 1.5, 
                       varname.abbrev = FALSE, ...)
 {
-  require(ggplot2)
+  library(ggplot2)
+  library(plyr)
+  library(scales)
+  library(grid)
 
   stopifnot(length(choices) == 2)
 
@@ -69,8 +72,13 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     d <- pcobj$sdev
     u <- sweep(pcobj$scores, 2, 1 / (d * nobs.factor), FUN = '*')
     v <- pcobj$loadings
+  } else if(class(pcobj) == 'PCA') {
+    nobs.factor <- sqrt(nrow(pcobj$call$X))
+    d <- sqrt(pcobj$eig)
+    u <- sweep(pcobj$ind$coord, 2, 1 / (d * nobs.factor), FUN = '*')
+    v <- sweep(pcobj$var$coord,2,sqrt(pcobj$eig[1:ncol(pcobj$var$coord),1]),FUN="/")
   } else {
-    stop('Expected a object of class prcomp or princomp')
+    stop('Expected a object of class prcomp, princomp or PCA')
   }
 
   # Scores
