@@ -62,17 +62,17 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   stopifnot(length(choices) == 2)
 
   # Recover the SVD
-  if(class(pcobj) == 'prcomp') {
+ if(inherits(pcobj, 'prcomp')){
     nobs.factor <- sqrt(nrow(pcobj$x) - 1)
     d <- pcobj$sdev
     u <- sweep(pcobj$x, 2, 1 / (d * nobs.factor), FUN = '*')
     v <- pcobj$rotation
-  } else if(class(pcobj) == 'princomp') {
+  } else if(inherits(pcobj, 'princomp')) {
     nobs.factor <- sqrt(pcobj$n.obs)
     d <- pcobj$sdev
     u <- sweep(pcobj$scores, 2, 1 / (d * nobs.factor), FUN = '*')
     v <- pcobj$loadings
-  } else if(class(pcobj) == 'PCA') {
+  } else if(inherits(pcobj, 'PCA')) {
     nobs.factor <- sqrt(nrow(pcobj$call$X))
     d <- unlist(sqrt(pcobj$eig)[1])
     u <- sweep(pcobj$ind$coord, 2, 1 / (d * nobs.factor), FUN = '*')
