@@ -1,7 +1,7 @@
 Package: ggbiplot
 Type: Package
 Title: A ggplot2 based biplot
-Version: 0.5
+Version: 0.55
 Date: 2011-10-23
 Author: Vincent Q. Vu <vqv@stat.cmu.edu>
 Maintainer: Vincent Q. Vu <vqv@stat.cmu.edu>
@@ -9,7 +9,7 @@ Description: A ggplot2 based biplot.  It provides a drop-in
     replacement for biplot.princomp(). It implements a
     biplot and scree plot using ggplot2.
 Depends:
-    ggplot2
+    ggplot2, plyr, scales, grid
 License: GPL-2
 URL: http://github.com/vqv/ggbiplot
 Collate:
