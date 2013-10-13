@@ -5,6 +5,7 @@ An implementation of the biplot using ggplot2.  The package provides two functio
 `ggbiplot` aims to be a drop-in replacement for the built-in R function `biplot.princomp()` with extended functionality 
 for labeling groups, drawing a correlation circle, and adding Normal probability ellipsoids.
 
+*The development of this software was supported in part by NSF Postdoctoral Fellowship DMS-0903120*
 
 Installation
 ------------
