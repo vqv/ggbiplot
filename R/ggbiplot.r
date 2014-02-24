@@ -77,11 +77,18 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     d <- unlist(sqrt(pcobj$eig)[1])
     u <- sweep(pcobj$ind$coord, 2, 1 / (d * nobs.factor), FUN = '*')
     v <- sweep(pcobj$var$coord,2,sqrt(pcobj$eig[1:ncol(pcobj$var$coord),1]),FUN="/")
+  } else if(inherits(pcobj, "lda")) {
+      nobs.factor <- sqrt(pcobj$N)
+      d <- pcobj$svd
+      u <- predict(pcobj)$x/nobs.factor
+      v <- pcobj$scaling
+      d.total <- sum(d^2)
   } else {
-    stop('Expected a object of class prcomp, princomp or PCA')
+    stop('Expected a object of class prcomp, princomp, PCA, or lda')
   }
 
   # Scores
+  choices <- pmin(choices, ncol(u))
   df.u <- as.data.frame(sweep(u[,choices], 2, d[choices]^obs.scale, FUN='*'))
 
   # Directions
