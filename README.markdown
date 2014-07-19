@@ -73,7 +73,7 @@ standardized and the loadings are scaled up by the inverse of the standardizatio
 By default, `fortify()` will rescale the lengths of the loadings vectors so 
 that they are comparable to the lengths of the score vectors whenever `scale != 1`. The argument `equalize = FALSE` ensures that this does not happen.
 
-### Correlation principal components biplot with ellipses and additional tweaks
+### Correlation biplot with ellipses and additional tweaks
 ```R
 df <- fortify(m, scale = 1, equalize = FALSE)
 g <- ggplot(df, aes(x = PC1, PC2)) + 
