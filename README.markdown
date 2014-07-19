@@ -100,3 +100,41 @@ g2 <- g + geom_axis(data = subset(attr(df, "basis"), PC1^2 + PC2^2 > 1/3),
 
 print(g2)
 ```
+
+### Fisher's iris data
+```R
+library(MASS)
+data(iris)
+
+# Standardize numeric variables and apply LDA
+iris_z <- lapply(iris, function(x) if (is.numeric(x)) scale(x) else x)
+m <- lda(Species ~ ., data = iris_z)
+df <- fortify(m, iris_z)
+
+g <- ggplot(df, aes(x = LD1, y = LD2)) +
+  geom_point(aes(color = Species)) + 
+  stat_ellipse(aes(group = Species, color = Species)) +
+  geom_axis(data = attr(df, "basis"), 
+            aes(label = abbreviate(.name))) + 
+  annotate("circle", x = 0, y = 0, radius = 1, alpha = 1/4) +
+  ylim(-4, 4) + coord_equal()
+
+print(g)
+```
+
+### USArrests
+```R
+data(USArrests)
+data(state)
+m <- princomp(USArrests)
+df <- fortify(m, scale = 1)
+
+g <- ggplot(df, aes(x = PC1, y = PC2)) +
+  geom_text(aes(label = state.abb[match(rownames(df),state.name)])) +
+  geom_axis(data = attr(df, "basis"), aes(label = .name))
+print(g)
+```
+Compare the above with
+```R
+example(biplot.princomp)
+````
