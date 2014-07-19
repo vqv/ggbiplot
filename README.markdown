@@ -115,7 +115,6 @@ g <- ggplot(df, aes(x = LD1, y = LD2)) +
   geom_point(aes(color = Species)) + 
   stat_ellipse(aes(group = Species, color = Species)) +
   geom_axis(data = attr(df, "basis"), aes(label = abbreviate(.name))) + 
-  annotate("circle", x = 0, y = 0, radius = 1, alpha = 1/4) +
   ylim(-4, 4) + coord_equal()
 
 print(g)
