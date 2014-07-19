@@ -15,7 +15,7 @@ Imports:
     plyr,
     proto,
     scales
-Suggests:
-    FactoMineR
+Enhances:
+    FactoMineR, MASS
 License: GPL-2
 URL: http://github.com/vqv/ggbiplot
