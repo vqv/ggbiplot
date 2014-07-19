@@ -26,16 +26,30 @@ df <- fortify(m, wine, scale = 1, equalize = FALSE)
 
 # Basic principal components plot with ellipses
 g <- ggplot(df, aes(x = PC1, y = PC2)) +
-  geom_point(aes(group = cultivar, color = cultivar, shape = cultivar)) + 
+  geom_point(aes(group = cultivar, color = cultivar)) + 
   stat_ellipse(aes(group = cultivar, color = cultivar))
-
-# Biplot with correlation circle
-g <- g + geom_axis(data = attr(df, "basis"), aes(label = .name)) + 
-  annotate("circle", x = 0, y = 0, radius = 1, alpha = 1/4)
 
 # Some tweaks to the layout
 g <- g + scale_color_discrete(name = '')
-g <- g + opts(legend.direction = 'horizontal', legend.position = 'top')
+g <- g + theme(legend.direction = 'horizontal', legend.position = 'top')
+g <- g + coord_equal()
 
-print(g)
+# Biplot with correlation circle
+g1 <- g + geom_axis(data = attr(df, "basis"), aes(label = .name)) + 
+  annotate("circle", x = 0, y = 0, radius = 1, alpha = 1/4)
+
+print(g1)
+```
+
+The following example continues the above. We will 
+manually scale the biplot axes by scaling the loadings and 
+threshold variables with small loadings.
+
+```R
+# Biplot with correlation circle
+g2 <- g + geom_axis(data = subset(attr(df, "basis"), PC1^2 + PC2^2 > 1/3), 
+                    aes(PC1 * 2, PC2 * 2, label = .name)) + 
+  annotate("circle", x = 0, y = 0, radius = 2, alpha = 1/4)
+
+print(g2)
 ```
