@@ -4,7 +4,8 @@
 \title{}
 \usage{
 geom_vector(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", arrow = TRUE, ...)
+  position = "identity", arrow = grid::arrow(length = unit(1/3, "picas")),
+  ...)
 }
 \arguments{
 \item{arrow}{specification for arrow heads, as created by arrow()}

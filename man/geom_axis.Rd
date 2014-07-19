@@ -4,14 +4,11 @@
 \title{}
 \usage{
 geom_axis(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", arrow = TRUE, scale = 1, circle = FALSE,
-  circle_color = "grey60", circle_size = 0.5, circle_linetype = 1,
-  circle_alpha = 0.4, ...)
+  position = "identity", arrow = grid::arrow(length = unit(1/3, "picas")),
+  ...)
 }
 \arguments{
 \item{arrow}{specification for arrow heads, as created by arrow()}
-
-\item{scale}{length scale of the axis}
 }
 \description{
 

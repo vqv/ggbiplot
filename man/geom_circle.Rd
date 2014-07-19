@@ -4,7 +4,7 @@
 \title{}
 \usage{
 geom_circle(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", nsegment = 51, ...)
+  position = "identity", ...)
 }
 \arguments{
 \item{arrow}{specification for arrow heads, as created by arrow()}

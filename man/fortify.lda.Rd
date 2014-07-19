@@ -2,7 +2,11 @@
 \name{fortify.lda}
 \alias{fortify.lda}
 \usage{
-\method{fortify}{lda}(model, data = NULL, scale = 0, ...)
+\method{fortify}{lda}(model, data = NULL, scale = 0, equalize = scale !=
+  0, ...)
+}
+\arguments{
+\item{equalize}{should the basis vectors be rescaled to be comparable with the score vectors?}
 }
 \examples{
 library(MASS)
@@ -11,7 +15,7 @@ df <- fortify(m, iris)
 ggplot(df, aes(x = LD1, y = LD2)) +
   geom_point(aes(group = Species, color = Species, shape = Species)) +
   stat_ellipse(aes(group = Species, color = Species)) +
-  geom_axis(data = attr(df, "basis"), aes(label = abbreviate(name))) +
+  geom_axis(data = attr(df, "basis"), aes(label = abbreviate(.name))) +
   geom_point(data = fortify(irislda, data.frame(m$means)), shape = 3) +
   ylim(-4, 4) + coord_equal()
 }

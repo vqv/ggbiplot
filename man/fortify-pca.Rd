@@ -7,11 +7,14 @@
 \title{Fortify methods for principal components analysis objects produced
 by \code{prcomp}, \code{princomp}, and \code{PCA} in \pkg{FactoMineR}}
 \usage{
-\method{fortify}{prcomp}(model, data = NULL, scale = 0, ...)
+\method{fortify}{prcomp}(model, data = NULL, scale = 0, equalize = scale
+  != 0, ...)
 
-\method{fortify}{princomp}(model, data = NULL, scale = 0, ...)
+\method{fortify}{princomp}(model, data = NULL, scale = 0, equalize = scale
+  != 0, ...)
 
-\method{fortify}{PCA}(model, data = NULL, scale = 0, ...)
+\method{fortify}{PCA}(model, data = NULL, scale = 0, equalize = scale !=
+  0, ...)
 }
 \arguments{
 \item{model}{an object of class \code{prcomp}, \code{princomp}, or
@@ -21,6 +24,8 @@ by \code{prcomp}, \code{princomp}, and \code{PCA} in \pkg{FactoMineR}}
 for \code{\link[FactoMineR]{PCA}} objects}
 
 \item{scale}{scale the scores and loadings as done by \code{\link[stats]{biplot.prcomp}}}
+
+\item{equalize}{should the basis vectors be rescaled to be comparable with the score vectors?}
 
 \item{...}{not used}
 }
@@ -42,7 +47,7 @@ df <- fortify(winepca, wine)
 ggplot(df, aes(x = PC1, y = PC2)) +
   geom_point(aes(group = cultivar, color = cultivar)) +
   stat_ellipse(aes(group = cultivar, color = cultivar)) +
-  geom_axis(data = attr(df, "basis"), aes(label = name), scale = 3) +
+  geom_axis(data = attr(df, "basis"), aes(label = .name), scale = 3) +
   coord_equal()
 }
 
