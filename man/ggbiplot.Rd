@@ -3,7 +3,7 @@
 \name{ggbiplot}
 \alias{ggbiplot}
 \alias{ggbiplot-package}
-\title{Fantope Project and Select}
+\title{ggbiplot}
 \usage{
 ggbiplot(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   groups = NULL, ellipse = FALSE, ellipse.prob = 0.68, labels = NULL,
@@ -43,7 +43,7 @@ ggbiplot(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
 a ggplot2 plot
 }
 \description{
-Fantope Project and Select
+ggbiplot
 
 Biplot for Principal Components using ggplot2
 }

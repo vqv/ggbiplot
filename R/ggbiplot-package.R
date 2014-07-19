@@ -4,9 +4,8 @@
 # Copyright 2014 Vincent Q. Vu. All rights reserved
 # 
 
-#' Fantope Project and Select
+#' ggbiplot
 #'
-#' @useDynLib ggbiplot
 #' @import ggplot2 plyr proto grid scales
 #' @name ggbiplot
 #' @docType package

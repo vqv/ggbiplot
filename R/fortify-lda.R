@@ -1,5 +1,19 @@
+#' Fortify method for principal components analysis objects produced 
+#' by \code{lda} in \pkg{MASS}
+#' 
+#' @name fortify-lda
+#'
+#' @param model   an object of class \code{\link[MASS]{lda}}
+#' @param data    discriminant scores and class predictions are computed for data 
+#' @param scale   scale the scores and loadings as done by \code{\link[stats]{biplot.prcomp}}
 #' @param equalize should the basis vectors be rescaled to be comparable with the score vectors?
-#' @export
+#' @param ...     not used
+#'
+#' @return A data frame consisting of the columns of \code{data} together with 
+#'         discriminant scores and class predictions.  Additionally, the attribute 
+#'         \code{basis} is set to a data frame containing the loadings and a 
+#'         column of variable names if present in \code{model}
+#'
 #' @examples
 #' library(MASS)
 #' m <- lda(Species ~ ., data = iris)

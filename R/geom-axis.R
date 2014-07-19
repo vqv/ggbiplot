@@ -1,3 +1,4 @@
+#' Axis arrows with optional text labels.
 #'
 #' @param arrow specification for arrow heads, as created by arrow()
 #' @export
