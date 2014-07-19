@@ -42,7 +42,7 @@ qplot(PC1, PC2, data = fortify(m), color = cultivar) +
   stat_ellipse(aes(group = cultivar))
 ```
 
-# Basic principal components biplot
+### Basic principal components biplot
 ```R
 df <- fortify(m)
 g <- ggplot(df, aes(x = PC1, PC2)) + 
@@ -59,7 +59,7 @@ one in coordinate (variable) and zeroes everywhere else.  This scaling is
 useful because it results in a plot where the scores and loadings vectors 
 are on the **same scale**.
 
-# Correlation principal components biplot
+### Correlation principal components biplot
 ```R
 df <- fortify(m, scale = 1, equalize = FALSE)
 g <- ggplot(df, aes(x = PC1, PC2)) + 
@@ -73,7 +73,7 @@ standardized and the loadings are scaled up by the inverse of the standardizatio
 By default, `fortify()` will rescale the lengths of the loadings vectors so 
 that they are comparable to the lengths of the score vectors whenever `scale != 1`. The argument `equalize = FALSE` ensures that this does not happen.
 
-# Correlation principal components biplot with ellipses and additional tweaks
+### Correlation principal components biplot with ellipses and additional tweaks
 ```R
 df <- fortify(m, scale = 1, equalize = FALSE)
 g <- ggplot(df, aes(x = PC1, PC2)) + 
@@ -89,7 +89,7 @@ g1 <- g + geom_axis(data = attr(df, "basis"), aes(label = .name)) +
 print(g1)
 ```
 
-# Thresholded correlation biplot with rescaled biplot axes
+### Thresholded correlation biplot with rescaled biplot axes
 The following example continues the previous. We will 
 manually scale the biplot axes by scaling the loadings and 
 threshold variables with small loadings.
