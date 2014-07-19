@@ -24,7 +24,7 @@ The new design factors the functionality of the original ggbiplot() function int
 5. Additional embellishments such as circles and ellipses can be added using `geom_circle()` (provided by ggbiplot) and `stat_ellipse()` (provided by ggplot versions >=1.0.0).
 
 
-## Example Usage
+## Examples
 The folowing examples are based on correlation PCA of the `wine` dataset that is included with `ggbiplot`.
 ```R
 data(wine)
