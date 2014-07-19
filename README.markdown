@@ -1,7 +1,7 @@
 ggbiplot
 ========
 
-This is experimental branch of ggbiplot is a complete overhaul of the existing 
+This experimental branch of ggbiplot is a complete overhaul of the existing 
 ggbiplot package.  It adds several new geoms and fortify methods that allow 
 biplots to be constructed in a more ggplot2-like manner.  It is currently 
 under development so its documentation is sparse and the interface and 
@@ -48,8 +48,8 @@ threshold variables with small loadings.
 ```R
 # Biplot with correlation circle
 g2 <- g + geom_axis(data = subset(attr(df, "basis"), PC1^2 + PC2^2 > 1/3), 
-                    aes(PC1 * 2, PC2 * 2, label = .name)) + 
-  annotate("circle", x = 0, y = 0, radius = 2, alpha = 1/4)
+                    aes(PC1 * 1.5, PC2 * 1.5, label = .name)) + 
+  annotate("circle", x = 0, y = 0, radius = 1.5, alpha = 1/4)
 
 print(g2)
 ```
