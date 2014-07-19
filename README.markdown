@@ -19,8 +19,8 @@ The new design factors the functionality of the original ggbiplot() function int
 
 1. Compute a linear dimension reduction such as principal components analysis (PCA) or linear discriminant analysis using functions such as `prcomp()` in base R or `lda()` in MASS.
 2. Convert the dimension reduction object into a data frame that can be used for plotting using the `fortify()` method.  This method returns a data frame containing the projections of the data (scores) with the attribute `basis` set equal to a matrix the loadings (or basis vectors for the projection).
-3. Use `ggplot2` to produce a basic plot, e.g. a principal components score plot, from the fortified dimension reduction object can then be used with `ggplot` to produce a basic projection plot.
-4. Promote the basic plot to biplot by adding an additional layer for th biplot axes using `geom_axis()` (provided by ggbiplot).
+3. Use `ggplot2` to produce a basic plot, e.g. a principal components score plot, from the fortified dimension reduction object.
+4. Promote the basic plot to biplot by adding an additional biplot axes layer using `geom_axis()` (provided by ggbiplot).
 5. Additional embellishments such as circles and ellipses can be added using `geom_circle()` (provided by ggbiplot) and `stat_ellipse()` (provided by ggplot versions >=1.0.0).
 
 
