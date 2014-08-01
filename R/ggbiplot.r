@@ -189,9 +189,8 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     ell <- ddply(df.u, 'groups', function(x) {
       if(nrow(x) <= 2) {
         return(NULL)
-      } else(nrow(x) > 2) {
-        sigma <- var(cbind(x$xvar, x$yvar))
       }
+      sigma <- var(cbind(x$xvar, x$yvar))
       mu <- c(mean(x$xvar), mean(x$yvar))
       ed <- sqrt(qchisq(ellipse.prob, df = 2))
       data.frame(sweep(circle %*% chol(sigma) * ed, 2, mu, FUN = '+'), 
