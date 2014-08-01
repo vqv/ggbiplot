@@ -187,12 +187,10 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     circle <- cbind(cos(theta), sin(theta))
 
     ell <- ddply(df.u, 'groups', function(x) {
-      if(nrow(x) < 2) {
+      if(nrow(x) <= 2) {
         return(NULL)
-      } else if(nrow(x) > 2) {
+      } else(nrow(x) > 2) {
         sigma <- var(cbind(x$xvar, x$yvar))
-      } else {
-        sigma <- diag(c(var(x$xvar), var(x$yvar)))
       }
       mu <- c(mean(x$xvar), mean(x$yvar))
       ed <- sqrt(qchisq(ellipse.prob, df = 2))
