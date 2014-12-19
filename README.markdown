@@ -9,7 +9,7 @@ behavior are likely to change.
 ## Installation
 ```R
 library(devtools)
-install_github("ggbiplot", "vqv", ref = "experimental")
+install_github("vqv/ggbiplot", ref = "experimental")
 ```
 
 The package has several dependencies, including version >= 1.0.0 of ggplot2.  Check the DESCRIPTION file and make sure you have the correct versions of the dependencies installed.
