@@ -31,7 +31,7 @@
 #' @param ellipse.prob    size of the ellipse in Normal probability
 #' @param labels          optional vector of labels for the observations
 #' @param labels.size     size of the text used for the labels
-#' @param alpha           alpha transparency value for the points (0 = TRUEransparent, 1 = opaque)
+#' @param alpha           alpha transparency value for the points (0 = transparent, 1 = opaque)
 #' @param circle          draw a correlation circle? (only applies when prcomp was called with scale = TRUE and when var.scale = 1)
 #' @param var.axes        draw arrows for the variables?
 #' @param varname.size    size of the text for variable names
