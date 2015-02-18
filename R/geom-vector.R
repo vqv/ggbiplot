@@ -1,14 +1,3 @@
-#' Arrows
-#'
-#' @param arrow specification for arrow heads, as created by arrow()
-#' @export
-geom_vector <- function (mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", arrow = grid::arrow(length = unit(1/3, "picas")), ...) {
-
-  GeomVector$new(mapping = mapping, data = data, stat = stat,
-    position = position, arrow = arrow, ...)
-}
-
 GeomVector <- proto(ggplot2:::Geom, {
   objname <- "vector"
 
@@ -24,7 +13,8 @@ GeomVector <- proto(ggplot2:::Geom, {
   )
   guide_geom <- function(.) "segment"
 
-  draw <- function(., data, scales, coordinates, arrow, ...) {
+  draw <- function(., data, scales, coordinates, 
+    arrow = grid::arrow(length = unit(1/3, "picas")), ...) {
 
     if (empty(data)) return(zeroGrob())
 
@@ -40,3 +30,14 @@ GeomVector <- proto(ggplot2:::Geom, {
     GeomSegment$draw(segment, scales, coordinates, arrow = arrow)
   }
 })
+
+#' Arrows
+#'
+#' @param arrow specification for arrow heads, as created by arrow()
+#' @export
+geom_vector <- function (mapping = NULL, data = NULL, stat = "identity",
+  position = "identity", arrow = grid::arrow(length = unit(1/3, "picas")), ...) {
+
+  GeomVector$new(mapping = mapping, data = data, stat = stat,
+    position = position, arrow = arrow, ...)
+}

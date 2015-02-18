@@ -1,15 +1,3 @@
-#' Axis arrows with optional text labels.
-#'
-#' @param arrow specification for arrow heads, as created by arrow()
-#' @export
-geom_axis <- function (mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", arrow = grid::arrow(length = unit(1/3, "picas")), 
-  ...) {
-
-  GeomAxis$new(mapping = mapping, data = data, stat = stat,
-    position = position, arrow = arrow, ...)
-}
-
 GeomAxis <- proto(ggplot2:::Geom, {
   objname <- "axis"
 
@@ -56,3 +44,15 @@ GeomAxis <- proto(ggplot2:::Geom, {
     )
   }
 })
+
+#' Axis arrows with optional text labels.
+#'
+#' @param arrow specification for arrow heads, as created by arrow()
+#' @export
+geom_axis <- function (mapping = NULL, data = NULL, stat = "identity",
+  position = "identity", arrow = grid::arrow(length = unit(1/3, "picas")), 
+  ...) {
+
+  GeomAxis$new(mapping = mapping, data = data, stat = stat,
+    position = position, arrow = arrow, ...)
+}

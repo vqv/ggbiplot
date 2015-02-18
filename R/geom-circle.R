@@ -1,14 +1,3 @@
-#' Circles specified by position and radius
-#'
-#' @param arrow specification for arrow heads, as created by arrow()
-#' @export
-geom_circle <- function (mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", ...) {
-
-  GeomCircle$new(mapping = mapping, data = data, stat = stat,
-    position = position, ...)
-}
-
 GeomCircle <- proto(ggplot2:::Geom, {
   objname <- "circle"
 
@@ -56,3 +45,14 @@ GeomCircle <- proto(ggplot2:::Geom, {
     do.call("gList", grobs)
   }
 })
+
+#' Circles specified by position and radius
+#'
+#' @param arrow specification for arrow heads, as created by arrow()
+#' @export
+geom_circle <- function (mapping = NULL, data = NULL, stat = "identity",
+  position = "identity", ...) {
+
+  GeomCircle$new(mapping = mapping, data = data, stat = stat,
+    position = position, ...)
+}
