@@ -12,9 +12,8 @@
 #' @param ...     not used
 #'
 #' @return A data frame consisting of the columns of \code{data} together with 
-#'         principal component scores.  Additionally, the attribute 
-#'         \code{basis} is set to a data frame containing the loadings and a 
-#'         column of variable names if present in \code{model}
+#'         principal component scores.  The attribute "basis" is set to to a data frame containing the loadings and a 
+#'         column of variable names if present in \code{model}. The attribute "radius" is set to either 1 or the scale factor used to equalize the basis vectors.
 #'
 #' @examples
 #' data(wine)
@@ -32,9 +31,10 @@ NULL
 
   scores <- sweep(scores, 2, sdev^(-scale), FUN = "*")
   loadings <- sweep(loadings, 2, sdev^(scale), FUN = "*")
+  radius <- 1
   if(equalize) {
-    r <- sqrt( median(rowSums(scores^2)) / max(colSums(loadings^2)) )
-    loadings <- loadings * r
+    radius <- sqrt( median(rowSums(scores^2)) / max(colSums(loadings^2)) )
+    loadings <- loadings * radius
   }
   scores <- data.frame(scores)
   loadings <- data.frame(loadings)
@@ -47,7 +47,9 @@ NULL
     rownames(loadings) <- NULL
   }
 
-  structure(scores, basis = loadings)
+  structure(scores, 
+    basis = loadings, 
+    radius = radius)
 }
 
 #' @method fortify prcomp
