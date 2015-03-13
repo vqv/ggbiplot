@@ -24,6 +24,7 @@
 #'   geom_axis(data = attr(df, "basis"), aes(label = abbreviate(.name))) + 
 #'   geom_point(data = fortify(irislda, data.frame(m$means)), shape = 3) + 
 #'   ylim(-4, 4) + coord_equal()
+#' @export
 fortify.lda <- function(model, data = NULL, scale = 0, equalize = scale != 0, ...) {
 
   # Predict
