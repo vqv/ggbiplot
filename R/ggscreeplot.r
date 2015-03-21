@@ -20,12 +20,13 @@
 
 #' Screeplot for Principal Components
 #'
+#' @import ggplot2
 #' @param pcobj          an object returned by prcomp() or princomp()
 #' @param type           the type of scree plot.  'pev' corresponds proportion of explained variance, i.e. the eigenvalues divided by the trace. 'cev' corresponds to the cumulative proportion of explained variance, i.e. the partial sum of the first k eigenvalues divided by the trace.
 #' @export
 #' @examples
 #'   data(wine)
-#'   wine.pca <- prcomp(wine, scale. = TRUE)
+#'   wine.pca <- prcomp(wine[, -ncol(wine)], scale. = TRUE)
 #'   print(ggscreeplot(wine.pca))
 #'
 ggscreeplot <- function(pcobj, type = c('pev', 'cev')) 
@@ -42,7 +43,7 @@ ggscreeplot <- function(pcobj, type = c('pev', 'cev'))
 
   df <- data.frame(PC = 1:length(d), yvar = yvar)
 
-  ggplot(data = df, aes(x = PC, y = yvar)) + 
+  ggplot(data = df, aes_string(x = "PC", y = "yvar")) + 
     xlab('principal component number') + ylab(yvar.lab) +
     geom_point() + geom_path()
 }
