@@ -37,6 +37,7 @@
 #' @param varname.size    size of the text for variable names
 #' @param varname.adjust  adjustment factor the placement of the variable names, >= 1 means farther from the arrow
 #' @param varname.abbrev  whether or not to abbreviate the variable names
+#' @param nvars           number of variables to plot
 #'
 #' @return                a ggplot2 plot
 #' @export
@@ -52,7 +53,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                       var.axes = TRUE, 
                       circle = FALSE, circle.prob = 0.69, 
                       varname.size = 3, varname.adjust = 1.5, 
-                      varname.abbrev = FALSE, ...)
+                      varname.abbrev = FALSE, nvars=NULL, ...)
 {
   library(ggplot2)
   library(plyr)
@@ -147,6 +148,16 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   g <- ggplot(data = df.u, aes(x = xvar, y = yvar)) + 
           xlab(u.axis.labs[1]) + ylab(u.axis.labs[2]) + coord_equal()
 
+
+  # Select nvars variables to plot based on PC loading
+  if(!is.null(nvars))  {
+      nvars <- min(dim(df.v)[1], nvars)
+      df.v$loading = df.v$xvar ^ 2 + df.v$yvar ^ 2
+      o <- order(df.v$loading, decreasing=TRUE)
+      df.v <- df.v[o[1:nvars],]
+  }
+
+  
   if(var.axes) {
     # Draw circle
     if(circle) 
