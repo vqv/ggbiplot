@@ -11,7 +11,7 @@ Installation
 ------------
 
     library(devtools)
-    install_github("ggbiplot", "vqv")
+    install_github("vqv/ggbiplot")
 
 Example Usage
 -------------
