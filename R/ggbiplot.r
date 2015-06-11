@@ -20,7 +20,13 @@
 
 #' Biplot for Principal Components using ggplot2
 #'
-#' @param pcobj           an object returned by prcomp() or princomp()
+#' @importFrom plyr ddply
+#' @import reshape2
+#' @import grid
+#' @import scales
+#' @import ggplot2
+#'
+#' @param pcobj           an object returned by prcomp(), princomp(), ...
 #' @param choices         which PCs to plot
 #' @param scale           covariance biplot (scale = 1), form biplot (scale = 0). When scale = 1, the inner product between the variables approximates the covariance and the distance between the points approximates the Mahalanobis distance.
 #' @param obs.scale       scale factor to apply to observations
@@ -33,18 +39,24 @@
 #' @param labels.size     size of the text used for the labels
 #' @param alpha           alpha transparency value for the points (0 = transparent, 1 = opaque)
 #' @param circle          draw a correlation circle? (only applies when prcomp was called with scale = TRUE and when var.scale = 1)
+#' @param circle.prob     probability for chisq distribution used to draw the correlation circle
 #' @param var.axes        draw arrows for the variables?
 #' @param varname.size    size of the text for variable names
 #' @param varname.adjust  adjustment factor the placement of the variable names, >= 1 means farther from the arrow
 #' @param varname.abbrev  whether or not to abbreviate the variable names
 #'
 #' @return                a ggplot2 plot
-#' @export
+
 #' @examples
+#' \dontrun{
 #'   data(wine)
-#'   wine.pca <- prcomp(wine, scale. = TRUE)
-#'   print(ggbiplot(wine.pca, obs.scale = 1, var.scale = 1, groups = wine.class, ellipse = TRUE, circle = TRUE))
+#'   
+#'   wine.pca <- prcomp(wine[, -ncol(wine)], scale. = TRUE)
+#'   print(ggbiplot(wine.pca, obs.scale = 1, var.scale = 1,
+#'                  groups = wine$class, ellipse = TRUE, circle = TRUE))
+#' }
 #'
+#' @export
 ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE, 
                       obs.scale = 1 - scale, var.scale = scale, 
                       groups = NULL, ellipse = FALSE, ellipse.prob = 0.68, 
@@ -52,13 +64,8 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                       var.axes = TRUE, 
                       circle = FALSE, circle.prob = 0.69, 
                       varname.size = 3, varname.adjust = 1.5, 
-                      varname.abbrev = FALSE, ...)
+                      varname.abbrev = FALSE)
 {
-  library(ggplot2)
-  library(plyr)
-  library(scales)
-  library(grid)
-
   stopifnot(length(choices) == 2)
 
   # Recover the SVD
@@ -77,7 +84,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     d <- unlist(sqrt(pcobj$eig)[1])
     u <- sweep(pcobj$ind$coord, 2, 1 / (d * nobs.factor), FUN = '*')
     v <- sweep(pcobj$var$coord,2,sqrt(pcobj$eig[1:ncol(pcobj$var$coord),1]),FUN="/")
-  } else if(inherits(pcobj, "lda")) {
+  } else if(inherits(pcobj, 'lda')) {
       nobs.factor <- sqrt(pcobj$N)
       d <- pcobj$svd
       u <- predict(pcobj)$x/nobs.factor
@@ -144,7 +151,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   df.v$hjust = with(df.v, (1 - varname.adjust * sign(xvar)) / 2)
 
   # Base plot
-  g <- ggplot(data = df.u, aes(x = xvar, y = yvar)) + 
+  g <- ggplot(data = df.u, aes_string(x = "xvar", y = "yvar")) + 
           xlab(u.axis.labs[1]) + ylab(u.axis.labs[2]) + coord_equal()
 
   if(var.axes) {
@@ -160,7 +167,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     # Draw directions
     g <- g +
       geom_segment(data = df.v,
-                   aes(x = 0, y = 0, xend = xvar, yend = yvar),
+                   aes_string(x = 0, y = 0, xend = "xvar", yend = "yvar"),
                    arrow = arrow(length = unit(1/2, 'picas')), 
                    color = muted('red'))
   }
@@ -204,8 +211,8 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   if(var.axes) {
     g <- g + 
     geom_text(data = df.v, 
-              aes(label = varname, x = xvar, y = yvar, 
-                  angle = angle, hjust = hjust), 
+              aes_string(label = "varname", x = "xvar", y = "yvar",
+                         angle = "angle", hjust = "hjust"), 
               color = 'darkred', size = varname.size)
   }
   # Change the name of the legend for groups

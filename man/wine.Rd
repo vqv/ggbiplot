@@ -6,7 +6,7 @@ Chemical composition of three cultivars of wine
 }
 \description{
 Chemical constituents of wines from three different cultivars grown in the same region in Italy.  The cultivars,
-'barolo', 'barbera', and 'grignolino', are indicated in wine.class.
+'barolo', 'barbera', and 'grignolino', are indicated in the class column.
 }
 \usage{data(wine)}
 \format{
@@ -18,8 +18,9 @@ http://archive.ics.uci.edu/ml/datasets/Wine
 }
 \examples{
 data(wine)
-wine.pca <- prcomp(wine, scale. = TRUE)
+wine.pca <- prcomp(wine[, -ncol(wine)], scale. = TRUE)
 print(ggscreeplot(wine.pca))                                               
-print(ggbiplot(wine.pca, obs.scale = 1, var.scale = 1, groups = wine.class, ellipse = TRUE, circle = TRUE))
+print(ggbiplot(wine.pca, obs.scale = 1, var.scale = 1,
+               groups = wine$class, ellipse = TRUE, circle = TRUE))
 }
 \keyword{datasets}
