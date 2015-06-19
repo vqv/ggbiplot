@@ -1,4 +1,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+**NEWS**: Active development of ggbiplot has moved to the [experimental branch](https://github.com/vqv/ggbiplot/tree/experimental)
+
 ggbiplot
 ========
 
