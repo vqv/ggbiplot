@@ -1,26 +1,26 @@
-# 
+#
 #  ggbiplot.r
-#  
+#
 #  Copyright 2011 Vincent Q. Vu.
-# 
+#
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
 #  as published by the Free Software Foundation; either version 2
 #  of the License, or (at your option) any later version.
-#  
+#
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#  
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-# 
+#
 
 #' Biplot for Principal Components using ggplot2
 #'
-#' @param pcobj           an object returned by prcomp() or princomp()
+#' @param pcobj           an object returned by prcomp(), princomp() or qmethod()
 #' @param choices         which PCs to plot
 #' @param scale           covariance biplot (scale = 1), form biplot (scale = 0). When scale = 1, the inner product between the variables approximates the covariance and the distance between the points approximates the Mahalanobis distance.
 #' @param obs.scale       scale factor to apply to observations
@@ -45,13 +45,13 @@
 #'   wine.pca <- prcomp(wine, scale. = TRUE)
 #'   print(ggbiplot(wine.pca, obs.scale = 1, var.scale = 1, groups = wine.class, ellipse = TRUE, circle = TRUE))
 #'
-ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE, 
-                      obs.scale = 1 - scale, var.scale = scale, 
-                      groups = NULL, ellipse = FALSE, ellipse.prob = 0.68, 
-                      labels = NULL, labels.size = 3, alpha = 1, 
-                      var.axes = TRUE, 
-                      circle = FALSE, circle.prob = 0.69, 
-                      varname.size = 3, varname.adjust = 1.5, 
+ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
+                      obs.scale = 1 - scale, var.scale = scale,
+                      groups = NULL, ellipse = FALSE, ellipse.prob = 0.68,
+                      labels = NULL, labels.size = 3, alpha = 1,
+                      var.axes = TRUE,
+                      circle = FALSE, circle.prob = 0.69,
+                      varname.size = 3, varname.adjust = 1.5,
                       varname.abbrev = FALSE, ...)
 {
   library(ggplot2)
@@ -78,13 +78,25 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     u <- sweep(pcobj$ind$coord, 2, 1 / (d * nobs.factor), FUN = '*')
     v <- sweep(pcobj$var$coord,2,sqrt(pcobj$eig[1:ncol(pcobj$var$coord),1]),FUN="/")
   } else if(inherits(pcobj, "lda")) {
-      nobs.factor <- sqrt(pcobj$N)
-      d <- pcobj$svd
-      u <- predict(pcobj)$x/nobs.factor
-      v <- pcobj$scaling
-      d.total <- sum(d^2)
+    nobs.factor <- sqrt(pcobj$N)
+    d <- pcobj$svd
+    u <- predict(pcobj)$x/nobs.factor
+    v <- pcobj$scaling
+    d.total <- sum(d^2)
+  } else if (inherits(pcobj, "QmethodRes"))  {
+    nobs.factor <- sqrt(nrow(pcobj$dataset))  # these are the number of item-cases for Q, or their squareroot
+    d <- unlist(sqrt(pcobj$f_char$characteristics["eigenvals"]))  # this works in the Q context
+
+    # Extract raw factor scores from qmethod via qfwe (unfortunately, qmethod only returns zscores)
+    rawsc.ind <- qfwe(dataset = pcobj$dataset, loa = pcobj$loa, flagged = pcobj$flagged)  # calculate raw sc as qmethod() would
+    rawsc.avg <- lapply(X = rawsc.ind, FUN = function(x) apply(X = x, MARGIN = 1, FUN = mean))  # calculate average
+    rawsc <- do.call(cbind.data.frame, rawsc.avg)  # bind list to df
+    colnames(rawsc) <- colnames(pcobj$loa)  # get real colnames
+
+    u <- sweep(rawsc, 2, 1 / (d * nobs.factor), FUN = '*')  # FIXME(maxheld83) don't really know what this means
+    v <- sweep(pcobj$loa, 2, sqrt(pcobj$f_char$characteristics$eigenvals), FUN = "/")  # this works in the Q context
   } else {
-    stop('Expected a object of class prcomp, princomp, PCA, or lda')
+    stop('Expected a object of class prcomp, princomp, PCA, lda, QmethodRes')
   }
 
   # Scores
@@ -102,7 +114,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     df.u <- df.u * nobs.factor
   }
 
-  # Scale the radius of the correlation circle so that it corresponds to 
+  # Scale the radius of the correlation circle so that it corresponds to
   # a data ellipse for the standardized PC scores
   r <- sqrt(qchisq(circle.prob, df = 2)) * prod(colMeans(df.u^2))^(1/4)
 
@@ -118,8 +130,8 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   }
 
   # Append the proportion of explained variance to the axis labels
-  u.axis.labs <- paste(u.axis.labs, 
-                       sprintf('(%0.1f%% explained var.)', 
+  u.axis.labs <- paste(u.axis.labs,
+                       sprintf('(%0.1f%% explained var.)',
                                100 * pcobj$sdev[choices]^2/sum(pcobj$sdev^2)))
 
   # Score Labels
@@ -144,16 +156,16 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   df.v$hjust = with(df.v, (1 - varname.adjust * sign(xvar)) / 2)
 
   # Base plot
-  g <- ggplot(data = df.u, aes(x = xvar, y = yvar)) + 
+  g <- ggplot(data = df.u, aes(x = xvar, y = yvar)) +
           xlab(u.axis.labs[1]) + ylab(u.axis.labs[2]) + coord_equal()
 
   if(var.axes) {
     # Draw circle
-    if(circle) 
+    if(circle)
     {
       theta <- c(seq(-pi, pi, length = 50), seq(pi, -pi, length = 50))
       circle <- data.frame(xvar = r * cos(theta), yvar = r * sin(theta))
-      g <- g + geom_path(data = circle, color = muted('white'), 
+      g <- g + geom_path(data = circle, color = muted('white'),
                          size = 1/2, alpha = 1/3)
     }
 
@@ -161,23 +173,23 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     g <- g +
       geom_segment(data = df.v,
                    aes(x = 0, y = 0, xend = xvar, yend = yvar),
-                   arrow = arrow(length = unit(1/2, 'picas')), 
+                   arrow = arrow(length = unit(1/2, 'picas')),
                    color = muted('red'))
   }
 
   # Draw either labels or points
   if(!is.null(df.u$labels)) {
     if(!is.null(df.u$groups)) {
-      g <- g + geom_text(aes(label = labels, color = groups), 
+      g <- g + geom_text(aes(label = labels, color = groups),
                          size = labels.size)
     } else {
-      g <- g + geom_text(aes(label = labels), size = labels.size)      
+      g <- g + geom_text(aes(label = labels), size = labels.size)
     }
   } else {
     if(!is.null(df.u$groups)) {
       g <- g + geom_point(aes(color = groups), alpha = alpha)
     } else {
-      g <- g + geom_point(alpha = alpha)      
+      g <- g + geom_point(alpha = alpha)
     }
   }
 
@@ -193,7 +205,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
       sigma <- var(cbind(x$xvar, x$yvar))
       mu <- c(mean(x$xvar), mean(x$yvar))
       ed <- sqrt(qchisq(ellipse.prob, df = 2))
-      data.frame(sweep(circle %*% chol(sigma) * ed, 2, mu, FUN = '+'), 
+      data.frame(sweep(circle %*% chol(sigma) * ed, 2, mu, FUN = '+'),
                  groups = x$groups[1])
     })
     names(ell)[1:2] <- c('xvar', 'yvar')
@@ -202,15 +214,15 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
 
   # Label the variable axes
   if(var.axes) {
-    g <- g + 
-    geom_text(data = df.v, 
-              aes(label = varname, x = xvar, y = yvar, 
-                  angle = angle, hjust = hjust), 
+    g <- g +
+    geom_text(data = df.v,
+              aes(label = varname, x = xvar, y = yvar,
+                  angle = angle, hjust = hjust),
               color = 'darkred', size = varname.size)
   }
   # Change the name of the legend for groups
   # if(!is.null(groups)) {
-  #   g <- g + scale_color_brewer(name = deparse(substitute(groups)), 
+  #   g <- g + scale_color_brewer(name = deparse(substitute(groups)),
   #                               palette = 'Dark2')
   # }
 
