@@ -15,6 +15,14 @@
 
   \item{choices}{which PCs to plot}
 
+  \item{coi}{define a set of columns of the original 
+  data-frame (variables) which should be coloured in a 
+  certain way. This has to be a list with as many list 
+  elements as there should be different colours in the 
+  final plot. Each list element should contain these 
+  variable names, that should be coloured in the specified 
+  colours.}
+  
   \item{scale}{covariance biplot (scale = 1), form biplot
   (scale = 0). When scale = 1, the inner product between
   the variables approximates the covariance and the
@@ -59,6 +67,18 @@
 
   \item{varname.abbrev}{whether or not to abbreviate the
   variable names}
+  
+  \item{arrow.color}{define a vector of colours which 
+  should be applied to the names specified in 'coi'. The 
+  length of this vector needs to be the lenght of coi 
+  (which is a list) + 1. The first element should be the 
+  colour for all unspecified elements (default colour).}
+  
+  \item{arrow.linetype}{same as arrow.colour, only for 
+  linetype of the arrows.}
+  
+  \item{arrow.alpha}{same as arrow.colour, only for 
+  linetype of the arrows.}
 }
 \value{
   a ggplot2 plot

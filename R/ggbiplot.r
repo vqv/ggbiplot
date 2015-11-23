@@ -92,7 +92,7 @@ ggbiplot2 <- function (pcobj, choices = 1:2, coi = "all", scale = 1, pc.biplot =
   
   # manage columns of interest (coi)
   if(switch1){
-    if(coi[1]=="all"){
+    if(coi=="all"){
       coi = list(c(names(pcobj$scale)))
       cnoi = NULL
     } else {
@@ -171,9 +171,11 @@ ggbiplot2 <- function (pcobj, choices = 1:2, coi = "all", scale = 1, pc.biplot =
       if(i==1){
         alphas[ names(pcobj$scale) %in% cnoi] <- arrow.alpha[i]
         colours[ names(pcobj$scale) %in% cnoi] <- arrow.color[i]
+        linetypes[ names(pcobj$scale) %in% cnoi] <- arrow.linetype[i]
       } else {
         alphas[ names(pcobj$scale) %in% coi[[i-1]] ] <- arrow.alpha[i]
         colours[ names(pcobj$scale) %in% coi[[i-1]] ] <- arrow.color[i]
+        linetypes[ names(pcobj$scale) %in% coi[[i-1]] ] <- arrow.linetype[i]
       }
     }
   }
@@ -199,7 +201,7 @@ ggbiplot2 <- function (pcobj, choices = 1:2, coi = "all", scale = 1, pc.biplot =
                    aes(x = 0, y = 0, xend = xvar, yend = yvar), 
                    arrow = arrow(length = unit(1/2, "picas")), 
                    color = colours,
-                   linetype = arrow.linetype,
+                   linetype = linetypes,
                    alpha = alphas)
   }
   
