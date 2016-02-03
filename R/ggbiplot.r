@@ -37,6 +37,7 @@
 #' @param varname.size    size of the text for variable names
 #' @param varname.adjust  adjustment factor the placement of the variable names, >= 1 means farther from the arrow
 #' @param varname.abbrev  whether or not to abbreviate the variable names
+#' @param family          set the font-family for non-ascii labels and variable axes
 #'
 #' @return                a ggplot2 plot
 #' @export
@@ -52,7 +53,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                       var.axes = TRUE, 
                       circle = FALSE, circle.prob = 0.69, 
                       varname.size = 3, varname.adjust = 1.5, 
-                      varname.abbrev = FALSE, ...)
+                      varname.abbrev = FALSE, family = "", ...)
 {
   library(ggplot2)
   library(plyr)
@@ -169,9 +170,9 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   if(!is.null(df.u$labels)) {
     if(!is.null(df.u$groups)) {
       g <- g + geom_text(aes(label = labels, color = groups), 
-                         size = labels.size)
+                         size = labels.size, family = family)
     } else {
-      g <- g + geom_text(aes(label = labels), size = labels.size)      
+      g <- g + geom_text(aes(label = labels), size = labels.size, family = family)      
     }
   } else {
     if(!is.null(df.u$groups)) {
@@ -206,7 +207,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     geom_text(data = df.v, 
               aes(label = varname, x = xvar, y = yvar, 
                   angle = angle, hjust = hjust), 
-              color = 'darkred', size = varname.size)
+              color = 'darkred', size = varname.size, family = family)
   }
   # Change the name of the legend for groups
   # if(!is.null(groups)) {
