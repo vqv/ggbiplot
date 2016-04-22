@@ -27,6 +27,7 @@
 #' @param groups          optional factor variable indicating the groups that the observations belong to. If provided the points will be colored according to groups
 #' @param ellipse         draw a normal data ellipse for each group?
 #' @param ellipse.prob    size of the ellipse in Normal probability
+#' @param ellipse.lwd     ellipse line weight
 #' @param labels          optional vector of labels for the observations
 #' @param labels.size     size of the text used for the labels
 #' @param alpha           alpha transparency value for the points (0 = TRUEransparent, 1 = opaque)
@@ -43,7 +44,7 @@
 #'   print(ggbiplot(wine.pca, obs.scale = 1, var.scale = 1, groups = wine.class, ellipse = TRUE, circle = TRUE))
 #'
 ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE, 
-                      groups = NULL, ellipse = FALSE, ellipse.prob = 0.68, 
+                      groups = NULL, ellipse = FALSE, ellipse.prob = 0.68, ellipse.lwd = 0.25,
                       labels = NULL, labels.size = 3, alpha = 1, 
                       var.axes = TRUE, 
                       circle = FALSE, circle.prob = 0.69, 
@@ -108,7 +109,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   # Overlay a concentration ellipse if there are groups
   if(!is.null(groups) && ellipse) {
     g <- g + stat_ellipse(aes(group = group, color = group), 
-                          type = "norm", level = ellipse.prob)
+                          type = "norm", level = ellipse.prob, size = ellipse.lwd)
   }
 
   return(g)
