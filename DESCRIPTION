@@ -8,7 +8,7 @@ Maintainer: Vincent Q. Vu <vqv@stat.cmu.edu>
 Description: A ggplot2 based biplot.  It provides a drop-in
     replacement for biplot.princomp(). It implements a
     biplot and scree plot using ggplot2.
-Depends:
+Imports:
     ggplot2, plyr, scales, grid
 License: GPL-2
 URL: http://github.com/vqv/ggbiplot
