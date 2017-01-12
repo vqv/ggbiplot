@@ -145,7 +145,8 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
 
   # Base plot
   g <- ggplot(data = df.u, aes(x = xvar, y = yvar)) + 
-          xlab(u.axis.labs[1]) + ylab(u.axis.labs[2]) + coord_equal()
+          xlab(u.axis.labs[1]) + ylab(u.axis.labs[2]) + coord_equal() +
+          theme_bw()
 
   if(var.axes) {
     # Draw circle
