@@ -37,6 +37,8 @@
 #' @param varname.size    size of the text for variable names
 #' @param varname.adjust  adjustment factor the placement of the variable names, >= 1 means farther from the arrow
 #' @param varname.abbrev  whether or not to abbreviate the variable names
+#' @param varname.labels  vector of labels to use instead of prcomp rownames
+#' @param varname.labels.expr should varname.labels be interpreted as expressions to be parsed?
 #'
 #' @return                a ggplot2 plot
 #' @export
@@ -52,7 +54,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                       var.axes = TRUE, 
                       circle = FALSE, circle.prob = 0.69, 
                       varname.size = 3, varname.adjust = 1.5, 
-                      varname.abbrev = FALSE, ...)
+                      varname.abbrev = FALSE, varname.labels = NULL, varname.labels.expr = F, ...)
 {
   library(ggplot2)
   library(plyr)
@@ -138,6 +140,10 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   } else {
     df.v$varname <- rownames(v)
   }
+  
+  if(!missing(varname.labels)) {
+    df.v$varname = varname.labels
+  }
 
   # Variables for text label placement
   df.v$angle <- with(df.v, (180/pi) * atan(yvar / xvar))
@@ -206,7 +212,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     geom_text(data = df.v, 
               aes(label = varname, x = xvar, y = yvar, 
                   angle = angle, hjust = hjust), 
-              color = 'darkred', size = varname.size)
+              color = 'darkred', size = varname.size, parse = varname.labels.expr)
   }
   # Change the name of the legend for groups
   # if(!is.null(groups)) {
