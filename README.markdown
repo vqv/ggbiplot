@@ -1,5 +1,5 @@
 # ggbiplot
-
+[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat-square)](http://bioconda.github.io/recipes/r-ggbiplot/README.html)
 This experimental branch of ggbiplot is a complete overhaul of the existing 
 ggbiplot package.  It adds several new geoms and fortify methods that allow 
 biplots to be constructed in a more ggplot2-like manner.  It is currently 
