@@ -31,6 +31,7 @@
 #' @param ellipse.prob    size of the ellipse in Normal probability
 #' @param labels          optional vector of labels for the observations
 #' @param labels.size     size of the text used for the labels
+#' @param labels.subset   vector of labels to show on biplot (NULL = show all labels)
 #' @param alpha           alpha transparency value for the points (0 = transparent, 1 = opaque)
 #' @param circle          draw a correlation circle? (only applies when prcomp was called with scale = TRUE and when var.scale = 1)
 #' @param var.axes        draw arrows for the variables?
@@ -48,7 +49,7 @@
 ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE, 
                       obs.scale = 1 - scale, var.scale = scale, 
                       groups = NULL, ellipse = FALSE, ellipse.prob = 0.68, 
-                      labels = NULL, labels.size = 3, alpha = 1, 
+                      labels = NULL, labels.size = 3, labels.subset = NULL, alpha = 1, 
                       var.axes = TRUE, 
                       circle = FALSE, circle.prob = 0.69, 
                       varname.size = 3, varname.adjust = 1.5, 
@@ -146,6 +147,10 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   # Base plot
   g <- ggplot(data = df.u, aes(x = xvar, y = yvar)) + 
           xlab(u.axis.labs[1]) + ylab(u.axis.labs[2]) + coord_equal()
+  
+  if(!is.null(labels.subset)){
+    df.v <- df.v[df.v$varname %in% labels.subset, ]
+  }
 
   if(var.axes) {
     # Draw circle
