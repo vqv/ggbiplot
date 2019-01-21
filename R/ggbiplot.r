@@ -32,6 +32,7 @@
 #' @param labels          optional vector of labels for the observations
 #' @param labels.size     size of the text used for the labels
 #' @param labels.subset   vector of labels to show on biplot (NULL = show all labels)
+#' @param labels.col      color of the labels (text and arrow)
 #' @param alpha           alpha transparency value for the points (0 = transparent, 1 = opaque)
 #' @param circle          draw a correlation circle? (only applies when prcomp was called with scale = TRUE and when var.scale = 1)
 #' @param var.axes        draw arrows for the variables?
@@ -49,8 +50,8 @@
 ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE, 
                       obs.scale = 1 - scale, var.scale = scale, 
                       groups = NULL, ellipse = FALSE, ellipse.prob = 0.68, 
-                      labels = NULL, labels.size = 3, labels.subset = NULL, alpha = 1, 
-                      var.axes = TRUE, 
+                      labels = NULL, labels.size = 3, labels.subset = NULL, labels.col = "darkred",
+                      alpha = 1, var.axes = TRUE, 
                       circle = FALSE, circle.prob = 0.69, 
                       varname.size = 3, varname.adjust = 1.5, 
                       varname.abbrev = FALSE, ...)
@@ -167,7 +168,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
       geom_segment(data = df.v,
                    aes(x = 0, y = 0, xend = xvar, yend = yvar),
                    arrow = arrow(length = unit(1/2, 'picas')), 
-                   color = muted('red'))
+                   color = labels.col)
   }
 
   # Draw either labels or points
@@ -211,7 +212,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     geom_text(data = df.v, 
               aes(label = varname, x = xvar, y = yvar, 
                   angle = angle, hjust = hjust), 
-              color = 'darkred', size = varname.size)
+              color = labels.col, size = varname.size)
   }
   # Change the name of the legend for groups
   # if(!is.null(groups)) {
