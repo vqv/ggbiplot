@@ -11,7 +11,6 @@ Description: A ggplot2 based biplot.  It provides a drop-in
 Imports:
     ggplot2, plyr, scales, grid
 License: GPL-2
+Encoding: UTF-8
 URL: http://github.com/vqv/ggbiplot
-Collate:
-    'ggbiplot.r'
-    'ggscreeplot.r'
+RoxygenNote: 7.2.1

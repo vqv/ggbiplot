@@ -28,7 +28,7 @@
 #' @examples
 #'   data(wine)
 #'   wine.pca <- prcomp(wine, scale. = TRUE)
-#'   print(ggscreeplot(wine.pca))
+#'   ggscreeplot(wine.pca)
 #'
 ggscreeplot <- function(pcobj, type = c('pev', 'cev')) 
 {

@@ -38,15 +38,21 @@
 #' @param varname.size    size of the text for variable names
 #' @param varname.adjust  adjustment factor the placement of the variable names, >= 1 means farther from the arrow
 #' @param varname.abbrev  whether or not to abbreviate the variable names
+#' @param ...             other arguments passed down
 #'
+#' @import     ggplot2
 #' @importFrom stats predict qchisq var
 #' @importFrom scales muted
-#' @return                a ggplot2 plot
+#' @return                a ggplot2 plot object
 #' @export
 #' @examples
 #'   data(wine)
+#'   library(ggplot2)
 #'   wine.pca <- prcomp(wine, scale. = TRUE)
-#'   print(ggbiplot(wine.pca, obs.scale = 1, var.scale = 1, groups = wine.class, ellipse = TRUE, circle = TRUE))
+#'   ggbiplot(wine.pca, 
+#'            obs.scale = 1, var.scale = 1, 
+#'            groups = wine.class, 
+#'            ellipse = TRUE, circle = TRUE)
 #'
 ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE, 
                       obs.scale = 1 - scale, var.scale = scale, 
