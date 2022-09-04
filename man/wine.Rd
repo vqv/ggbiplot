@@ -1,5 +1,6 @@
 \name{wine}
 \alias{wine}
+\alias{wine.class}
 \docType{data}
 \title{
 Chemical composition of three cultivars of wine
@@ -20,6 +21,7 @@ http://archive.ics.uci.edu/ml/datasets/Wine
 data(wine)
 wine.pca <- prcomp(wine, scale. = TRUE)
 print(ggscreeplot(wine.pca))                                               
-print(ggbiplot(wine.pca, obs.scale = 1, var.scale = 1, groups = wine.class, ellipse = TRUE, circle = TRUE))
+print(ggbiplot(wine.pca, obs.scale = 1, var.scale = 1, 
+               groups = wine.class, ellipse = TRUE, circle = TRUE))
 }
 \keyword{datasets}

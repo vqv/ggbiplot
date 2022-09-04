@@ -33,11 +33,14 @@
 #' @param labels.size     size of the text used for the labels
 #' @param alpha           alpha transparency value for the points (0 = transparent, 1 = opaque)
 #' @param circle          draw a correlation circle? (only applies when prcomp was called with scale = TRUE and when var.scale = 1)
+#' @param circle.prob     size of circle
 #' @param var.axes        draw arrows for the variables?
 #' @param varname.size    size of the text for variable names
 #' @param varname.adjust  adjustment factor the placement of the variable names, >= 1 means farther from the arrow
 #' @param varname.abbrev  whether or not to abbreviate the variable names
 #'
+#' @importFrom stats predict qchisq var
+#' @importFrom scales muted
 #' @return                a ggplot2 plot
 #' @export
 #' @examples
@@ -54,10 +57,10 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                       varname.size = 3, varname.adjust = 1.5, 
                       varname.abbrev = FALSE, ...)
 {
-  library(ggplot2)
-  library(plyr)
-  library(scales)
-  library(grid)
+  # library(ggplot2)
+  # library(plyr)
+  # library(scales)
+  # library(grid)
 
   stopifnot(length(choices) == 2)
 
