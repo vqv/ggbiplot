@@ -26,9 +26,12 @@
 #' @param obs.scale       scale factor to apply to observations
 #' @param var.scale       scale factor to apply to variables
 #' @param pc.biplot       for compatibility with biplot.princomp()
-#' @param groups          optional factor variable indicating the groups that the observations belong to. If provided the points will be colored according to groups
+#' @param groups          optional factor variable indicating the groups that the observations belong to. 
+#'                        If provided the points will be colored according to groups.
+#' @param point.size      Size of observation points.
 #' @param ellipse         draw a normal data ellipse for each group?
-#' @param ellipse.prob    size of the ellipse in Normal probability
+#' @param ellipse.prob    coverage size of the data ellipse in Normal probability
+#' @param ellipse.size    thickness of the line outlining the ellipses
 #' @param labels          optional vector of labels for the observations
 #' @param labels.size     size of the text used for the labels
 #' @param alpha           alpha transparency value for the points (0 = transparent, 1 = opaque)
@@ -36,6 +39,7 @@
 #' @param circle.prob     size of circle
 #' @param var.axes        draw arrows for the variables?
 #' @param varname.size    size of the text for variable names
+#' @param varname.color   color for the variable vectors and names
 #' @param varname.adjust  adjustment factor the placement of the variable names, >= 1 means farther from the arrow
 #' @param varname.abbrev  whether or not to abbreviate the variable names
 #' @param ...             other arguments passed down
@@ -43,6 +47,7 @@
 #' @import     ggplot2
 #' @importFrom stats predict qchisq var
 #' @importFrom scales muted
+#' @importFrom plyr ddply
 #' @return                a ggplot2 plot object
 #' @export
 #' @examples
@@ -55,13 +60,18 @@
 #'            ellipse = TRUE, circle = TRUE)
 #'
 ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE, 
-                      obs.scale = 1 - scale, var.scale = scale, 
-                      groups = NULL, ellipse = FALSE, ellipse.prob = 0.68, 
-                      labels = NULL, labels.size = 3, alpha = 1, 
-                      var.axes = TRUE, 
-                      circle = FALSE, circle.prob = 0.69, 
-                      varname.size = 3, varname.adjust = 1.5, 
-                      varname.abbrev = FALSE, ...)
+                     obs.scale = 1 - scale, var.scale = scale, 
+                     groups = NULL, 
+                     point.size = 1.5,
+                     ellipse = FALSE, ellipse.prob = 0.68, ellipse.size = NULL,
+                     labels = NULL, labels.size = 3, 
+                     alpha = 1, 
+                     var.axes = TRUE, 
+                     circle = FALSE, circle.prob = 0.69, 
+                     varname.size = 3, 
+                     varname.adjust = 1.5, 
+                     varname.color = 'darkred',
+                     varname.abbrev = FALSE, ...)
 {
   # library(ggplot2)
   # library(plyr)
@@ -95,6 +105,9 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   } else {
     stop('Expected a object of class prcomp, princomp, PCA, or lda')
   }
+
+  # shutup 'no visible binding...'
+#  utils::globalVariables(c("xvar", "yvar", "varname", "angle", "hjust")) 
 
   # Scores
   choices <- pmin(choices, ncol(u))
@@ -154,7 +167,9 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
 
   # Base plot
   g <- ggplot(data = df.u, aes(x = xvar, y = yvar)) + 
-          xlab(u.axis.labs[1]) + ylab(u.axis.labs[2]) + coord_equal()
+          xlab(u.axis.labs[1]) + 
+          ylab(u.axis.labs[2]) + 
+          coord_equal()
 
   if(var.axes) {
     # Draw circle
@@ -162,16 +177,18 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     {
       theta <- c(seq(-pi, pi, length = 50), seq(pi, -pi, length = 50))
       circle <- data.frame(xvar = r * cos(theta), yvar = r * sin(theta))
-      g <- g + geom_path(data = circle, color = muted('white'), 
+      g <- g + geom_path(data = circle, color = scales::muted('white'), 
                          size = 1/2, alpha = 1/3)
     }
 
     # Draw directions
+    arrow_style <- arrow(length = unit(1/2, 'picas'), type="closed", angle=15)
     g <- g +
       geom_segment(data = df.v,
                    aes(x = 0, y = 0, xend = xvar, yend = yvar),
-                   arrow = arrow(length = unit(1/2, 'picas')), 
-                   color = muted('red'))
+                   arrow = arrow_style, 
+                   color = varname.color,
+                   size = 1.2)
   }
 
   # Draw either labels or points
@@ -184,7 +201,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     }
   } else {
     if(!is.null(df.u$groups)) {
-      g <- g + geom_point(aes(color = groups), alpha = alpha)
+      g <- g + geom_point(aes(color = groups), alpha = alpha, size = point.size)
     } else {
       g <- g + geom_point(alpha = alpha)      
     }
@@ -206,7 +223,8 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                  groups = x$groups[1])
     })
     names(ell)[1:2] <- c('xvar', 'yvar')
-    g <- g + geom_path(data = ell, aes(color = groups, group = groups))
+    g <- g + geom_path(data = ell, aes(color = groups, group = groups, size = ellipse.size))
+#    g <- g + geom_polygon(data = ell, aes(color = groups, group = groups, size = ellipse.size))
   }
 
   # Label the variable axes
@@ -215,7 +233,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     geom_text(data = df.v, 
               aes(label = varname, x = xvar, y = yvar, 
                   angle = angle, hjust = hjust), 
-              color = 'darkred', size = varname.size)
+              color = varname.color, size = varname.size)
   }
   # Change the name of the legend for groups
   # if(!is.null(groups)) {

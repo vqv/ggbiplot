@@ -12,8 +12,10 @@ ggbiplot(
   obs.scale = 1 - scale,
   var.scale = scale,
   groups = NULL,
+  point.size = 1.5,
   ellipse = FALSE,
   ellipse.prob = 0.68,
+  ellipse.size = NULL,
   labels = NULL,
   labels.size = 3,
   alpha = 1,
@@ -22,6 +24,7 @@ ggbiplot(
   circle.prob = 0.69,
   varname.size = 3,
   varname.adjust = 1.5,
+  varname.color = "darkred",
   varname.abbrev = FALSE,
   ...
 )
@@ -39,11 +42,16 @@ ggbiplot(
 
 \item{var.scale}{scale factor to apply to variables}
 
-\item{groups}{optional factor variable indicating the groups that the observations belong to. If provided the points will be colored according to groups}
+\item{groups}{optional factor variable indicating the groups that the observations belong to. 
+If provided the points will be colored according to groups.}
+
+\item{point.size}{Size of observation points.}
 
 \item{ellipse}{draw a normal data ellipse for each group?}
 
-\item{ellipse.prob}{size of the ellipse in Normal probability}
+\item{ellipse.prob}{coverage size of the data ellipse in Normal probability}
+
+\item{ellipse.size}{thickness of the line outlining the ellipses}
 
 \item{labels}{optional vector of labels for the observations}
 
@@ -60,6 +68,8 @@ ggbiplot(
 \item{varname.size}{size of the text for variable names}
 
 \item{varname.adjust}{adjustment factor the placement of the variable names, >= 1 means farther from the arrow}
+
+\item{varname.color}{color for the variable vectors and names}
 
 \item{varname.abbrev}{whether or not to abbreviate the variable names}
 

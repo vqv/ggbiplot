@@ -3,6 +3,7 @@
 export(ggbiplot)
 export(ggscreeplot)
 import(ggplot2)
+importFrom(plyr,ddply)
 importFrom(scales,muted)
 importFrom(stats,predict)
 importFrom(stats,qchisq)
