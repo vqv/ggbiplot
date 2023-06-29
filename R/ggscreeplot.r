@@ -42,6 +42,7 @@ ggscreeplot <- function(pcobj, type = c('pev', 'cev'))
                      pev = 'proportion of explained variance',
                      cev = 'cumulative proportion of explained variance')
 
+  PC <- NULL
   df <- data.frame(PC = 1:length(d), yvar = yvar)
 
   ggplot(data = df, aes(x = PC, y = yvar)) + 

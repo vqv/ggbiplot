@@ -110,7 +110,8 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   }
 
   # shutup 'no visible binding...'
-  utils::globalVariables(c("xvar", "yvar", "varname", "angle", "hjust")) 
+#  utils::globalVariables(c("xvar", "yvar", "varname", "angle", "hjust"))
+  angle <- circle_chol <- ed <- hjust <- mu <- sigma <- varname <- xvar <- yvar <-NULL
 
   # Scores
   choices <- pmin(choices, ncol(u))
