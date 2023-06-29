@@ -47,7 +47,10 @@
 #' @import     ggplot2
 #' @importFrom stats predict qchisq var
 #' @importFrom scales muted
-#' @importFrom plyr ddply
+## @importFrom plyr ddply
+#' @importFrom dplyr filter n summarize select group_by
+#' @importFrom tidyr unnest
+#' @importFrom purrr map
 #' @return                a ggplot2 plot object
 #' @export
 #' @examples
@@ -107,7 +110,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   }
 
   # shutup 'no visible binding...'
-#  utils::globalVariables(c("xvar", "yvar", "varname", "angle", "hjust")) 
+  utils::globalVariables(c("xvar", "yvar", "varname", "angle", "hjust")) 
 
   # Scores
   choices <- pmin(choices, ncol(u))
@@ -188,7 +191,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                    aes(x = 0, y = 0, xend = xvar, yend = yvar),
                    arrow = arrow_style, 
                    color = varname.color,
-                   size = 1.2)
+                   linewidth = 1.2)
   }
 
   # Draw either labels or points
@@ -212,17 +215,35 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     theta <- c(seq(-pi, pi, length = 50), seq(pi, -pi, length = 50))
     circle <- cbind(cos(theta), sin(theta))
 
-    ell <- ddply(df.u, 'groups', function(x) {
-      if(nrow(x) <= 2) {
-        return(NULL)
-      }
-      sigma <- var(cbind(x$xvar, x$yvar))
-      mu <- c(mean(x$xvar), mean(x$yvar))
-      ed <- sqrt(qchisq(ellipse.prob, df = 2))
-      data.frame(sweep(circle %*% chol(sigma) * ed, 2, mu, FUN = '+'), 
-                 groups = x$groups[1])
-    })
-    names(ell)[1:2] <- c('xvar', 'yvar')
+    # ell <- ddply(df.u, 'groups', function(x) {
+    #   if(nrow(x) <= 2) {
+    #     return(NULL)
+    #   }
+    #   sigma <- var(cbind(x$xvar, x$yvar))
+    #   mu <- c(mean(x$xvar), mean(x$yvar))
+    #   ed <- sqrt(qchisq(ellipse.prob, df = 2))
+    #   data.frame(sweep(circle %*% chol(sigma) * ed, 2, mu, FUN = '+'), 
+    #              groups = x$groups[1])
+    # })
+    # names(ell)[1:2] <- c('xvar', 'yvar')
+
+    ell <- 
+      df.u |>
+      group_by(groups) |>
+      filter(n() > 2) |>
+      summarize(
+        sigma = list(var(cbind(xvar, yvar))),
+        mu = list(c(mean(xvar), mean(yvar))),
+        ed = sqrt(qchisq(ellipse.prob, df = 2)),
+        circle_chol = list(circle %*% chol(sigma[[1]]) * ed),
+        ell = list(sweep(circle_chol[[1]], 2, mu[[1]], FUN = "+")),
+        xvar = map(ell, ~.x[,1]),
+        yvar = map(ell, ~.x[,2]),
+        .groups = "drop"
+      ) |> 
+      select(xvar, yvar, groups) |> 
+      tidyr::unnest(c(xvar, yvar))
+    
     g <- g + geom_path(data = ell, aes(color = groups, group = groups, size = ellipse.size))
 #    g <- g + geom_polygon(data = ell, aes(color = groups, group = groups, size = ellipse.size))
   }
