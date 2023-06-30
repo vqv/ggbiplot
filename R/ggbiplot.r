@@ -31,7 +31,7 @@
 #' @param point.size      Size of observation points.
 #' @param ellipse         draw a normal data ellipse for each group?
 #' @param ellipse.prob    coverage size of the data ellipse in Normal probability
-#' @param ellipse.size    thickness of the line outlining the ellipses
+#' @param ellipse.linewidth    thickness of the line outlining the ellipses
 #' @param labels          optional vector of labels for the observations
 #' @param labels.size     size of the text used for the labels
 #' @param alpha           alpha transparency value for the points (0 = transparent, 1 = opaque)
@@ -66,11 +66,13 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                      obs.scale = 1 - scale, var.scale = scale, 
                      groups = NULL, 
                      point.size = 1.5,
-                     ellipse = FALSE, ellipse.prob = 0.68, ellipse.size = NULL,
+                     ellipse = FALSE, 
+                     ellipse.prob = 0.68, 
+                     ellipse.linewidth = NULL,
                      labels = NULL, labels.size = 3, 
                      alpha = 1, 
                      var.axes = TRUE, 
-                     circle = FALSE, circle.prob = 0.69, 
+                     circle = FALSE, circle.prob = 0.68, 
                      varname.size = 3, 
                      varname.adjust = 1.5, 
                      varname.color = 'darkred',
@@ -145,7 +147,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
 
   # Append the proportion of explained variance to the axis labels
   u.axis.labs <- paste(u.axis.labs, 
-                       sprintf('(%0.1f%% explained var.)', 
+                       sprintf('(%0.1f%%)', 
                                100 * pcobj$sdev[choices]^2/sum(pcobj$sdev^2)))
 
   # Score Labels
@@ -181,8 +183,9 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     {
       theta <- c(seq(-pi, pi, length = 50), seq(pi, -pi, length = 50))
       circle <- data.frame(xvar = r * cos(theta), yvar = r * sin(theta))
-      g <- g + geom_path(data = circle, color = scales::muted('white'), 
-                         size = 1/2, alpha = 1/3)
+      g <- g + geom_path(data = circle, 
+                         color = scales::muted('white'), 
+                         linewidth = 1/2, alpha = 1/3)
     }
 
     # Draw directions
@@ -245,8 +248,16 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
       select(xvar, yvar, groups) |> 
       tidyr::unnest(c(xvar, yvar))
     
-    g <- g + geom_path(data = ell, aes(color = groups, group = groups, size = ellipse.size))
-#    g <- g + geom_polygon(data = ell, aes(color = groups, group = groups, size = ellipse.size))
+    # g <- g + geom_path(data = ell, 
+    #                    aes(color = groups, 
+    #                        group = groups),
+    #                    linewidth = ellipse.linewidth)
+    g <- g + geom_polygon(data = ell, 
+                          aes(color = groups, 
+                              fill = groups
+#                              , group = groups
+                              ),
+                          linewidth = ellipse.linewidth)
   }
 
   # Label the variable axes

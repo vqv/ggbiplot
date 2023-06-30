@@ -3,8 +3,11 @@ Type: Package
 Title: A ggplot2 based biplot
 Version: 0.6.0
 Date: 2023-06-29
-Author: Vincent Q. Vu <vqv@stat.cmu.edu>
-Maintainer: Vincent Q. Vu <vqv@stat.cmu.edu>
+Authors@R: c(
+    person("Vincent", "Vu", , "vqv@stat.cmu.edu", role = c("aut", "cre")),
+    person("Michael", "Friendly", , "friendly@yorku.ca", role = c("aut"),
+           comment = c(ORCID = "0000-0002-3237-0941"))
+           )
 Description: A ggplot2 based biplot.  It provides a drop-in
     replacement for biplot.princomp(). It implements a
     biplot and scree plot using ggplot2.

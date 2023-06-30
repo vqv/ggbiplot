@@ -2,9 +2,12 @@ data(wine, package="ggbiplot")
 wine.pca <- prcomp(wine, scale. = TRUE)
 ggbiplot(wine.pca, groups=wine.class,
          ellipse = TRUE, 
+         ellipse.linewidth = 1.2,
          circle = TRUE,
          varname.color = "darkred",
-         varname.size = 4)
+         varname.size = 4) +
+  theme_minimal() +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
 
 
 library(dplyr)
