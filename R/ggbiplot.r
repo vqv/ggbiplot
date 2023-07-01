@@ -254,8 +254,8 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     #                    linewidth = ellipse.linewidth)
     g <- g + geom_polygon(data = ell, 
                           aes(color = groups, 
-                              fill = groups
-#                              , group = groups
+                              fill = groups,
+                              group = groups
                               ),
                           linewidth = ellipse.linewidth)
   }
