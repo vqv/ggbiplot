@@ -4,8 +4,8 @@ Title: A ggplot2 based biplot
 Version: 0.6.0
 Date: 2023-06-29
 Authors@R: c(
-    person("Vincent", "Vu", , "vqv@stat.cmu.edu", role = c("aut"),
-    person("Michael", "Friendly", , "friendly@yorku.ca", role = c("aut", "cre")),
+    person("Vincent", "Vu", , "vqv@stat.cmu.edu", role = c("aut")),
+    person("Michael", "Friendly", , "friendly@yorku.ca", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3237-0941"))
            )
 Description: A ggplot2 based biplot.  It provides a drop-in

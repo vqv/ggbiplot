@@ -189,13 +189,13 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     }
 
     # Draw directions
-    arrow_style <- arrow(length = unit(1/2, 'picas'), type="closed", angle=15)
+    arrow_style <- arrow(length = unit(1/2, 'picas'), type="closed", angle=15)  # MF: was angle=15
     g <- g +
       geom_segment(data = df.v,
                    aes(x = 0, y = 0, xend = xvar, yend = yvar),
                    arrow = arrow_style, 
                    color = varname.color,
-                   linewidth = 1.2)
+                   linewidth = 1.4)    # MR: was 1.2
   }
 
   # Draw either labels or points
@@ -245,7 +245,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
         yvar = map(ell, ~.x[,2]),
         .groups = "drop"
       ) |> 
-      select(xvar, yvar, groups) |> 
+      dplyr::select(xvar, yvar, groups) |> 
       tidyr::unnest(c(xvar, yvar))
     
     # g <- g + geom_path(data = ell, 

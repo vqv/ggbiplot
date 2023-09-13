@@ -15,13 +15,13 @@ ggbiplot(
   point.size = 1.5,
   ellipse = FALSE,
   ellipse.prob = 0.68,
-  ellipse.size = NULL,
+  ellipse.linewidth = NULL,
   labels = NULL,
   labels.size = 3,
   alpha = 1,
   var.axes = TRUE,
   circle = FALSE,
-  circle.prob = 0.69,
+  circle.prob = 0.68,
   varname.size = 3,
   varname.adjust = 1.5,
   varname.color = "darkred",
@@ -51,7 +51,7 @@ If provided the points will be colored according to groups.}
 
 \item{ellipse.prob}{coverage size of the data ellipse in Normal probability}
 
-\item{ellipse.size}{thickness of the line outlining the ellipses}
+\item{ellipse.linewidth}{thickness of the line outlining the ellipses}
 
 \item{labels}{optional vector of labels for the observations}
 
