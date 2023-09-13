@@ -38,6 +38,7 @@ ggbiplot(peng.pca, obs.scale = 1, var.scale = 1,
   theme_minimal() +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
+# try reflecting & scaline var vectors
 ggbiplot(peng.pca, obs.scale = 1, var.scale = 1,
          var.factor = -1.1,
          groups = peng$species, point.size=2,

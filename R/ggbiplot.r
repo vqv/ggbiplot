@@ -61,6 +61,7 @@
 #'   wine.pca <- prcomp(wine, scale. = TRUE)
 #'   ggbiplot(wine.pca, 
 #'            obs.scale = 1, var.scale = 1, 
+#'            varname.size = 4,
 #'            groups = wine.class, 
 #'            ellipse = TRUE, circle = TRUE)
 #'
@@ -72,7 +73,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                      point.size = 1.5,
                      ellipse = FALSE, 
                      ellipse.prob = 0.68, 
-                     ellipse.linewidth = NULL,
+                     ellipse.linewidth = 1.3,
                      labels = NULL, labels.size = 3, 
                      alpha = 1, 
                      var.axes = TRUE, 
@@ -210,7 +211,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     }
 
     # Draw directions
-    arrow_style <- arrow(length = unit(1/2, 'picas'), type="closed", angle=15)  # MF: was angle=15
+    arrow_style <- arrow(length = unit(1/2, 'picas'), type="closed", angle=15) 
     g <- g +
       geom_segment(data = df.v,
                    aes(x = 0, y = 0, xend = xvar, yend = yvar),
@@ -259,9 +260,10 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     #                    linewidth = ellipse.linewidth)
     g <- g + geom_polygon(data = ell, 
                           aes(color = groups, 
-                              fill = groups,
-                              group = groups
+                              fill = groups
+                            #  group = groups
                               ),
+                          alpha = 0.4,    # MF: why doesn't this have any effect?
                           linewidth = ellipse.linewidth)
   }
 
