@@ -6,14 +6,16 @@ Date: 2023-06-29
 Authors@R: c(
     person("Vincent", "Vu", , "vqv@stat.cmu.edu", role = c("aut")),
     person("Michael", "Friendly", , "friendly@yorku.ca", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-3237-0941"))
+           comment = c(ORCID = "0000-0002-3237-0941")),
+    person("Aghasi", "Tavadyan", ,  "a.tavadyan@gmail.com", role = "ctb")
            )
 Description: A ggplot2 based biplot.  It provides a drop-in
-    replacement for biplot.princomp(). It implements a
+    replacement for biplot.princomp(), but with many enhancements. It implements a
     biplot and scree plot using ggplot2.
 Imports:
     ggplot2, dplyr, scales, tidyr, purrr
 License: GPL-2
 Encoding: UTF-8
-URL: http://github.com/vqv/ggbiplot
+URL: https://github.com/friendly/ggbiplot
 RoxygenNote: 7.2.3
+

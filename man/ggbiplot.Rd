@@ -16,7 +16,7 @@ ggbiplot(
   point.size = 1.5,
   ellipse = FALSE,
   ellipse.prob = 0.68,
-  ellipse.linewidth = NULL,
+  ellipse.linewidth = 1.3,
   labels = NULL,
   labels.size = 3,
   alpha = 1,
@@ -91,6 +91,7 @@ Biplot for Principal Components using ggplot2
   wine.pca <- prcomp(wine, scale. = TRUE)
   ggbiplot(wine.pca, 
            obs.scale = 1, var.scale = 1, 
+           varname.size = 4,
            groups = wine.class, 
            ellipse = TRUE, circle = TRUE)
 
