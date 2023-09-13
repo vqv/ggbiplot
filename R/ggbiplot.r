@@ -25,6 +25,8 @@
 #' @param scale           covariance biplot (scale = 1), form biplot (scale = 0). When scale = 1, the inner product between the variables approximates the covariance and the distance between the points approximates the Mahalanobis distance.
 #' @param obs.scale       scale factor to apply to observations
 #' @param var.scale       scale factor to apply to variables
+#' @param var.factor      factor to be applied to variable vectors after scaling. This allows the variable vectors to be reflected
+#'                        (\code{var.factor = -1}) or expanded in length (\code{var.factor > 1}) for greater visibility.
 #' @param pc.biplot       for compatibility with biplot.princomp()
 #' @param groups          optional factor variable indicating the groups that the observations belong to. 
 #'                        If provided the points will be colored according to groups.
@@ -63,7 +65,9 @@
 #'            ellipse = TRUE, circle = TRUE)
 #'
 ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE, 
-                     obs.scale = 1 - scale, var.scale = scale, 
+                     obs.scale = 1 - scale, 
+                     var.scale = scale, 
+                     var.factor = 1,    # MF
                      groups = NULL, 
                      point.size = 1.5,
                      ellipse = FALSE, 
@@ -122,6 +126,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   # Directions
   v <- sweep(v, 2, d^var.scale, FUN='*')
   df.v <- as.data.frame(v[, choices])
+  df.v <- var.factor * df.v
 
   names(df.u) <- c('xvar', 'yvar')
   names(df.v) <- names(df.u)
@@ -177,6 +182,22 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
           ylab(u.axis.labs[2]) + 
           coord_equal()
 
+  # Draw either labels or points
+  if(!is.null(df.u$labels)) {
+    if(!is.null(df.u$groups)) {
+      g <- g + geom_text(aes(label = labels, color = groups), 
+                         size = labels.size)
+    } else {
+      g <- g + geom_text(aes(label = labels), size = labels.size)      
+    }
+  } else {
+    if(!is.null(df.u$groups)) {
+      g <- g + geom_point(aes(color = groups), alpha = alpha, size = point.size)
+    } else {
+      g <- g + geom_point(alpha = alpha)      
+    }
+  }
+  
   if(var.axes) {
     # Draw circle
     if(circle) 
@@ -196,22 +217,6 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                    arrow = arrow_style, 
                    color = varname.color,
                    linewidth = 1.4)    # MR: was 1.2
-  }
-
-  # Draw either labels or points
-  if(!is.null(df.u$labels)) {
-    if(!is.null(df.u$groups)) {
-      g <- g + geom_text(aes(label = labels, color = groups), 
-                         size = labels.size)
-    } else {
-      g <- g + geom_text(aes(label = labels), size = labels.size)      
-    }
-  } else {
-    if(!is.null(df.u$groups)) {
-      g <- g + geom_point(aes(color = groups), alpha = alpha, size = point.size)
-    } else {
-      g <- g + geom_point(alpha = alpha)      
-    }
   }
 
   # Overlay a concentration ellipse if there are groups

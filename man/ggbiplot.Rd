@@ -11,6 +11,7 @@ ggbiplot(
   pc.biplot = TRUE,
   obs.scale = 1 - scale,
   var.scale = scale,
+  var.factor = 1,
   groups = NULL,
   point.size = 1.5,
   ellipse = FALSE,
@@ -41,6 +42,9 @@ ggbiplot(
 \item{obs.scale}{scale factor to apply to observations}
 
 \item{var.scale}{scale factor to apply to variables}
+
+\item{var.factor}{factor to be applied to variable vectors after scaling. This allows the variable vectors to be reflected
+(\code{var.factor = -1}) or expanded in length (\code{var.factor > 1}) for greater visibility.}
 
 \item{groups}{optional factor variable indicating the groups that the observations belong to. 
 If provided the points will be colored according to groups.}

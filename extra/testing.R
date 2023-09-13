@@ -31,9 +31,32 @@ peng.pca <- prcomp (~ bill_length + bill_depth + flipper_length + body_mass,
 
 ggbiplot(peng.pca, obs.scale = 1, var.scale = 1,
          groups = peng$species, point.size=2,
-         varname.size = 5, varname.color = scales::muted("red"),
-         ellipse = TRUE, 
+         varname.size = 5, varname.color = scales::muted("black"),
+         ellipse = TRUE, ellipse.linewidth = 1.4,
          circle = TRUE) +
-  scale_color_discrete(name = 'Penguin Species') +
+#  scale_fill_discrete(name = 'Species') +
   theme_minimal() +
   theme(legend.direction = 'horizontal', legend.position = 'top')
+
+ggbiplot(peng.pca, obs.scale = 1, var.scale = 1,
+         var.factor = -1.1,
+         groups = peng$species, point.size=2,
+         varname.size = 5, varname.color = scales::muted("black"),
+         ellipse = TRUE, ellipse.linewidth = 1.4,
+         circle = TRUE) +
+  #  scale_fill_discrete(name = 'Species') +
+  theme_minimal() +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
+
+
+# last two dimensions: outliers
+ggbiplot(peng.pca, obs.scale = 1, var.scale = 1, choices = 3:4,
+         groups = peng$species, point.size=2,
+         varname.size = 5, varname.color = scales::muted("red"),
+         ellipse = TRUE, ellipse.linewidth = 1.4,
+         circle = TRUE) +
+  #  scale_fill_discrete(name = 'Species') +
+  theme_minimal() +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
+
+
