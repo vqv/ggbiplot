@@ -1,6 +1,6 @@
 Package: ggbiplot
 Type: Package
-Title: A ggplot2 based biplot
+Title: A ggplot2 Based Biplot
 Version: 0.6.0
 Date: 2023-09-12
 Authors@R: c(
@@ -9,7 +9,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-3237-0941")),
     person("Aghasi", "Tavadyan", ,  "a.tavadyan@gmail.com", role = "ctb")
            )
-Description: A ggplot2 based biplot.  It provides a drop-in
+Description: A ggplot2 based biplot.  It provides a 
     replacement for biplot.princomp(), but with many enhancements. It implements a
     biplot and scree plot using ggplot2.
 Imports:
