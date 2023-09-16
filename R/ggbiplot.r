@@ -253,18 +253,28 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
       ) |> 
       dplyr::select(xvar, yvar, groups) |> 
       tidyr::unnest(c(xvar, yvar))
-    
+
     # g <- g + geom_path(data = ell, 
     #                    aes(color = groups, 
     #                        group = groups),
     #                    linewidth = ellipse.linewidth)
-    g <- g + geom_polygon(data = ell, 
-                          aes(color = groups, 
-                              fill = groups
-                            #  group = groups
-                              ),
-                          alpha = 0.4,    # MF: why doesn't this have any effect?
-                          linewidth = ellipse.linewidth)
+    # g <- g + geom_polygon(data = ell, 
+    #                       aes(color = groups, 
+    #                           fill = groups
+    #                         #  group = groups
+    #                           ),
+    #                       alpha = 0.4,    # MF: why doesn't this have any effect?
+    #                       linewidth = ellipse.linewidth)
+
+    # Overlay a concentration ellipse if there are groups
+      g <- g + stat_ellipse(geom="polygon",
+                            aes(group = groups, 
+                                color = groups,
+                                fill = groups),
+                            alpha = 0.2,
+                            linewidth = ellipse.linewidth,
+                            type = "norm", level = ellipse.prob)
+
   }
 
   # Label the variable axes
