@@ -20,7 +20,7 @@ Results of a chemical analysis of wines grown in the same region in Italy,
    derived from three different cultivars. The analysis determined the 
    quantities of 13 chemical constituents found in each of the three types of wines. 
    
-   The cultivars, 'barolo', 'barbera', and 'grignolino', are indicated in \code{wine.class}.
+   The grape varieties (cultivars), 'barolo', 'barbera', and 'grignolino', are indicated in \code{wine.class}.
 }
 \examples{
 data(wine)

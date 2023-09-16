@@ -13,7 +13,7 @@ Description: A ggplot2 based biplot.  It provides a
     replacement for biplot.princomp(), but with many enhancements. It implements a
     biplot and scree plot using ggplot2.
 Imports:
-    ggplot2, dplyr, scales, tidyr, purrr
+    ggplot2, dplyr, scales
 License: GPL-2
 Encoding: UTF-8
 URL: https://github.com/friendly/ggbiplot

@@ -34,6 +34,8 @@
 #' @param ellipse         draw a normal data ellipse for each group?
 #' @param ellipse.prob    coverage size of the data ellipse in Normal probability
 #' @param ellipse.linewidth    thickness of the line outlining the ellipses
+#' @param ellipse.fill    logical; should the ellipses be filled?
+#' @param ellipse.alpha   transparency value (0 - 1) for filled ellipses
 #' @param labels          optional vector of labels for the observations
 #' @param labels.size     size of the text used for the labels
 #' @param alpha           alpha transparency value for the points (0 = transparent, 1 = opaque)
@@ -51,8 +53,8 @@
 #' @importFrom scales muted
 ## @importFrom plyr ddply
 #' @importFrom dplyr filter n summarize select group_by
-#' @importFrom tidyr unnest
-#' @importFrom purrr map
+## @importFrom tidyr unnest
+## @importFrom purrr map
 #' @return                a ggplot2 plot object
 #' @export
 #' @examples
@@ -65,7 +67,8 @@
 #'            groups = wine.class, 
 #'            ellipse = TRUE, circle = TRUE)
 #'
-ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE, 
+ggbiplot <- function(pcobj, choices = 1:2, 
+                     scale = 1, pc.biplot = TRUE, 
                      obs.scale = 1 - scale, 
                      var.scale = scale, 
                      var.factor = 1,    # MF
@@ -74,6 +77,8 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                      ellipse = FALSE, 
                      ellipse.prob = 0.68, 
                      ellipse.linewidth = 1.3,
+                     ellipse.fill = TRUE,
+                     ellipse.alpha = 0.3,
                      labels = NULL, labels.size = 3, 
                      alpha = 1, 
                      var.axes = TRUE, 
@@ -83,12 +88,11 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
                      varname.color = 'darkred',
                      varname.abbrev = FALSE, ...)
 {
-  # library(ggplot2)
-  # library(plyr)
-  # library(scales)
-  # library(grid)
 
-  stopifnot(length(choices) == 2)
+  if(length(choices) > 2) {
+    warning("choices = ", choices, " is not of length 2. Only the first 2 will be used")
+    choices <- choices[1:2]
+  }
 
   # Recover the SVD
  if(inherits(pcobj, 'prcomp')){
@@ -237,22 +241,22 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     # })
     # names(ell)[1:2] <- c('xvar', 'yvar')
 
-    ell <- 
-      df.u |>
-      group_by(groups) |>
-      filter(n() > 2) |>
-      summarize(
-        sigma = list(var(cbind(xvar, yvar))),
-        mu = list(c(mean(xvar), mean(yvar))),
-        ed = sqrt(qchisq(ellipse.prob, df = 2)),
-        circle_chol = list(circle %*% chol(sigma[[1]]) * ed),
-        ell = list(sweep(circle_chol[[1]], 2, mu[[1]], FUN = "+")),
-        xvar = map(ell, ~.x[,1]),
-        yvar = map(ell, ~.x[,2]),
-        .groups = "drop"
-      ) |> 
-      dplyr::select(xvar, yvar, groups) |> 
-      tidyr::unnest(c(xvar, yvar))
+    # ell <- 
+    #   df.u |>
+    #   group_by(groups) |>
+    #   filter(n() > 2) |>
+    #   summarize(
+    #     sigma = list(var(cbind(xvar, yvar))),
+    #     mu = list(c(mean(xvar), mean(yvar))),
+    #     ed = sqrt(qchisq(ellipse.prob, df = 2)),
+    #     circle_chol = list(circle %*% chol(sigma[[1]]) * ed),
+    #     ell = list(sweep(circle_chol[[1]], 2, mu[[1]], FUN = "+")),
+    #     xvar = map(ell, ~.x[,1]),
+    #     yvar = map(ell, ~.x[,2]),
+    #     .groups = "drop"
+    #   ) |> 
+    #   dplyr::select(xvar, yvar, groups) |> 
+    #   tidyr::unnest(c(xvar, yvar))
 
     # g <- g + geom_path(data = ell, 
     #                    aes(color = groups, 
@@ -267,11 +271,12 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
     #                       linewidth = ellipse.linewidth)
 
     # Overlay a concentration ellipse if there are groups
-      g <- g + stat_ellipse(geom="polygon",
+      geom <- if(isTRUE(ellipse.fill)) "polygon" else "path"
+      g <- g + stat_ellipse(geom=geom,
                             aes(group = groups, 
                                 color = groups,
                                 fill = groups),
-                            alpha = 0.2,
+                            alpha = ellipse.alpha,
                             linewidth = ellipse.linewidth,
                             type = "norm", level = ellipse.prob)
 

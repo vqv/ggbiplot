@@ -17,6 +17,8 @@ ggbiplot(
   ellipse = FALSE,
   ellipse.prob = 0.68,
   ellipse.linewidth = 1.3,
+  ellipse.fill = TRUE,
+  ellipse.alpha = 0.3,
   labels = NULL,
   labels.size = 3,
   alpha = 1,
@@ -56,6 +58,10 @@ If provided the points will be colored according to groups.}
 \item{ellipse.prob}{coverage size of the data ellipse in Normal probability}
 
 \item{ellipse.linewidth}{thickness of the line outlining the ellipses}
+
+\item{ellipse.fill}{logical; should the ellipses be filled?}
+
+\item{ellipse.alpha}{transparency value (0 - 1) for filled ellipses}
 
 \item{labels}{optional vector of labels for the observations}
 
