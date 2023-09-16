@@ -2,7 +2,10 @@
 
 - Use `geom_polygon()` rather than `geom_path()` for ellipses
 - Added `var.factor` argument to expand or reflect the variable vectors
-- moved points/labels code earlier so ellipses and variable vectors are not obscured
+- Moved points/labels code earlier so ellipses and variable vectors are not obscured
+- Replaced internal calculation of ellipses with `stat_ellipse()`
+- Now allow ellipses to be filled (`geom_polygon()`) or unfilled (`geom_path()`)
+- Added hex logo
 
 ## Version 0.56
 

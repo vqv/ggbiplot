@@ -51,7 +51,6 @@
 #' @import     ggplot2
 #' @importFrom stats predict qchisq var
 #' @importFrom scales muted
-## @importFrom plyr ddply
 #' @importFrom dplyr filter n summarize select group_by
 ## @importFrom tidyr unnest
 ## @importFrom purrr map
@@ -78,13 +77,15 @@ ggbiplot <- function(pcobj, choices = 1:2,
                      ellipse.prob = 0.68, 
                      ellipse.linewidth = 1.3,
                      ellipse.fill = TRUE,
-                     ellipse.alpha = 0.3,
-                     labels = NULL, labels.size = 3, 
+                     ellipse.alpha = 0.25,
+                     labels = NULL, 
+                     labels.size = 3, 
                      alpha = 1, 
                      var.axes = TRUE, 
-                     circle = FALSE, circle.prob = 0.68, 
+                     circle = FALSE, 
+                     circle.prob = 0.68, 
                      varname.size = 3, 
-                     varname.adjust = 1.5, 
+                     varname.adjust = 1.25, 
                      varname.color = 'darkred',
                      varname.abbrev = FALSE, ...)
 {
@@ -272,13 +273,22 @@ ggbiplot <- function(pcobj, choices = 1:2,
 
     # Overlay a concentration ellipse if there are groups
       geom <- if(isTRUE(ellipse.fill)) "polygon" else "path"
-      g <- g + stat_ellipse(geom=geom,
+      if (isTRUE(ellipse.fill)) {
+      g <- g + stat_ellipse(geom="polygon",
                             aes(group = groups, 
                                 color = groups,
                                 fill = groups),
                             alpha = ellipse.alpha,
                             linewidth = ellipse.linewidth,
                             type = "norm", level = ellipse.prob)
+      }
+      else {
+        g <- g + stat_ellipse(geom="path",
+                              aes(group = groups, 
+                                  color = groups),
+                              linewidth = ellipse.linewidth,
+                              type = "norm", level = ellipse.prob)
+      }
 
   }
 

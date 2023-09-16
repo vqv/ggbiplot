@@ -18,10 +18,10 @@ CRAN. There is also an [experimental
 branch](https://github.com/friendly/ggbiplot/tree/experimental) which
 attempts to simplify the code, but this has some unresolved problems.
 
-# ggbiplot
+# ggbiplot <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
 
-An implementation of the biplot using ggplot2. The package provides two
-functions: `ggscreeplot()` and `ggbiplot()`. `ggbiplot` aims to be a
+An implementation of the biplot using `ggplot2`. The package provides
+two functions: `ggscreeplot()` and `ggbiplot()`. `ggbiplot` aims to be a
 drop-in replacement for the built-in R function `biplot.princomp()` with
 extended functionality for labeling groups, drawing a correlation
 circle, and adding Normal probability ellipsoids.
@@ -63,7 +63,7 @@ ggbiplot(wine.pca,
   groups = wine.class, 
   ellipse = TRUE, 
   circle = TRUE) +
-  scale_color_discrete(name = '') +
+  labs(fill = "Cultivar", color = "Cultivar") +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 ```
 

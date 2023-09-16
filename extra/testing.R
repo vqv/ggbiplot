@@ -1,8 +1,19 @@
+library(ggbiplot)
+library(ggplot2)
 data(wine, package="ggbiplot")
 wine.pca <- prcomp(wine, scale. = TRUE)
 ggbiplot(wine.pca, groups=wine.class,
          ellipse = TRUE, 
-         ellipse.linewidth = 1.2,
+         ellipse.linewidth = 1.1,
+         circle = TRUE,
+         varname.color = "darkred",
+         varname.size = 4) +
+  theme_minimal() +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
+
+ggbiplot(wine.pca, groups=wine.class,
+         ellipse = TRUE, 
+         ellipse.linewidth = 1.2, ellipse.fill = FALSE,
          circle = TRUE,
          varname.color = "darkred",
          varname.size = 4) +
@@ -10,8 +21,8 @@ ggbiplot(wine.pca, groups=wine.class,
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
 
+
 library(dplyr)
-library(ggplot2)
 data(penguins, package = "palmerpenguins")
 peng <- penguins |>
   rename(
@@ -31,21 +42,25 @@ peng.pca <- prcomp (~ bill_length + bill_depth + flipper_length + body_mass,
 
 ggbiplot(peng.pca, obs.scale = 1, var.scale = 1,
          groups = peng$species, point.size=2,
-         varname.size = 5, varname.color = scales::muted("black"),
+         varname.size = 5, 
+         varname.color = scales::muted("black"),
          ellipse = TRUE, ellipse.linewidth = 1.4,
          circle = TRUE) +
-#  scale_fill_discrete(name = 'Species') +
+  # scale_fill_discrete(name = 'Species') +
+  # scale_color_discrete(name = 'Species') +
+  labs(fill = "Species", color = "Species") +
   theme_minimal() +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
 # try reflecting & scaline var vectors
 ggbiplot(peng.pca, obs.scale = 1, var.scale = 1,
-         var.factor = -1.1,
+         var.factor = -1,
+         varname.adjust = 1,
          groups = peng$species, point.size=2,
          varname.size = 5, varname.color = scales::muted("black"),
          ellipse = TRUE, ellipse.linewidth = 1.4,
          circle = TRUE) +
-  #  scale_fill_discrete(name = 'Species') +
+  labs(fill = "Species", color = "Species") +
   theme_minimal() +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
@@ -53,10 +68,11 @@ ggbiplot(peng.pca, obs.scale = 1, var.scale = 1,
 # last two dimensions: outliers
 ggbiplot(peng.pca, obs.scale = 1, var.scale = 1, choices = 3:4,
          groups = peng$species, point.size=2,
+         var.factor = 2.1, varname.adjust = 1,
          varname.size = 5, varname.color = scales::muted("red"),
-         ellipse = TRUE, ellipse.linewidth = 1.4,
+         ellipse = TRUE, ellipse.alpha = 0.1, 
          circle = TRUE) +
-  #  scale_fill_discrete(name = 'Species') +
+  labs(fill = "Species", color = "Species") +
   theme_minimal() +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
