@@ -24,13 +24,16 @@
 #' @param type    the type of scree plot.  
 #'                'pev' corresponds proportion of explained variance, i.e. the eigenvalues divided by the trace. 
 #'                'cev' corresponds to the cumulative proportion of explained variance, i.e. the partial sum of the first k eigenvalues divided by the trace.
+#' @param size    point size
 #' @export
 #' @examples
 #'   data(wine)
 #'   wine.pca <- prcomp(wine, scale. = TRUE)
 #'   ggscreeplot(wine.pca)
 #'
-ggscreeplot <- function(pcobj, type = c('pev', 'cev')) 
+ggscreeplot <- function(pcobj, 
+                        type = c('pev', 'cev'),
+                        size = 4) 
 {
   type <- match.arg(type)
   d <- pcobj$sdev^2
@@ -39,13 +42,13 @@ ggscreeplot <- function(pcobj, type = c('pev', 'cev'))
                  cev = cumsum(d) / sum(d))
 
   yvar.lab <- switch(type,
-                     pev = 'proportion of explained variance',
-                     cev = 'cumulative proportion of explained variance')
+                     pev = 'Proportion of explained variance',
+                     cev = 'Cumulative proportion of explained variance')
 
   PC <- NULL
   df <- data.frame(PC = 1:length(d), yvar = yvar)
 
   ggplot(data = df, aes(x = PC, y = yvar)) + 
-    xlab('principal component number') + ylab(yvar.lab) +
-    geom_point() + geom_path()
+    xlab('Principal component number') + ylab(yvar.lab) +
+    geom_point(size = size) + geom_path()
 }

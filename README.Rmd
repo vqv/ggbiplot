@@ -36,8 +36,7 @@ An implementation of the biplot using `ggplot2`.  The package provides two funct
 for labeling groups, drawing a correlation circle, and adding Normal probability ellipsoids.
 
 
-Installation
-------------
+## Installation
 
 Install the current master branch with:
 
@@ -45,25 +44,31 @@ Install the current master branch with:
 remotes::install_github("friendly/ggbiplot")
 ```
 
-Example Usage
--------------
+## Example Usage
+
+### Wine data
+
 The `wine` data contains results of a chemical analysis of wines grown in the same region in Italy,
 derived from three different cultivars. The analysis determined the 
 quantities of 13 chemical constituents found in each of the three types of wines. 
-The grape varieties (cultivars), 'barolo', 'barbera', and 'grignolino', are given in `wine.class`.
+The grape varieties (cultivars), **barolo**, **barbera**, and **grignolino**, are given in `wine.class`.
 
 What can we understand about the differences among these wines from a biplot?
 
 ```{r wine-screeplot}
 library(ggbiplot)
 library(ggplot2)
+library(dplyr)
+
 data(wine)
 wine.pca <- prcomp(wine, scale. = TRUE)
-ggscreeplot(wine.pca)
+ggscreeplot(wine.pca) +
+  theme_bw(base_size = 14)
 ```
 
+Hmm. The screeplot shows that more than two dimensions are necessary to account for most of the variance.
 
-Plot the first two PCA dimensions:
+Plot the first two PCA dimensions, accounting for 55% of the variance.
 ```{r wine-biplot}
 ggbiplot(wine.pca, 
   obs.scale = 1, var.scale = 1,
@@ -73,3 +78,63 @@ ggbiplot(wine.pca,
   labs(fill = "Cultivar", color = "Cultivar") +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 ```
+
+The three cultivars are arranged along the first dimension, in the order barolo < grignolino < barbera.
+These are distinguished largely by a conrtast between (`Phenols`, `Flav`) vs. (`NonFlavPhenols`, `AlcAsh`).
+The second dimension is represented by the cluster of variables `Mg`, `Alcohol`, `Ash`, `Color`, which distinguishes
+grignolino from the other two.
+
+### Iris data
+
+```{r iris-pca}
+data(iris)
+iris.pca <- prcomp (~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,
+                    data=iris,
+                    scale. = TRUE)
+summary(iris.pca)
+```
+
+Plot the first two dimensions:
+
+```{r iris-biplot0}
+iris.gg <-
+ggbiplot(iris.pca, obs.scale = 1, var.scale = 1,
+         groups = iris$Species, point.size=2,
+         varname.size = 5, 
+         varname.color = "black",
+         varname.adjust = 1.2,
+         ellipse = TRUE, 
+         circle = TRUE) +
+  labs(fill = "Species", color = "Species") +
+  theme_minimal(base_size = 14) +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
+
+iris.gg
+```
+
+It is possible to add annotations to the biplot by making use of the fact that `ggplot()` returns a lot of
+information in the `"gg"` object. In particular, the `$data` component contains the scores on the principal
+components that are plotted as points here.
+Here we add direct labels for the groups and suppress the legend.
+
+```{r iris-labs}
+# get means of coordinates by group
+group.labs <-
+  iris.gg$data |>
+  summarise(xvar = mean(xvar),
+            yvar = mean(yvar), .by = groups)
+
+group.labs
+```
+
+Now, just use `geom_label` to draw labels for the groups.
+```{r iris-biplot1}
+iris.gg + geom_label(data = group.labs,
+                     aes(x = xvar, y=yvar, label=groups),
+                     size = 5) +
+  theme(legend.position = "none")
+
+```
+
+
+

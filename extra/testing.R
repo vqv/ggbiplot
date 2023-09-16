@@ -1,5 +1,11 @@
+#' ---
+#' title: test cases for ggbiplot
+#' ---
+
 library(ggbiplot)
 library(ggplot2)
+library(dplyr)
+
 data(wine, package="ggbiplot")
 wine.pca <- prcomp(wine, scale. = TRUE)
 ggbiplot(wine.pca, groups=wine.class,
@@ -11,6 +17,7 @@ ggbiplot(wine.pca, groups=wine.class,
   theme_minimal() +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
+# unfilled
 ggbiplot(wine.pca, groups=wine.class,
          ellipse = TRUE, 
          ellipse.linewidth = 1.2, ellipse.fill = FALSE,
@@ -21,8 +28,8 @@ ggbiplot(wine.pca, groups=wine.class,
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
 
-
-library(dplyr)
+#' ## penguins data
+#' 
 data(penguins, package = "palmerpenguins")
 peng <- penguins |>
   rename(
@@ -40,17 +47,30 @@ peng.pca <- prcomp (~ bill_length + bill_depth + flipper_length + body_mass,
                     na.action=na.omit,
                     scale. = TRUE)
 
+peng.gg <-
 ggbiplot(peng.pca, obs.scale = 1, var.scale = 1,
          groups = peng$species, point.size=2,
-         varname.size = 5, 
-         varname.color = scales::muted("black"),
-         ellipse = TRUE, ellipse.linewidth = 1.4,
+         varname.size = 6, 
+         varname.color = "black",  #scales::muted("black"),
+         ellipse = TRUE, ellipse.linewidth = 1.2,
          circle = TRUE) +
-  # scale_fill_discrete(name = 'Species') +
-  # scale_color_discrete(name = 'Species') +
   labs(fill = "Species", color = "Species") +
-  theme_minimal() +
+  theme_minimal(base_size = 14) +
   theme(legend.direction = 'horizontal', legend.position = 'top')
+
+# label the ellipses
+group.labs <-
+  peng.gg$data |>
+  summarise(xvar = mean(xvar),
+            yvar = mean(yvar), .by = groups)
+
+peng.gg + geom_label(data = group.labs,
+                     aes(x = xvar, y=yvar, label=groups),
+                     size = 5) +
+  theme(legend.position = "none")
+
+
+
 
 # try reflecting & scaline var vectors
 ggbiplot(peng.pca, obs.scale = 1, var.scale = 1,
@@ -76,4 +96,31 @@ ggbiplot(peng.pca, obs.scale = 1, var.scale = 1, choices = 3:4,
   theme_minimal() +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
+#' ## iris data
+#' 
+data(iris)
+iris.pca <- prcomp (~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,
+                    data=iris,
+                    scale. = TRUE)
 
+iris.gg <-
+ggbiplot(iris.pca, obs.scale = 1, var.scale = 1,
+         groups = iris$Species, point.size=2,
+         varname.size = 5, 
+         varname.color = "black",
+         varname.adjust = 1.2,
+         ellipse = TRUE, 
+         circle = TRUE) +
+  labs(fill = "Species", color = "Species") +
+  theme_minimal(base_size = 14) +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
+
+group.labs <-
+  iris.gg$data |>
+  summarise(xvar = mean(xvar),
+            yvar = mean(yvar), .by = groups)
+
+iris.gg + geom_label(data = group.labs,
+                     aes(x = xvar, y=yvar, label=groups),
+                     size = 5) +
+  theme(legend.position = "none")

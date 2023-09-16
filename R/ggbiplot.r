@@ -57,15 +57,30 @@
 #' @return                a ggplot2 plot object
 #' @export
 #' @examples
-#'   data(wine)
-#'   library(ggplot2)
-#'   wine.pca <- prcomp(wine, scale. = TRUE)
-#'   ggbiplot(wine.pca, 
-#'            obs.scale = 1, var.scale = 1, 
-#'            varname.size = 4,
-#'            groups = wine.class, 
-#'            ellipse = TRUE, circle = TRUE)
+#' data(wine)
+#' library(ggplot2)
+#' wine.pca <- prcomp(wine, scale. = TRUE)
+#' ggbiplot(wine.pca, 
+#'          obs.scale = 1, var.scale = 1, 
+#'          varname.size = 4,
+#'          groups = wine.class, 
+#'          ellipse = TRUE, circle = TRUE)
 #'
+#' data(iris)
+#' iris.pca <- prcomp (~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,
+#'                     data=iris,
+#'                     scale. = TRUE)
+#' ggbiplot(iris.pca, obs.scale = 1, var.scale = 1,
+#'          groups = iris$Species, point.size=2,
+#'          varname.size = 5, 
+#'          varname.color = "black",
+#'          varname.adjust = 1.2,
+#'          ellipse = TRUE, 
+#'          circle = TRUE) +
+#'   labs(fill = "Species", color = "Species") +
+#'   theme_minimal(base_size = 14) +
+#'   theme(legend.direction = 'horizontal', legend.position = 'top')
+
 ggbiplot <- function(pcobj, choices = 1:2, 
                      scale = 1, pc.biplot = TRUE, 
                      obs.scale = 1 - scale, 
@@ -86,7 +101,7 @@ ggbiplot <- function(pcobj, choices = 1:2,
                      circle.prob = 0.68, 
                      varname.size = 3, 
                      varname.adjust = 1.25, 
-                     varname.color = 'darkred',
+                     varname.color = "black",
                      varname.abbrev = FALSE, ...)
 {
 
