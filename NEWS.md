@@ -6,6 +6,8 @@
 - Replaced internal calculation of ellipses with `stat_ellipse()`
 - Now allow ellipses to be filled (`geom_polygon()`) or unfilled (`geom_path()`)
 - Added hex logo
+- Added iris example to README
+- Removed Imports: dplyr, purrr as no longer needed
 
 ## Version 0.56
 

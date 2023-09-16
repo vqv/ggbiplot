@@ -18,7 +18,7 @@ ggbiplot(
   ellipse.prob = 0.68,
   ellipse.linewidth = 1.3,
   ellipse.fill = TRUE,
-  ellipse.alpha = 0.3,
+  ellipse.alpha = 0.25,
   labels = NULL,
   labels.size = 3,
   alpha = 1,
@@ -26,26 +26,29 @@ ggbiplot(
   circle = FALSE,
   circle.prob = 0.68,
   varname.size = 3,
-  varname.adjust = 1.5,
-  varname.color = "darkred",
+  varname.adjust = 1.25,
+  varname.color = "black",
   varname.abbrev = FALSE,
   ...
 )
 }
 \arguments{
-\item{pcobj}{an object returned by prcomp() or princomp()}
+\item{pcobj}{an object returned by \code{\link[stats]{prcomp}}, \code{\link[stats]{princomp}}, 
+\code{\link[FactoMineR]{PCA}}, or \code{\link[MASS]{lda}}}
 
-\item{choices}{which PCs to plot}
+\item{choices}{Which components to plot? A vector of length 2.}
 
-\item{scale}{covariance biplot (scale = 1), form biplot (scale = 0). When scale = 1, the inner product between the variables approximates the covariance and the distance between the points approximates the Mahalanobis distance.}
+\item{scale}{Covariance biplot (scale = 1), form biplot (scale = 0). When scale = 1, the inner product 
+between the variables approximates the covariance and the distance between the points 
+approximates the Mahalanobis distance.}
 
-\item{pc.biplot}{for compatibility with biplot.princomp()}
+\item{pc.biplot}{For compatibility with \code{biplot.princomp()}}
 
-\item{obs.scale}{scale factor to apply to observations}
+\item{obs.scale}{Scale factor to apply to observations}
 
-\item{var.scale}{scale factor to apply to variables}
+\item{var.scale}{Scale factor to apply to variables}
 
-\item{var.factor}{factor to be applied to variable vectors after scaling. This allows the variable vectors to be reflected
+\item{var.factor}{Factor to be applied to variable vectors after scaling. This allows the variable vectors to be reflected
 (\code{var.factor = -1}) or expanded in length (\code{var.factor > 1}) for greater visibility.}
 
 \item{groups}{optional factor variable indicating the groups that the observations belong to. 
@@ -55,15 +58,16 @@ If provided the points will be colored according to groups.}
 
 \item{ellipse}{draw a normal data ellipse for each group?}
 
-\item{ellipse.prob}{coverage size of the data ellipse in Normal probability}
+\item{ellipse.prob}{Coverage size of the data ellipse in Normal probability}
 
-\item{ellipse.linewidth}{thickness of the line outlining the ellipses}
+\item{ellipse.linewidth}{Thickness of the line outlining the ellipses}
 
-\item{ellipse.fill}{logical; should the ellipses be filled?}
+\item{ellipse.fill}{Logical; should the ellipses be filled?}
 
-\item{ellipse.alpha}{transparency value (0 - 1) for filled ellipses}
+\item{ellipse.alpha}{Transparency value (0 - 1) for filled ellipses}
 
-\item{labels}{optional vector of labels for the observations}
+\item{labels}{Optional vector of labels for the observations. Often, this will be specified as the \code{row.names()}
+of the dataset.}
 
 \item{labels.size}{size of the text used for the labels}
 
@@ -86,19 +90,44 @@ If provided the points will be colored according to groups.}
 \item{...}{other arguments passed down}
 }
 \value{
-a ggplot2 plot object
+a ggplot2 plot object of class \code{c("gg", "ggplot")}
 }
 \description{
-Biplot for Principal Components using ggplot2
+A biplot simultaneously displays information on the observations (as points)
+and the variables (as vectors) in a multidimensional dataset. The 2D biplot
+is typically based on the first two principal components of a dataset, giving a rank 2 approximation to the data.
 }
 \examples{
-  data(wine)
-  library(ggplot2)
-  wine.pca <- prcomp(wine, scale. = TRUE)
-  ggbiplot(wine.pca, 
-           obs.scale = 1, var.scale = 1, 
-           varname.size = 4,
-           groups = wine.class, 
-           ellipse = TRUE, circle = TRUE)
+data(wine)
+library(ggplot2)
+wine.pca <- prcomp(wine, scale. = TRUE)
+ggbiplot(wine.pca, 
+         obs.scale = 1, var.scale = 1, 
+         varname.size = 4,
+         groups = wine.class, 
+         ellipse = TRUE, circle = TRUE)
 
+data(iris)
+iris.pca <- prcomp (~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,
+                    data=iris,
+                    scale. = TRUE)
+ggbiplot(iris.pca, obs.scale = 1, var.scale = 1,
+         groups = iris$Species, point.size=2,
+         varname.size = 5, 
+         varname.color = "black",
+         varname.adjust = 1.2,
+         ellipse = TRUE, 
+         circle = TRUE) +
+  labs(fill = "Species", color = "Species") +
+  theme_minimal(base_size = 14) +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
+}
+\references{
+K. R. Gabriel (1971). The biplot graphical display of matrices with application to principal component analysis. 
+  \emph{Biometrika}, \bold{58}, 453–467. \doi{10.2307/2334381}.
+  
+  J.C. Gower and D. J. Hand (1996). \emph{Biplots}. Chapman & Hall
+}
+\seealso{
+\code{link[stats]{biplot}}, \code{link[factoextra]{fviz_pca_biplot}}
 }

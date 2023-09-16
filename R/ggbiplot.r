@@ -19,24 +19,32 @@
 # 
 
 #' Biplot for Principal Components using ggplot2
+#' 
+#' A biplot simultaneously displays information on the observations (as points)
+#' and the variables (as vectors) in a multidimensional dataset. The 2D biplot
+#' is typically based on the first two principal components of a dataset, giving a rank 2 approximation to the data.
 #'
-#' @param pcobj           an object returned by prcomp() or princomp()
-#' @param choices         which PCs to plot
-#' @param scale           covariance biplot (scale = 1), form biplot (scale = 0). When scale = 1, the inner product between the variables approximates the covariance and the distance between the points approximates the Mahalanobis distance.
-#' @param obs.scale       scale factor to apply to observations
-#' @param var.scale       scale factor to apply to variables
-#' @param var.factor      factor to be applied to variable vectors after scaling. This allows the variable vectors to be reflected
+#' @param pcobj           an object returned by \code{\link[stats]{prcomp}}, \code{\link[stats]{princomp}}, 
+#'                        \code{\link[FactoMineR]{PCA}}, or \code{\link[MASS]{lda}}
+#' @param choices         Which components to plot? A vector of length 2.
+#' @param scale           Covariance biplot (scale = 1), form biplot (scale = 0). When scale = 1, the inner product 
+#'                        between the variables approximates the covariance and the distance between the points 
+#'                        approximates the Mahalanobis distance.
+#' @param obs.scale       Scale factor to apply to observations
+#' @param var.scale       Scale factor to apply to variables
+#' @param var.factor      Factor to be applied to variable vectors after scaling. This allows the variable vectors to be reflected
 #'                        (\code{var.factor = -1}) or expanded in length (\code{var.factor > 1}) for greater visibility.
-#' @param pc.biplot       for compatibility with biplot.princomp()
+#' @param pc.biplot       For compatibility with \code{biplot.princomp()}
 #' @param groups          optional factor variable indicating the groups that the observations belong to. 
 #'                        If provided the points will be colored according to groups.
 #' @param point.size      Size of observation points.
 #' @param ellipse         draw a normal data ellipse for each group?
-#' @param ellipse.prob    coverage size of the data ellipse in Normal probability
-#' @param ellipse.linewidth    thickness of the line outlining the ellipses
-#' @param ellipse.fill    logical; should the ellipses be filled?
-#' @param ellipse.alpha   transparency value (0 - 1) for filled ellipses
-#' @param labels          optional vector of labels for the observations
+#' @param ellipse.prob    Coverage size of the data ellipse in Normal probability
+#' @param ellipse.linewidth    Thickness of the line outlining the ellipses
+#' @param ellipse.fill    Logical; should the ellipses be filled?
+#' @param ellipse.alpha   Transparency value (0 - 1) for filled ellipses
+#' @param labels          Optional vector of labels for the observations. Often, this will be specified as the \code{row.names()}
+#'                        of the dataset.
 #' @param labels.size     size of the text used for the labels
 #' @param alpha           alpha transparency value for the points (0 = transparent, 1 = opaque)
 #' @param circle          draw a correlation circle? (only applies when prcomp was called with scale = TRUE and when var.scale = 1)
@@ -51,10 +59,19 @@
 #' @import     ggplot2
 #' @importFrom stats predict qchisq var
 #' @importFrom scales muted
-#' @importFrom dplyr filter n summarize select group_by
+## @importFrom dplyr filter n summarize select group_by
 ## @importFrom tidyr unnest
 ## @importFrom purrr map
-#' @return                a ggplot2 plot object
+#' 
+#' @seealso \code{link[stats]{biplot}}, \code{link[factoextra]{fviz_pca_biplot}}
+#' 
+#' @references 
+#'   K. R. Gabriel (1971). The biplot graphical display of matrices with application to principal component analysis. 
+#'   \emph{Biometrika}, \bold{58}, 453–467. \doi{10.2307/2334381}.
+#'   
+#'   J.C. Gower and D. J. Hand (1996). \emph{Biplots}. Chapman & Hall
+#'   
+#' @return                a ggplot2 plot object of class \code{c("gg", "ggplot")}
 #' @export
 #' @examples
 #' data(wine)
@@ -133,7 +150,7 @@ ggbiplot <- function(pcobj, choices = 1:2,
       v <- pcobj$scaling
       d.total <- sum(d^2)
   } else {
-    stop('Expected a object of class prcomp, princomp, PCA, or lda')
+    stop('Expected a object of class "prcomp", "princomp", "PCA", or "lda"')
   }
 
   # shutup 'no visible binding...'

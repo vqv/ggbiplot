@@ -35,6 +35,23 @@ ggscreeplot <- function(pcobj,
                         type = c('pev', 'cev'),
                         size = 4) 
 {
+  # Recover the SVD
+  if(inherits(pcobj, 'prcomp')){
+    nobs.factor <- sqrt(nrow(pcobj$x) - 1)
+    d <- pcobj$sdev
+  } else if(inherits(pcobj, 'princomp')) {
+    nobs.factor <- sqrt(pcobj$n.obs)
+    d <- pcobj$sdev
+  } else if(inherits(pcobj, 'PCA')) {
+    nobs.factor <- sqrt(nrow(pcobj$call$X))
+    d <- unlist(sqrt(pcobj$eig)[1])
+  } else if(inherits(pcobj, "lda")) {
+    d <- pcobj$svd
+  } else {
+    stop('Expected a object of class "prcomp", "princomp", "PCA", or "lda"')
+  }
+  
+
   type <- match.arg(type)
   d <- pcobj$sdev^2
   yvar <- switch(type, 
