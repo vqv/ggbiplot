@@ -11,9 +11,13 @@ Authors@R: c(
            )
 Description: A ggplot2 based biplot.  It provides a 
     replacement for biplot.princomp(), but with many enhancements. It implements a
-    biplot and scree plot using ggplot2.
+    biplot and scree plot using ggplot2 which can be used with prcomp(), princomp(),
+    FactoMineR::PCA() or MASS::lda().
 Imports:
-    ggplot2, dplyr, scales
+    ggplot2, scales
+Suggests: 
+    dplyr,
+    MASS
 License: GPL-2
 Encoding: UTF-8
 URL: https://github.com/friendly/ggbiplot

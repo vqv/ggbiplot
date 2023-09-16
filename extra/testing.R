@@ -44,7 +44,6 @@ peng <- penguins |>
 
 peng.pca <- prcomp (~ bill_length + bill_depth + flipper_length + body_mass,
                     data=peng,
-                    na.action=na.omit,
                     scale. = TRUE)
 
 peng.gg <-
@@ -85,9 +84,11 @@ ggbiplot(peng.pca, obs.scale = 1, var.scale = 1,
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
 
-# last two dimensions: outliers
+# last two dimensions: outliers; use observation labels
 ggbiplot(peng.pca, obs.scale = 1, var.scale = 1, choices = 3:4,
-         groups = peng$species, point.size=2,
+         groups = peng$species, 
+         labels = row.names(peng),
+         point.size=2,
          var.factor = 2.1, varname.adjust = 1,
          varname.size = 5, varname.color = scales::muted("red"),
          ellipse = TRUE, ellipse.alpha = 0.1, 
@@ -96,31 +97,30 @@ ggbiplot(peng.pca, obs.scale = 1, var.scale = 1, choices = 3:4,
   theme_minimal() +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
-#' ## iris data
-#' 
-data(iris)
-iris.pca <- prcomp (~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,
-                    data=iris,
-                    scale. = TRUE)
+#' USArrests
 
-iris.gg <-
-ggbiplot(iris.pca, obs.scale = 1, var.scale = 1,
-         groups = iris$Species, point.size=2,
-         varname.size = 5, 
-         varname.color = "black",
-         varname.adjust = 1.2,
-         ellipse = TRUE, 
-         circle = TRUE) +
-  labs(fill = "Species", color = "Species") +
+data("USArrests")
+arrests.pca <- 
+  prcomp (~ Murder + Assault + UrbanPop + Rape,
+          data=USArrests,
+          scale. = TRUE)
+
+ggbiplot(arrests.pca,
+         labels = state.abb[match(row.names(USArrests), state.name)] ,
+         circle = TRUE,
+         varname.size = 4,
+         varname.color = "red") +
   theme_minimal(base_size = 14) +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
-group.labs <-
-  iris.gg$data |>
-  summarise(xvar = mean(xvar),
-            yvar = mean(yvar), .by = groups)
+ggbiplot(arrests.pca,
+         groups = state.region,
+         labels = state.abb[match(row.names(USArrests), state.name)],
+         labels.size = 4,
+         ellipse = TRUE, ellipse.level = 0.5, ellipse.alpha = 0.1,
+         circle = TRUE,
+         varname.size = 4,
+         varname.color = "black") +
+  theme_minimal(base_size = 14) +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
 
-iris.gg + geom_label(data = group.labs,
-                     aes(x = xvar, y=yvar, label=groups),
-                     size = 5) +
-  theme(legend.position = "none")
