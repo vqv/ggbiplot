@@ -8,6 +8,22 @@
 \format{
 A \code{wine} data frame consisting of 178 observations (rows) and
 13 columns and vector \code{wine.class} of factors indicating the cultivars.
+The variables are:
+  \describe{
+     \item{\code{Alcohol}}{a numeric vector}
+     \item{\code{MalicAcid}}{Malic acid, a numeric vector}
+     \item{\code{Ash}}{Ash, a numeric vector}
+     \item{\code{AlcAsh}}{Alcalinity of ash, a numeric vector}
+     \item{\code{Mg}}{Magnesium, a numeric vector}
+     \item{\code{Phenols}}{total phenols, a numeric vector}
+     \item{\code{Flav}}{Flavanoids, a numeric vector}
+     \item{\code{NonFlavPhenols}}{Nonflavanoid phenols, a numeric vector}
+     \item{\code{Proa}}{Proanthocyanins, a numeric vector}
+     \item{\code{Color}}{Color intensity, a numeric vector}
+     \item{\code{Hue}}{a numeric vector}
+     \item{\code{OD}}{D280/OD315 of diluted wines, a numeric vector}
+     \item{\code{Proline}}{a numeric vector}
+     }
 }
 \source{
 UCI Machine Learning Repository (\url{http://archive.ics.uci.edu/ml/datasets/Wine})
