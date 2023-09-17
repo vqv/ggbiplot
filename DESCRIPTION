@@ -13,6 +13,7 @@ Description: A ggplot2 based biplot.  It provides a
     replacement for biplot.princomp(), but with many enhancements. It implements a
     biplot and scree plot using ggplot2 which can be used with prcomp(), princomp(),
     FactoMineR::PCA() or MASS::lda().
+Depends: R (>= 3.5.0)
 Imports:
     ggplot2, scales
 Suggests: 

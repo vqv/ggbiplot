@@ -32,3 +32,4 @@ ggbiplot(wine.pca,
          obs.scale = 1, var.scale = 1, 
          groups = wine.class, ellipse = TRUE, circle = TRUE)
 }
+\keyword{dataset}

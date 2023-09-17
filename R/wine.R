@@ -15,6 +15,7 @@
 #' A \code{wine} data frame consisting of 178 observations (rows) and
 #' 13 columns and vector \code{wine.class} of factors indicating the cultivars.
 #' @source UCI Machine Learning Repository (\url{http://archive.ics.uci.edu/ml/datasets/Wine})
+#' @keywords dataset
 #'
 #' @examples 
 #' data(wine)
