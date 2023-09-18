@@ -2,6 +2,7 @@
 
 export(ggbiplot)
 export(ggscreeplot)
+export(reflect)
 import(ggplot2)
 importFrom(scales,muted)
 importFrom(stats,predict)
