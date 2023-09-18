@@ -19,7 +19,17 @@
 #' @export
 #'
 #' @examples
-#' # none yet
+#' data(crime)
+#' crime.pca <- 
+#'   crime |> 
+#'   dplyr::select(where(is.numeric)) |>
+#'   prcomp(scale. = TRUE)
+#'   
+#'  biplot(crime.pca)
+#'  
+#'  crime.pca <- reflect(crime.pca)
+#'  biplot(crime.pca)
+
 reflect <- function(pcobj, columns = 1:2){
 
   check <- function(x, cols){

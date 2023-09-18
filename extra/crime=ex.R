@@ -4,8 +4,8 @@
 
 library(ggbiplot)
 library(dplyr)
-
-load(here::here("data", "crime.RData"))
+data(crime)
+#load(here::here("data", "crime.RData"))
 
 crime.pca <- 
   crime |> 
@@ -15,8 +15,10 @@ crime.pca <-
 biplot(crime.pca)
 
 # reflect dims 1:2
-crime.pca$rotation[,1:2] <- -1 * crime.pca$rotation[,1:2]
-crime.pca$x[,1:2] <- -1 * crime.pca$x[,1:2]
+# crime.pca$rotation[,1:2] <- -1 * crime.pca$rotation[,1:2]
+# crime.pca$x[,1:2] <- -1 * crime.pca$x[,1:2]
+
+crime.pca <- reflect(crime.pca)
 
 biplot(crime.pca)
 
