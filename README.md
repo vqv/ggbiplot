@@ -68,6 +68,10 @@ crime |>
 
 ![](man/figures/README-crime-corrplot-1.png)<!-- -->
 
+The correlations are all positive. Note also that the variables in the
+dataset are ordered in seriousness or violence, ranging from murder to
+auto theft.
+
 Carry out a PCA:
 
 ``` r
@@ -108,7 +112,8 @@ The directions of the principal components are arbitrary; we are free to
 reflect the variable vectors and component scores to facilitate
 interpretation. Also, there seem to be differences among regions of the
 U.S., which can be visualized using data ellipses for the component
-scores.
+scores. The `groups` argument allows the observations to colored by
+group and to summarized by groups.
 
 ``` r
 crime.pca <- reflect(crime.pca)
@@ -126,6 +131,29 @@ ggbiplot(crime.pca,
 ```
 
 ![](man/figures/README-crime-biplot1-1.png)<!-- -->
+
+The interpretation of the data is now clear.
+
+- The first dimension, accounting for 58.8% of variance, can be seen to
+  represent **overall crime rate**, with Nevada (NV) at the high end and
+  North Dakota (ND), South Dakota (SD) and West Virginia (WV) at the low
+  end.
+
+- The second dimension, accounting for 17.7% of variance represents a
+  contrast between **personal crime vs. property crime**. On this
+  dimension, Massachusetts (MA), Rhode Island (RI) are opposed to
+  Mississippi (MS), Alabama (AL), Louisiana (LA) and South Carolina
+  (SC).
+
+- The regions are represented by the differences in the centers of the
+  data ellipses for the scores. Southern states are highest on murder,
+  assault and rape, while the Northeast states are highest on auto theft
+  and larceny.
+
+- In this standardized view, the angles between variable vectors
+  approximate the correlations among the variables, according to
+  $\cos (\text{angle}) \approx r$. Thus, `murder` and `auto`, nearly
+  $90^o$ reflect a near 0 correlation.
 
 ### Wine data
 
