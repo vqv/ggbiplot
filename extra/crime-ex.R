@@ -2,10 +2,16 @@
 #' title: crime data
 #' ---
 
+library(ggplot2)
 library(ggbiplot)
 library(dplyr)
+library(corrplot)
 data(crime)
-#load(here::here("data", "crime.RData"))
+
+crime |> 
+  dplyr::select(where(is.numeric)) |> 
+  cor() |> 
+  corrplot(method = "ellipse")
 
 crime.pca <- 
   crime |> 
@@ -18,7 +24,7 @@ biplot(crime.pca)
 crime.pca$rotation[,1:2] <- -1 * crime.pca$rotation[,1:2]
 crime.pca$x[,1:2] <- -1 * crime.pca$x[,1:2]
 
-crime.pca <- reflect(crime)
+crime.pca <- reflect(crime.pca)
 
 biplot(crime.pca)
 

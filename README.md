@@ -34,7 +34,98 @@ Install the current master branch with:
 remotes::install_github("friendly/ggbiplot")
 ```
 
-## Example Usage
+## Examples
+
+Load packages:
+
+``` r
+library(ggplot2)
+library(ggbiplot)
+library(dplyr)
+library(corrplot)
+
+# set ggplot2 theme
+theme_set(theme_minimal(base_size = 14))
+```
+
+### Crime data
+
+The `crime` data gives rates of various serious crimes in each of the 50
+U. S. states, originally from the United States Statistical Abstracts
+(1970).
+
+Let’s take a quick look at the correlations among these, using
+`corrplot::corrplot()` and showing each correlation by an ellipse whose
+eccentricity and shading represents the value of the correlation.
+
+``` r
+data(crime)
+crime |> 
+  dplyr::select(where(is.numeric)) |> 
+  cor() |> 
+  corrplot(method = "ellipse")
+```
+
+![](man/figures/README-crime-corrplot-1.png)<!-- -->
+
+Carry out a PCA:
+
+``` r
+crime.pca <- 
+  crime |> 
+  dplyr::select(where(is.numeric)) |>
+  prcomp(scale. = TRUE)
+
+crime.pca
+#> Standard deviations (1, .., p=7):
+#> [1] 2.029 1.113 0.852 0.563 0.508 0.471 0.352
+#> 
+#> Rotation (n x k) = (7 x 7):
+#>             PC1     PC2     PC3     PC4     PC5     PC6     PC7
+#> murder   -0.300 -0.6292  0.1782 -0.2321  0.5381  0.2591  0.2676
+#> rape     -0.432 -0.1694 -0.2442  0.0622  0.1885 -0.7733 -0.2965
+#> robbery  -0.397  0.0422  0.4959 -0.5580 -0.5200 -0.1144 -0.0039
+#> assault  -0.397 -0.3435 -0.0695  0.6298 -0.5067  0.1724  0.1917
+#> burglary -0.440  0.2033 -0.2099 -0.0576  0.1010  0.5360 -0.6481
+#> larceny  -0.357  0.4023 -0.5392 -0.2349  0.0301  0.0394  0.6017
+#> auto     -0.295  0.5024  0.5684  0.4192  0.3698 -0.0573  0.1470
+```
+
+The biplot, using default scaling (standardized components), and
+labeling the states by their state abbreviation:
+
+``` r
+ggbiplot(crime.pca,
+         labels = crime$st ,
+         circle = TRUE,
+         varname.size = 4,
+         varname.color = "red") 
+```
+
+![](man/figures/README-crime-biplot0-1.png)<!-- -->
+
+The directions of the principal components are arbitrary; we are free to
+reflect the variable vectors and component scores to facilitate
+interpretation. Also, there seem to be differences among regions of the
+U.S., which can be visualized using data ellipses for the component
+scores.
+
+``` r
+crime.pca <- reflect(crime.pca)
+ggbiplot(crime.pca,
+         groups = crime$region,
+         labels = crime$st,
+         labels.size = 4,
+         var.factor = 1.4,
+         ellipse = TRUE, ellipse.level = 0.5, ellipse.alpha = 0.1,
+         circle = TRUE,
+         varname.size = 4,
+         varname.color = "black") +
+  labs(fill = "Region", color = "Region") +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
+```
+
+![](man/figures/README-crime-biplot1-1.png)<!-- -->
 
 ### Wine data
 
@@ -54,8 +145,7 @@ library(dplyr)
 
 data(wine)
 wine.pca <- prcomp(wine, scale. = TRUE)
-ggscreeplot(wine.pca) +
-  theme_bw(base_size = 14)
+ggscreeplot(wine.pca) 
 ```
 
 ![](man/figures/README-wine-screeplot-1.png)<!-- -->
@@ -93,10 +183,10 @@ iris.pca <- prcomp (~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,
                     scale. = TRUE)
 summary(iris.pca)
 #> Importance of components:
-#>                           PC1    PC2     PC3     PC4
-#> Standard deviation     1.7084 0.9560 0.38309 0.14393
-#> Proportion of Variance 0.7296 0.2285 0.03669 0.00518
-#> Cumulative Proportion  0.7296 0.9581 0.99482 1.00000
+#>                         PC1   PC2    PC3     PC4
+#> Standard deviation     1.71 0.956 0.3831 0.14393
+#> Proportion of Variance 0.73 0.229 0.0367 0.00518
+#> Cumulative Proportion  0.73 0.958 0.9948 1.00000
 ```
 
 Plot the first two dimensions:
@@ -133,10 +223,10 @@ group.labs <-
             yvar = mean(yvar), .by = groups)
 
 group.labs
-#>       groups       xvar       yvar
-#> 1     setosa -2.2173249 -0.2879627
-#> 2 versicolor  0.4947904  0.5483335
-#> 3  virginica  1.7225345 -0.2603708
+#>       groups   xvar   yvar
+#> 1     setosa -2.217 -0.288
+#> 2 versicolor  0.495  0.548
+#> 3  virginica  1.723 -0.260
 ```
 
 Now, just use `geom_label` to draw labels for the groups.

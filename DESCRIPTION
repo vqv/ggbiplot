@@ -17,6 +17,7 @@ Depends: R (>= 3.5.0)
 Imports:
     ggplot2, scales
 Suggests: 
+    corrplot,
     dplyr,
     MASS
 License: GPL-2

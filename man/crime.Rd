@@ -26,7 +26,7 @@ The data are originally from the United States Statistical Abstracts (1970).
 data(crime)
 }
 \description{
-This dataset gives rates of various crimes in each of the 50 U. S. states, 
+This dataset gives rates of various serious crimes in each of the 50 U. S. states, 
 originally from the United States Statistical Abstracts (1970). The data
 were analyzed by John Hartigan (1975) in his book \emph{Clustering Algorithms} and 
 were later reanalyzed by Friendly (1991).

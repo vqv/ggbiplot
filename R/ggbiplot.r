@@ -20,40 +20,94 @@
 
 #' Biplot for Principal Components using ggplot2
 #' 
+#' @description 
 #' A biplot simultaneously displays information on the observations (as points)
 #' and the variables (as vectors) in a multidimensional dataset. The 2D biplot
-#' is typically based on the first two principal components of a dataset, giving a rank 2 approximation to the data.
+#' is typically based on the first two principal components of a dataset, giving a rank 2 approximation 
+#' to the data.
+#' 
+#' The biplot method for principal component analysis was originally defined by Gabriel (1971, 1981).
+#' Gower & Hand (1996) give a more complete treatment. Gower et al. (2011) is the most up to date
+#' exposition of biplot methodology.
+#' 
+#' @details
+#' The biplot is constructed by using the singular value decomposition (SVD) to obtain a low-rank 
+#' approximation to the data matrix \eqn{\mathbf{X}_{n \times p}} (centered, and optionally scaled to unit variances)
+#' whose \eqn{n} rows are the observations 
+#' and whose \eqn{p} columns are the variables. 
+#' 
+#' Using the SVD, the matrix \eqn{\mathbf{X}}, of rank \eqn{r \le p}
+#' can be expressed \emph{exactly} as
+#' \deqn{\mathbf{X} = \mathbf{U} \mathbf{\Lambda} \mathbf{V}'
+#'                  = \Sigma_i^r \lambda_i \mathbf{u}_i \mathbf{v}_i' \; ,}
+#' 
+#' where 
+#' \itemize{
+#'    \item \eqn{\mathbf{U}} is an \eqn{n \times r} orthonormal matrix of observation scores and also the eigenvectors
+#'          of \eqn{\mathbf{X} \mathbf{X}'},
+#'    \item \eqn{\mathbf{\Lambda}} is an \eqn{r \times r} diagonal matrix of singular values, 
+#'          \eqn{\lambda_1 \ge \lambda_2 \ge \cdots \lambda_r} 
+#'         % which are also the square roots
+#'         % of the eigenvalues of \eqn{\mathbf{X} \mathbf{X}'}. 
+#'    \item \eqn{\mathbf{V}} is an \eqn{r \times p} orthonormal matrix of observation scores and also the eigenvectors
+#'          of \eqn{\mathbf{X}' \mathbf{X}}.
+#' }
+#' 
+#' Then, a rank 2 (or 3) PCA approximation \eqn{\widehat{\mathbf{X}}} to the data matrix used in the biplot
+#' can be obtained from the first 2 (or 3)
+#' singular values \eqn{\lambda_i}
+#' and the corresponding \eqn{\mathbf{u}_i, \mathbf{v}_i} as
+#' 
+#' \deqn{\mathbf{X} \approx \widehat{\mathbf{X}} = \lambda_1 \mathbf{u}_1 \mathbf{v}_1' + \lambda_2 \mathbf{u}_2 \mathbf{v}_2'}
 #'
+#' The biplot is then obtained by overlaying two scatterplots that share a common set of axes and have a between-set scalar 
+#' product interpretation. Typically, the observations (rows of \eqn{\mathbf{X}}) are represented as points
+#' and the variables (columns of \eqn{\mathbf{X}}) are represented as vectors from the origin.
+#' 
+#' The \code{scale} factor, \eqn{\alpha} allows the variances of the components to be apportioned between the
+#' row points and column vectors, with different interpretations, by representing the approximation
+#' \eqn{\widehat{\mathbf{X}}} as the product of two matrices,
+#' 
+#' \deqn{\widehat{\mathbf{X}} = (\mathbf{U} \mathbf{\Lambda}^\alpha) (\mathbf{\Lambda}^{1-\alpha} \mathbf{V}')}
+#' 
 #' @param pcobj           an object returned by \code{\link[stats]{prcomp}}, \code{\link[stats]{princomp}}, 
 #'                        \code{\link[FactoMineR]{PCA}}, or \code{\link[MASS]{lda}}
 #' @param choices         Which components to plot? A vector of length 2.
-#' @param scale           Covariance biplot (scale = 1), form biplot (scale = 0). When scale = 1, the inner product 
+#' @param scale           Covariance biplot (\code{scale = 1}), form biplot (\code{scale = 0}). 
+#'                        When \code{scale = 1} (the default), the inner product 
 #'                        between the variables approximates the covariance and the distance between the points 
 #'                        approximates the Mahalanobis distance.
 #' @param obs.scale       Scale factor to apply to observations
 #' @param var.scale       Scale factor to apply to variables
 #' @param var.factor      Factor to be applied to variable vectors after scaling. This allows the variable vectors to be reflected
 #'                        (\code{var.factor = -1}) or expanded in length (\code{var.factor > 1}) for greater visibility.
-#' @param pc.biplot       For compatibility with \code{biplot.princomp()}
-#' @param groups          optional factor variable indicating the groups that the observations belong to. 
-#'                        If provided the points will be colored according to groups.
+#'                        \code{\link{reflect}} provides a simpler way to reflect the variables.
+#' @param pc.biplot       Logical, for compatibility with \code{biplot.princomp()}. If \code{TRUE}, use what Gabriel (1971) 
+#'                        refers to as a "principal component biplot", with \eqn{\alpha = 1} and observations scaled 
+#'                        up by sqrt(n) and variables scaled down by sqrt(n). Then inner products between 
+#'                        variables approximate covariances and distances between observations approximate 
+#'                        Mahalanobis distance.
+#' @param groups          Optional factor variable indicating the groups that the observations belong to. 
+#'                        If provided the points will be colored according to groups and this allows data ellipses also
+#'                        to be drawn when \code{ellipse = TRUE}.
 #' @param point.size      Size of observation points.
-#' @param ellipse         draw a normal data ellipse for each group?
+#' @param ellipse         Logical; draw a normal data ellipse for each group?
 #' @param ellipse.prob    Coverage size of the data ellipse in Normal probability
 #' @param ellipse.linewidth    Thickness of the line outlining the ellipses
 #' @param ellipse.fill    Logical; should the ellipses be filled?
 #' @param ellipse.alpha   Transparency value (0 - 1) for filled ellipses
 #' @param labels          Optional vector of labels for the observations. Often, this will be specified as the \code{row.names()}
 #'                        of the dataset.
-#' @param labels.size     size of the text used for the labels
-#' @param alpha           alpha transparency value for the points (0 = transparent, 1 = opaque)
-#' @param circle          draw a correlation circle? (only applies when prcomp was called with scale = TRUE and when var.scale = 1)
-#' @param circle.prob     size of circle
-#' @param var.axes        draw arrows for the variables?
-#' @param varname.size    size of the text for variable names
-#' @param varname.color   color for the variable vectors and names
-#' @param varname.adjust  adjustment factor the placement of the variable names, >= 1 means farther from the arrow
-#' @param varname.abbrev  whether or not to abbreviate the variable names
+#' @param labels.size     Size of the text used for the point labels
+#' @param alpha           Alpha transparency value for the points (0 = transparent, 1 = opaque)
+#' @param circle          draw a correlation circle? (only applies when prcomp was called with 
+#'                        \code{scale = TRUE} and when \code{var.scale = 1})
+#' @param circle.prob     Size of the correlation circle
+#' @param var.axes        logical; draw arrows for the variables?
+#' @param varname.size    Size of the text for variable names
+#' @param varname.color   Color for the variable vectors and names
+#' @param varname.adjust  Adjustment factor the placement of the variable names, >= 1 means farther from the arrow
+#' @param varname.abbrev  logical; whether or not to abbreviate the variable names, using \code{\link{abbreviate}}.
 #' @param ...             other arguments passed down
 #'
 #' @import     ggplot2
@@ -63,7 +117,10 @@
 ## @importFrom tidyr unnest
 ## @importFrom purrr map
 #' 
-#' @seealso \code{link[stats]{biplot}}, \code{link[factoextra]{fviz_pca_biplot}}
+#' @seealso 
+#'   \code{\link{reflect}}, \code{\link{ggscreeplot}};
+#'   \code{link[stats]{biplot}} for the original stats package version;
+#'   \code{link[factoextra]{fviz_pca_biplot}} for the factoextra package version.
 #' 
 #' @references 
 #'   Gabriel, K. R. (1971). The biplot graphical display of matrices with application to principal component analysis. 
@@ -72,7 +129,9 @@
 #'   Gabriel, K. R. (1981). Biplot display of multivariate matrices for inspection of data and diagnosis. 
 #'   In V. Barnett (Ed.), \emph{Interpreting Multivariate Data}. London: Wiley. 
 #'   
-#'   J.C. Gower and D. J. Hand (1996). \emph{Biplots}. Chapman & Hall
+#'   J.C. Gower and D. J. Hand (1996). \emph{Biplots}. Chapman & Hall.
+#'   
+#'   Gower, J. C., Lubbe, S. G., & Roux, N. J. L. (2011). \emph{Understanding Biplots}. Wiley.
 #'   
 #' @return                a ggplot2 plot object of class \code{c("gg", "ggplot")}
 #' @export
@@ -101,8 +160,10 @@
 #'   theme_minimal(base_size = 14) +
 #'   theme(legend.direction = 'horizontal', legend.position = 'top')
 
-ggbiplot <- function(pcobj, choices = 1:2, 
-                     scale = 1, pc.biplot = TRUE, 
+ggbiplot <- function(pcobj, 
+                     choices = 1:2, 
+                     scale = 1, 
+                     pc.biplot = TRUE, 
                      obs.scale = 1 - scale, 
                      var.scale = scale, 
                      var.factor = 1,    # MF

@@ -25,8 +25,12 @@ knitr::opts_chunk$set(
   message = FALSE, 
   warning = FALSE,
   comment = "#>",
+  fig.height = 6,
+  fig.width = 6,
   fig.path = "man/figures/README-"
 )
+
+options(digits = 3)
 ```
 
 # ggbiplot <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
@@ -44,7 +48,82 @@ Install the current master branch with:
 remotes::install_github("friendly/ggbiplot")
 ```
 
-## Example Usage
+## Examples
+
+Load packages:
+
+```{r}
+library(ggplot2)
+library(ggbiplot)
+library(dplyr)
+library(corrplot)
+
+# set ggplot2 theme
+theme_set(theme_minimal(base_size = 14))
+```
+
+### Crime data
+
+The `crime` data gives rates of various serious crimes in each of the 50 U. S. states, 
+originally from the United States Statistical Abstracts (1970).
+
+Let's take a quick look at the correlations among these, using `corrplot::corrplot()`
+and showing each correlation by an ellipse whose eccentricity and shading represents the value of
+the correlation.
+
+```{r crime-corrplot}
+data(crime)
+crime |> 
+  dplyr::select(where(is.numeric)) |> 
+  cor() |> 
+  corrplot(method = "ellipse")
+```
+
+The correlations are all positive.  Note also that the variables in the dataset
+are ordered in seriousness or violence, ranging from murder to auto theft.
+
+Carry out a PCA:
+
+```{r crime-pca}
+crime.pca <- 
+  crime |> 
+  dplyr::select(where(is.numeric)) |>
+  prcomp(scale. = TRUE)
+
+crime.pca
+```
+
+The biplot, using default scaling (standardized components), and labeling the
+states by their state abbreviation:
+
+```{r crime-biplot0}
+ggbiplot(crime.pca,
+         labels = crime$st ,
+         circle = TRUE,
+         varname.size = 4,
+         varname.color = "red") 
+```
+
+The directions of the principal components are arbitrary; we are free to reflect
+the variable vectors and component scores to facilitate interpretation.
+Also, there seem to be differences among regions of the U.S., which can be
+visualized using data ellipses for the component scores.
+
+```{r crime-biplot1}
+crime.pca <- reflect(crime.pca)
+ggbiplot(crime.pca,
+         groups = crime$region,
+         labels = crime$st,
+         labels.size = 4,
+         var.factor = 1.4,
+         ellipse = TRUE, ellipse.level = 0.5, ellipse.alpha = 0.1,
+         circle = TRUE,
+         varname.size = 4,
+         varname.color = "black") +
+  labs(fill = "Region", color = "Region") +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
+```
+
 
 ### Wine data
 
@@ -62,8 +141,7 @@ library(dplyr)
 
 data(wine)
 wine.pca <- prcomp(wine, scale. = TRUE)
-ggscreeplot(wine.pca) +
-  theme_bw(base_size = 14)
+ggscreeplot(wine.pca) 
 ```
 
 Hmm. The screeplot shows that more than two dimensions are necessary to account for most of the variance.
