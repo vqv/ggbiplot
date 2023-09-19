@@ -2,7 +2,8 @@
 #' title: penguins data examples
 #' ---
 #' 
- 
+
+library(ggplot2) 
 data(penguins, package = "palmerpenguins")
 peng <- penguins |>
   rename(
