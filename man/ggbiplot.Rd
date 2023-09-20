@@ -104,10 +104,13 @@ a ggplot2 plot object of class \code{c("gg", "ggplot")}
 A biplot simultaneously displays information on the observations (as points)
 and the variables (as vectors) in a multidimensional dataset. The 2D biplot
 is typically based on the first two principal components of a dataset, giving a rank 2 approximation 
-to the data.
+to the data. The “bi” in biplot refers to the fact that two sets of points (i.e., the rows and
+columns of the data matrix) are visualized by scalar products, not the fact
+that the display is usually two-dimensional.
 
 The biplot method for principal component analysis was originally defined by Gabriel (1971, 1981).
-Gower & Hand (1996) give a more complete treatment. Gower et al. (2011) is the most up to date
+Gower & Hand (1996) give a more complete treatment. Greenacre (2010) is a practical user-oriented guide to biplots.
+Gower et al. (2011) is the most up to date
 exposition of biplot methodology.
 }
 \details{
@@ -138,7 +141,9 @@ can be obtained from the first 2 (or 3)
 singular values \eqn{\lambda_i}
 and the corresponding \eqn{\mathbf{u}_i, \mathbf{v}_i} as
 
-\deqn{\mathbf{X} \approx \widehat{\mathbf{X}} = \lambda_1 \mathbf{u}_1 \mathbf{v}_1' + \lambda_2 \mathbf{u}_2 \mathbf{v}_2'}
+\deqn{\mathbf{X} \approx \widehat{\mathbf{X}} = \lambda_1 \mathbf{u}_1 \mathbf{v}_1' + \lambda_2 \mathbf{u}_2 \mathbf{v}_2' \; .}
+
+The variance of \eqn{\mathbf{X}} accounted for by each term is \eqn{\lambda_i^2}.
 
 The biplot is then obtained by overlaying two scatterplots that share a common set of axes and have a between-set scalar 
 product interpretation. Typically, the observations (rows of \eqn{\mathbf{X}}) are represented as points
@@ -149,6 +154,18 @@ row points and column vectors, with different interpretations, by representing t
 \eqn{\widehat{\mathbf{X}}} as the product of two matrices,
 
 \deqn{\widehat{\mathbf{X}} = (\mathbf{U} \mathbf{\Lambda}^\alpha) (\mathbf{\Lambda}^{1-\alpha} \mathbf{V}')}
+
+The choice \eqn{\alpha = 1}, assigning the singular values totally to the left factor,
+ gives a distance interpretation to the row display and 
+\eqn{\alpha = 0} gives a distance interpretation to the column display.
+\eqn{\alpha = 1/2} gives a symmetrically scaled biplot.
+
+When the singular values are assigned totally to the left or to the right factor, the resultant 
+coordinates are called \emph{principal coordinates} and the sum of squared coordinates
+on each dimension equal the corresponding singular value.
+The other matrix, to which no part of the singular 
+values is assigned, contains the so-called \emph{standard coordinates} and have sum of squared
+values equal to 1.0.
 }
 \examples{
 data(wine)
@@ -181,6 +198,9 @@ Gabriel, K. R. (1971). The biplot graphical display of matrices with application
   
   Gabriel, K. R. (1981). Biplot display of multivariate matrices for inspection of data and diagnosis. 
   In V. Barnett (Ed.), \emph{Interpreting Multivariate Data}. London: Wiley. 
+  
+  Greenacre, M. (2010). \emph{Biplots in Practice}. BBVA Foundation, Bilbao, Spain. 
+  Available for free at \url{https://www.multivariatestatistics.org}.
   
   J.C. Gower and D. J. Hand (1996). \emph{Biplots}. Chapman & Hall.
   

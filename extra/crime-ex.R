@@ -11,7 +11,7 @@ data(crime)
 crime |> 
   dplyr::select(where(is.numeric)) |> 
   cor() |> 
-  corrplot(method = "ellipse")
+  corrplot(method = "ellipse", tl.srt = 0)
 
 crime.pca <- 
   crime |> 

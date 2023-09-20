@@ -14,7 +14,7 @@ ggbiplot(wine.pca, groups=wine.class,
          circle = TRUE,
          varname.color = "darkred",
          varname.size = 4) +
-  theme_minimal() +
+  theme_minimal(base_size = 14) +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
 # unfilled
