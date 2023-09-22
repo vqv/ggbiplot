@@ -3,7 +3,8 @@
 #' ---
 #' 
 
-library(ggplot2) 
+library(ggplot2)
+library(ggbiplot)
 data(penguins, package = "palmerpenguins")
 peng <- penguins |>
   rename(
@@ -45,7 +46,7 @@ peng.gg + geom_label(data = group.labs,
 
 
 
-# try reflecting & scaline var vectors
+# try reflecting & scaling var vectors
 ggbiplot(peng.pca, obs.scale = 1, var.scale = 1,
          var.factor = -1,
          varname.adjust = 1,

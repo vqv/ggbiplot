@@ -1,8 +1,12 @@
-# biplots in R
+---
+title: Biplots in R
+author: Michael Friendly
+output: github_document
+---
+
 
 There are quite a few implementations of biplots in R, but IMHO, **none** are sufficiently general to become a
-current standard, with wide applicability, and easily used within modern R, encompasing the latest developments
-in the `tidyverse` and the `ggplot2` framework. 
+current standard, with wide applicability, and easily used within modern R, encompassing the latest developments in the `tidyverse` and the `ggplot2` framework. 
 
 Current implementation range from base R `biplot.princomp()`
 to `factoextra::fviz_pca()` extending the `FactoMineR` package, and
@@ -24,9 +28,13 @@ control for a given example.
   possibly direct labels for groups rather than a legend, etc.
 * show row/observation points as points or observation lables. Be able to control the
   point/character size easily. Be able to filter out some point labels to highlight
-  some more intersting ones.
+  some more interesting ones.
 * For variable vectors, control all graphical attributes: color, linewidth, font/sizes for
   variable names, etc.
+
+Here is a simple example showing the type of plot I'd like to produce:
+
+![](peng-biplot.png)
 
 Is it time for a new, more modern implementation that is easy to use and to understand?
 Any such implementation can't do everything, but if well-designed, it could be something
