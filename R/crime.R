@@ -1,7 +1,8 @@
 #' @title U. S. Crimes
 #' @name crime
 #' @description 
-#' This dataset gives rates of various serious crimes in each of the 50 U. S. states, 
+#' This dataset gives rates of occurrence (per 100,000 people)
+#' various serious crimes in each of the 50 U. S. states, 
 #' originally from the United States Statistical Abstracts (1970). The data
 #' were analyzed by John Hartigan (1975) in his book \emph{Clustering Algorithms} and 
 #' were later reanalyzed by Friendly (1991). 
@@ -25,6 +26,10 @@
 #' @keywords dataset
 #' @source 
 #' The data are originally from the United States Statistical Abstracts (1970).
+#' This dataset also appears in the SAS/Stat Sample library,
+#' \emph{Getting Started Example for PROC PRINCOMP}, 
+#' \url{https://support.sas.com/documentation/onlinedoc/stat/ex_code/131/princgs.html}, from which the
+#' current copy was derived.
 #' @references 
 #' Friendly, M. (1991). \emph{SAS System for Statistical Graphics}. SAS Institute.
 #'
