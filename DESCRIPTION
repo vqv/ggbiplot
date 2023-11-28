@@ -25,6 +25,7 @@ Suggests:
     MASS
 License: GPL-2
 Encoding: UTF-8
+Language: en-US
 URL: https://github.com/friendly/ggbiplot
 BugReports: https://github.com/friendly/ggbiplot/issues
 RoxygenNote: 7.2.3

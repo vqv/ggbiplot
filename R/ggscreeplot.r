@@ -4,7 +4,7 @@
 #' various dimension reduction techniques
 #'
 #' @param pcobj   an object representing a linear dimension technique, such a returned by \code{\link[stats]{prcomp}} 
-#'                or \code{\link[stats]{princomp}} or \code{\link[FactomineR]{PCA}} or \code{\link[MASS]{lda}}
+#'                or \code{\link[stats]{princomp}} or \code{\link[FactoMineR]{PCA}} or \code{\link[MASS]{lda}}
 #' @param type    the type of scree plot.  
 #'                'pev' corresponds proportion of explained variance, i.e. the eigenvalues divided by the trace. 
 #'                'cev' corresponds to the cumulative proportion of explained variance, i.e. the partial sum of the first k eigenvalues divided by the trace.

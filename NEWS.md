@@ -1,6 +1,11 @@
+## Version 0.6.1
+
+- Revise documentation for `ggscreeplot()`
+- `data(crime)` used in README
+
 ## Version 0.6.0
 
-- Use `geom_polygon()` rather than `geom_path()` for ellipses
+- Use `geom_polygon()` rather than `geom_path()` for ellipses to allow them to be filled.
 - Added `var.factor` argument to expand or reflect the variable vectors
 - Moved points/labels code earlier so ellipses and variable vectors are not obscured
 - Replaced internal calculation of ellipses with `stat_ellipse()`

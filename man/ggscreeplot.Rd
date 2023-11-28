@@ -8,7 +8,7 @@ ggscreeplot(pcobj, type = c("pev", "cev"), size = 4)
 }
 \arguments{
 \item{pcobj}{an object representing a linear dimension technique, such a returned by \code{\link[stats]{prcomp}} 
-or \code{\link[stats]{princomp}} or \code{\link[FactomineR]{PCA}} or \code{\link[MASS]{lda}}}
+or \code{\link[stats]{princomp}} or \code{\link[FactoMineR]{PCA}} or \code{\link[MASS]{lda}}}
 
 \item{type}{the type of scree plot.
 'pev' corresponds proportion of explained variance, i.e. the eigenvalues divided by the trace. 

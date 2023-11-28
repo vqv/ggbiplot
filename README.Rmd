@@ -180,7 +180,7 @@ ggbiplot(wine.pca,
 ```
 
 The three cultivars are arranged along the first dimension, in the order barolo < grignolino < barbera.
-These are distinguished largely by a conrtast between (`Phenols`, `Flav`) vs. (`NonFlavPhenols`, `AlcAsh`).
+These are distinguished largely by a contrast between (`Phenols`, `Flav`) vs. (`NonFlavPhenols`, `AlcAsh`).
 The second dimension is represented by the cluster of variables `Mg`, `Alcohol`, `Ash`, `Color`, which distinguishes
 grignolino from the other two.
 
