@@ -200,7 +200,7 @@ Gabriel, K. R. (1971). The biplot graphical display of matrices with application
   In V. Barnett (Ed.), \emph{Interpreting Multivariate Data}. London: Wiley. 
   
   Greenacre, M. (2010). \emph{Biplots in Practice}. BBVA Foundation, Bilbao, Spain. 
-  Available for free at \url{https://www.multivariatestatistics.org}.
+  Available for free at \url{https://www.fbbva.es/microsite/multivariate-statistics/}.
   
   J.C. Gower and D. J. Hand (1996). \emph{Biplots}. Chapman & Hall.
   

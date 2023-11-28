@@ -1,7 +1,8 @@
 ## Version 0.6.1
 
-- Revise documentation for `ggscreeplot()`
-- `data(crime)` used in README
+- Revised documentation for `ggscreeplot()`
+- `data(crime)` used in README giving a more complete example.
+- Fixed links reported as 301s
 
 ## Version 0.6.0
 
