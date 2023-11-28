@@ -7,7 +7,8 @@
 ggscreeplot(pcobj, type = c("pev", "cev"), size = 4)
 }
 \arguments{
-\item{pcobj}{an object returned by prcomp() or princomp()}
+\item{pcobj}{an object representing a linear dimension technique, such a returned by \code{\link[stats]{prcomp}} 
+or \code{\link[stats]{princomp}} or \code{\link[FactomineR]{PCA}} or \code{\link[MASS]{lda}}}
 
 \item{type}{the type of scree plot.
 'pev' corresponds proportion of explained variance, i.e. the eigenvalues divided by the trace. 
@@ -16,11 +17,15 @@ ggscreeplot(pcobj, type = c("pev", "cev"), size = 4)
 \item{size}{point size}
 }
 \description{
-Screeplot for Principal Components
+Produces scree plots (Cattell, 1966) of the variance proportions explained by each dimension against dimension number from 
+various dimension reduction techniques
 }
 \examples{
   data(wine)
   wine.pca <- prcomp(wine, scale. = TRUE)
   ggscreeplot(wine.pca)
 
+}
+\references{
+Cattell, R. B. (1966). The Scree Test For The Number Of Factors. \emph{Multivariate Behavioral Research}, 1, 245–276.
 }
