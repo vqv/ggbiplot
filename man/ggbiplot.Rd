@@ -126,13 +126,13 @@ can be expressed \emph{exactly} as
 
 where 
 \itemize{
-   \item \eqn{\mathbf{U}} is an \eqn{n \times r} orthonormal matrix of observation scores and also the eigenvectors
+   \item \eqn{\mathbf{U}} is an \eqn{n \times r} orthonormal matrix of observation scores; these are also the eigenvectors
          of \eqn{\mathbf{X} \mathbf{X}'},
    \item \eqn{\mathbf{\Lambda}} is an \eqn{r \times r} diagonal matrix of singular values, 
          \eqn{\lambda_1 \ge \lambda_2 \ge \cdots \lambda_r} 
         % which are also the square roots
         % of the eigenvalues of \eqn{\mathbf{X} \mathbf{X}'}. 
-   \item \eqn{\mathbf{V}} is an \eqn{r \times p} orthonormal matrix of observation scores and also the eigenvectors
+   \item \eqn{\mathbf{V}} is an \eqn{r \times p} orthonormal matrix of variable weights and also the eigenvectors
          of \eqn{\mathbf{X}' \mathbf{X}}.
 }
 
@@ -208,6 +208,6 @@ Gabriel, K. R. (1971). The biplot graphical display of matrices with application
 }
 \seealso{
 \code{\link{reflect}}, \code{\link{ggscreeplot}};
-  \code{link[stats]{biplot}} for the original stats package version;
-  \code{link[factoextra]{fviz_pca_biplot}} for the factoextra package version.
+  \code{\link[stats]{biplot}} for the original stats package version;
+  \code{\link[factoextra]{fviz_pca_biplot}} for the factoextra package version.
 }
