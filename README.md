@@ -14,17 +14,22 @@ package](https://CRAN.R-project.org/package=ggbiplot) was forked from
 since 2015.
 
 The goal is to complete that development and publish a new version on
-CRAN. There is also an [experimental
+CRAN with Vince Yu as the principal author. There is also an
+[experimental
 branch](https://github.com/friendly/ggbiplot/tree/experimental) which
 attempts to simplify the code, but this has some unresolved problems.
 
 # ggbiplot <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
 
-An implementation of the biplot using `ggplot2`. The package provides
-two functions: `ggscreeplot()` and `ggbiplot()`. `ggbiplot` aims to be a
-drop-in replacement for the built-in R function `biplot.princomp()` with
-extended functionality for labeling groups, drawing a correlation
-circle, and adding Normal probability ellipsoids.
+This package provides a `ggplot2` implementation of the biplot, a
+simultaneous plot of scores for observations and vectors for variables
+for principal component-like analyses.  
+The package provides two main functions: `ggscreeplot()` and
+`ggbiplot()`.
+
+`ggbiplot` aims to be a drop-in replacement for the built-in R function
+`biplot.princomp()` with extended functionality for labeling groups,
+drawing a correlation circle, and adding data ellipsoids.
 
 ## Installation
 
@@ -63,7 +68,7 @@ data(crime)
 crime |> 
   dplyr::select(where(is.numeric)) |> 
   cor() |> 
-  corrplot(method = "ellipse")
+  corrplot(method = "ellipse", tl.srt = 0)
 ```
 
 ![](man/figures/README-crime-corrplot-1.png)<!-- -->
@@ -197,7 +202,7 @@ ggbiplot(wine.pca,
 
 The three cultivars are arranged along the first dimension, in the order
 barolo \< grignolino \< barbera. These are distinguished largely by a
-conrtast between (`Phenols`, `Flav`) vs. (`NonFlavPhenols`, `AlcAsh`).
+contrast between (`Phenols`, `Flav`) vs. (`NonFlavPhenols`, `AlcAsh`).
 The second dimension is represented by the cluster of variables `Mg`,
 `Alcohol`, `Ash`, `Color`, which distinguishes grignolino from the other
 two.

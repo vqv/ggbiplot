@@ -1,13 +1,13 @@
 
-#' Reflect columns in a principal component-like object
+#' Reflect Columns in a Principal Component-like Object
 #' 
-#' Principle component like objects have variable loadings whose
-#' signs are arbitrary, in the sense that a given column can be 
+#' Principle component-like objects have variable loadings (the eigenvectors of the covariance/correlation matrix)
+#' whose signs are arbitrary, in the sense that a given column can be 
 #' reflected (multiplied by -1) without changing the fit.
 #' 
 #' This function allows one to reflect any columns of the variable
 #' loadings (and corresponding observation scores). This is often
-#' useful for interpreting a biplot.
+#' useful for interpreting a biplot, for example when a component (often the first) has all negative signs.
 #'
 #' @param pcobj     an object returned by \code{\link[stats]{prcomp}}, \code{\link[stats]{princomp}}, 
 #'                  \code{\link[FactoMineR]{PCA}}, or \code{\link[MASS]{lda}}
@@ -16,7 +16,10 @@
 #' @return    The pca-like object with specified columns of the 
 #'            variable loadings and observation scores multiplied
 #'            by -1.
+#' @author Michael Friendly
 #' @export
+#' @seealso \code{\link[stats]{prcomp}},  \code{\link[stats]{princomp}}, 
+#'          \code{\link[FactoMineR]{PCA}}, \code{\link[MASS]{lda}}
 #'
 #' @examples
 #' data(crime)
@@ -27,7 +30,7 @@
 #'   
 #'  biplot(crime.pca)
 #'  
-#'  crime.pca <- reflect(crime.pca)
+#'  crime.pca <- reflect(crime.pca)  # reflect columns 1:2
 #'  biplot(crime.pca)
 
 reflect <- function(pcobj, columns = 1:2){
@@ -53,7 +56,7 @@ reflect <- function(pcobj, columns = 1:2){
     pcobj$ind$coord[, columns]   <- -1 * pcobj$ind$coord[, columns]
   } 
   else if(inherits(pcobj, "lda")) {
-    warning("Can't reflect an 'lda' object")
+    warning("Can't reflect an 'lda' object")               # Why not???
   #   u <- predict(pcobj)$x
   #   check(u, columns)
   #   pcobj$scaling[, columns] <- -1 * pcobj$scaling[, columns]
