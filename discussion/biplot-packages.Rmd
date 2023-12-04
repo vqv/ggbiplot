@@ -1,0 +1,160 @@
+---
+title: "Biplot packages in R"
+author: "Michael Friendly"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+This document contains notes I initially prepared for a casual discussion session
+at the CARME23 meeting in Bonn, Sept. 24-28.
+
+## Why talk?
+
+There are quite a few implementations of biplots in R, but IMHO, **none** are sufficiently general to:
+
+* become a current standard, 
+* with wide applicability, and 
+* easily used within modern R, 
+* encompassing the latest developments in the `tidyverse` and the `ggplot2` framework. 
+
+Does anyone want to join me in making biplots more accessible and easy to use in modern R?
+
+### My problem
+
+My problem, as a **user** and **explainer** is that with none of these can I 
+
+* easily create and describe simple examples of biplot methods 
+* with all the graphical attributes I want to control for a given example.
+
+### What I'd like
+
+* Provide a **common interface** for PCA / LDA and **all** related methods: E.g., 
+
+> {`prcomp() / princomp() / MASS::lda(), ...} -> a common "biplot" class object.
+
+* Easily allow the different **scalings**, to show row/column variables in principal or
+  standard coordinates.
+* When there are groups, provide nice data ellipses or other bivariate summaries (convex hulls, ...)
+  for each group, with fine control over graphical attributes (color, fill, ...), 
+  possibly direct labels for groups rather than a legend, etc.
+* show row/observation points as points or observation labels. 
+* Be able to control the point/character size easily. Be able to filter out some point labels to highlight some more interesting ones.
+* For variable vectors, control all graphical attributes: color, linewidth, font/sizes for variable names, etc.
+
+
+## Current state: What packages exist?
+
+* **base R**: `prcomp()`, `princomp()` --> [`biplot()`](https://rdrr.io/r/stats/biplot.html)
+
+* [**FactoMineR**](https://cran.r-project.org/package=FactoMineR), [**factoextra**](https://rpkgs.datanovia.com/factoextra/): [`PCA()`](https://rdrr.io/cran/FactoMineR/man/PCA.html) --> [`fviz_pca()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html), `fviz_pca_ind()`, `fviz_pca_var()`
+
+* [**adegraphics**](https://cran.r-project.org/package=adegraphics) Lattice-based. Development of `ade4`, "dudi" framework -> `biplot()`
+  + [**biplot2d3d**](https://github.com/Andros-Spica/biplot2d3d) By Andreas Angourakis. Uses **ade4*, **heplots** and **rgl**.
+
+* [**biplotEZ**](https://cran.r-project.org/package=biplotEZ) based on the _Understanding Biplots_, `UBbipl` package
+  <!-- + Development version at [] -->
+
+* [**ggbiplot**](https://cran.r-project.org/package=ggbiplot): Original by Vincent Yu, development now at https://github.com/friendly/ggbiplot 
+
+* [**biplotGUI**](https://biplotgui.r-forge.r-project.org/): A Windows-only graphical interface to biplots using `tcktk`.
+
+* [**MultBiplot**](https://cran.r-project.org/package=MultBiplotR), by Jose Luis Vicente-Villardon. A wide variety of different biplot application types.
+
+## Discussion at CARME23
+
+The following are some of the points raised by people at the _Biplot Software_
+session at CARME:
+
+* Overplotting and labelling with auto / user defined shifting to avoid label overlap. 
+* Filtering what to plot and what to suppress 
+* Interactive plots and animation 
+* Simple default plot + possibilities to make it nice (decouple computations from representation)
+* Ability to show density of samples
+* Plot more than dim 1 & 2 - linked plots with same scales
+* Specific to CA: is it standard or principal points for rows or cols, symmetric or asymmetric
+* Needs to be a low level package to be used by other multivariate analysis packages 
+
+## Examples
+
+These examples show biplots produced by some of these packages.
+
+### Doing the PCA
+
+The default method for `prcomp()` takes a numeric or complex matrix or data frame argument. By default, it does **not** scale the observations to unit variance,
+so `scale. = TRUE` should usually be specified. You can control the number of
+components returned using the `rank. argument.`
+
+```{r}
+data(iris)
+iris.pca <- prcomp(iris[,1:4], scale. = TRUE)
+```
+
+There is also a formula method, which is more verbose, but more easily readable.
+
+```{r}
+iris.pca <- prcomp(~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,
+                   data=iris, scale. = TRUE)
+```
+
+You can also use tidy steps and pipes from **dplyr** to select variables, and
+perhaps filter out missing data.
+
+```{r}
+iris.pca <- 
+  iris |> 
+  dplyr::select(where(is.numeric)) |>
+  prcomp(scale. = TRUE)
+```
+
+### ggbiplot
+
+The default plot:
+
+```{r iris-ggbiplot-default}
+library(ggbiplot)
+library(ggplot2)
+library(dplyr)
+ggbiplot(iris.pca, groups = iris$Species)
+```
+
+Using more features:
+
+```{r iris-gg-features1}
+iris.gg <-
+  ggbiplot(iris.pca, obs.scale = 1, var.scale = 1,
+           groups = iris$Species, point.size=2,
+           varname.size = 5, 
+           varname.color = "darkred",
+           varname.adjust = 1.2,
+           ellipse = TRUE, 
+           circle = TRUE) +
+  labs(fill = "Species", color = "Species") +
+  theme_minimal(base_size = 14) +
+  theme(legend.direction = 'horizontal', legend.position = 'top')
+iris.gg
+```
+
+Use direct labels for the groups rather than a legend.
+This makes use of the fact that the `gg` object contains the dataset used
+`iris.gg$data` used to construct the plot.
+
+```{r iris-gg-labels}
+# find means of the coordinates
+group.labs <-
+  iris.gg$data |>
+  summarise(xvar = mean(xvar),
+            yvar = mean(yvar), .by = groups)
+
+iris.gg + geom_label(data = group.labs,
+                     aes(x = xvar, y=yvar, label=groups),
+                     size = 5) +
+  theme(legend.position = "none")
+
+```
+
