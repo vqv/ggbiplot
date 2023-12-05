@@ -3,20 +3,6 @@
 #  
 #  Copyright 2011 Vincent Q. Vu.
 # 
-#  This program is free software; you can redistribute it and/or
-#  modify it under the terms of the GNU General Public License
-#  as published by the Free Software Foundation; either version 2
-#  of the License, or (at your option) any later version.
-#  
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#  
-#  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-# 
 
 #' Biplot for Principal Components using ggplot2
 #' 
@@ -139,6 +125,7 @@
 #'   \code{\link[stats]{biplot}} for the original stats package version;
 #'   \code{\link[factoextra]{fviz_pca_biplot}} for the factoextra package version.
 #' 
+#' @author Vincent Q. Vu.
 #' @references 
 #'   Gabriel, K. R. (1971). The biplot graphical display of matrices with application to principal component analysis. 
 #'   \emph{Biometrika}, \bold{58}, 453–467. \doi{10.2307/2334381}.
@@ -316,7 +303,7 @@ ggbiplot <- function(pcobj,
     if(!is.null(df.u$groups)) {
       g <- g + geom_point(aes(color = groups), alpha = alpha, size = point.size)
     } else {
-      g <- g + geom_point(alpha = alpha)      
+      g <- g + geom_point(alpha = alpha, size = point.size)      
     }
   }
   

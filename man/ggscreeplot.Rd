@@ -16,6 +16,9 @@ or \code{\link[stats]{princomp}} or \code{\link[FactoMineR]{PCA}} or \code{\link
 
 \item{size}{point size}
 }
+\value{
+A ggplot2 object
+}
 \description{
 Produces scree plots (Cattell, 1966) of the variance proportions explained by each dimension against dimension number from 
 various dimension reduction techniques

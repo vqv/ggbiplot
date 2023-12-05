@@ -211,3 +211,6 @@ Gabriel, K. R. (1971). The biplot graphical display of matrices with application
   \code{\link[stats]{biplot}} for the original stats package version;
   \code{\link[factoextra]{fviz_pca_biplot}} for the factoextra package version.
 }
+\author{
+Vincent Q. Vu.
+}
