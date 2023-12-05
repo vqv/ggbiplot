@@ -9,6 +9,8 @@
 #'                'pev' corresponds proportion of explained variance, i.e. the eigenvalues divided by the trace. 
 #'                'cev' corresponds to the cumulative proportion of explained variance, i.e. the partial sum of the first k eigenvalues divided by the trace.
 #' @param size    point size
+#' 
+#' @returns A ggplot2 object
 #' @export
 #' @references 
 #' Cattell, R. B. (1966). The Scree Test For The Number Of Factors. \emph{Multivariate Behavioral Research}, 1, 245–276.
