@@ -11,7 +11,8 @@ output: github_document
 
 
 
-This repo for the [ggbiplot package](https://CRAN.R-project.org/package=ggbiplot)
+This repo for the **ggbiplot** package
+<!-- [ggbiplot package](https://CRAN.R-project.org/package=ggbiplot) -->
 was forked from [https://github.com/vqv/ggbiplot](https://github.com/vqv/ggbiplot) by Vince Yu, which has been dormant
 since 2015.  
 

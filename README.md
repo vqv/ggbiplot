@@ -8,10 +8,10 @@ status](https://www.r-pkg.org/badges/version/ggbiplot)](https://CRAN.R-project.o
 Commit](https://img.shields.io/github/last-commit/friendly/ggbiplot)](https://github.com/friendly/ggbiplot)
 <!-- badges: end -->
 
-This repo for the [ggbiplot
-package](https://CRAN.R-project.org/package=ggbiplot) was forked from
-<https://github.com/vqv/ggbiplot> by Vince Yu, which has been dormant
-since 2015.
+This repo for the **ggbiplot** package
+<!-- [ggbiplot package](https://CRAN.R-project.org/package=ggbiplot) -->
+was forked from <https://github.com/vqv/ggbiplot> by Vince Yu, which has
+been dormant since 2015.
 
 The goal is to complete that development and publish a new version on
 CRAN with Vince Yu as the principal author. There is also an
