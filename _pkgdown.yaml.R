@@ -1,0 +1,21 @@
+url: http://friendly.github.io/ggbiplot/
+
+template:
+  bootstrap: 5
+  bslib:
+    base_font: {google: "Roboto"}
+    heading_font: {google: "Roboto Slab"}
+    code_font: {google: "JetBrains Mono"}
+
+reference:
+  - title: "Biplot functions"
+    contents:
+      - ggbiplot
+      - ggscreeplot
+      - reflect
+  
+  - title: "Data sets"
+      - crime
+      - wine
+
+      
