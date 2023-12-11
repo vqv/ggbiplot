@@ -60,3 +60,11 @@ ggbiplot(crime.pca,
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
 
+library(FactoMiner)
+
+crime.PCA <- 
+  crime |> 
+  dplyr::select(where(is.numeric)) |>
+  PCA()
+
+crime.PCA$var$cor
