@@ -51,8 +51,11 @@ My problem, as a **user** and **explainer** is that with none of these can I
 ## Current state: What packages exist?
 
 * **base R**: `prcomp()`, `princomp()` --> [`biplot()`](https://rdrr.io/r/stats/biplot.html)
+Tutorial: https://www.benjaminbell.co.uk/2018/02/principal-components-analysis-pca-in-r.html
 
 * [**FactoMineR**](https://cran.r-project.org/package=FactoMineR), [**factoextra**](https://rpkgs.datanovia.com/factoextra/): [`PCA()`](https://rdrr.io/cran/FactoMineR/man/PCA.html) --> [`fviz_pca()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html), `fviz_pca_ind()`, `fviz_pca_var()`
+
+Tutorials: https://medium.com/@RaharditoDP/principal-component-analysis-with-biplot-analysis-in-r-ee39d17096a1
 
 * [**adegraphics**](https://cran.r-project.org/package=adegraphics) Lattice-based. Development of `ade4`, "dudi" framework -> `biplot()`
   + [**biplot2d3d**](https://github.com/Andros-Spica/biplot2d3d) By Andreas Angourakis. Uses **ade4*, **heplots** and **rgl**.
