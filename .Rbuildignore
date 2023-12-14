@@ -5,3 +5,6 @@
 examples/
 discussion/
 ^cran-comments\.md$
+docs/
+pkgdown/
+_pkgdown.yaml

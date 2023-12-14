@@ -7,7 +7,7 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is considered a new release, against last the published CRAN version, 0.55, due to a change in maintainer.
+* This is considered a new release, against the previously published CRAN version, 0.55, due to a change in maintainer.
 
 * Possibly misspelled words in DESCRIPTION:
   Biplots (3:42)

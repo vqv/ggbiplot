@@ -51,6 +51,7 @@ reflect <- function(pcobj, columns = 1:2){
     pcobj$scores[, columns]   <- -1 * pcobj$scores[, columns]
   } 
   else if(inherits(pcobj, 'PCA')) {
+    # TODO: reflect quanti.sup$coords if that is present
     check(pcobj$var$coord, columns)
     pcobj$var$coord[, columns] <- -1 * pcobj$var$coord[, columns]
     pcobj$ind$coord[, columns]   <- -1 * pcobj$ind$coord[, columns]
