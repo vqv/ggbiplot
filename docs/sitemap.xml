@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>http://friendly.github.io/ggbiplot/404.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>http://friendly.github.io/ggbiplot/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>http://friendly.github.io/ggbiplot/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>http://friendly.github.io/ggbiplot/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/crime.html</loc>
+    <loc>http://friendly.github.io/ggbiplot/reference/crime.html</loc>
   </url>
   <url>
-    <loc>/reference/ggbiplot.html</loc>
+    <loc>http://friendly.github.io/ggbiplot/reference/ggbiplot.html</loc>
   </url>
   <url>
-    <loc>/reference/ggscreeplot.html</loc>
+    <loc>http://friendly.github.io/ggbiplot/reference/ggscreeplot.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>http://friendly.github.io/ggbiplot/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/reflect.html</loc>
+    <loc>http://friendly.github.io/ggbiplot/reference/reflect.html</loc>
   </url>
   <url>
-    <loc>/reference/wine.html</loc>
+    <loc>http://friendly.github.io/ggbiplot/reference/wine.html</loc>
   </url>
 </urlset>

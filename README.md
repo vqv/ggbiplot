@@ -192,6 +192,7 @@ Plot the first two PCA dimensions, accounting for 55% of the variance.
 ggbiplot(wine.pca, 
   obs.scale = 1, var.scale = 1,
   groups = wine.class, 
+  varname.size = 4,
   ellipse = TRUE, 
   circle = TRUE) +
   labs(fill = "Cultivar", color = "Cultivar") +
@@ -208,6 +209,9 @@ The second dimension is represented by the cluster of variables `Mg`,
 two.
 
 ### Iris data
+
+The classic iris data is widely used for examples of multivariate
+analysis and biplots, so let’s use it here.
 
 ``` r
 data(iris)

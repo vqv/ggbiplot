@@ -8,3 +8,4 @@ discussion/
 docs/
 pkgdown/
 _pkgdown.yaml
+^CRAN-SUBMISSION$
