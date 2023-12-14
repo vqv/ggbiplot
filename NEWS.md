@@ -3,6 +3,7 @@
 - Revised documentation for `ggscreeplot()`
 - `data(crime)` used in README giving a more complete example.
 - Fixed links reported as 301s
+- Published pkgdown site
 
 ## Version 0.6.0
 
