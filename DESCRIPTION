@@ -1,6 +1,6 @@
 Package: ggbiplot
 Type: Package
-Title: A ggplot2 Based Implementation of Biplots
+Title: A Grammar of Graphics Implementation of Biplots
 Version: 0.6.1
 Date: 2023-12-12
 Authors@R: c(
@@ -14,7 +14,7 @@ Description: A 'ggplot2' based implementation of biplots, giving a representatio
     showing how the data variables relate to this space. It provides a 
     replacement for stats::biplot(), but with many enhancements to control the analysis and
     graphical display. It implements 
-    biplot and scree plot methods using ggplot2 which can be used with the results of prcomp(), princomp(),
+    biplot and scree plot methods which can be used with the results of prcomp(), princomp(),
     FactoMineR::PCA() or MASS::lda() and can be customized using 'ggplot2' techniques.
 Depends: R (>= 3.5.0)
 Imports:
