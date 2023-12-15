@@ -2,20 +2,20 @@ Package: ggbiplot
 Type: Package
 Title: A ggplot2 Based Implementation of Biplots
 Version: 0.6.1
-Date: 2023-11-12
+Date: 2023-12-12
 Authors@R: c(
     person("Vincent", "Vu", , "vqv@stat.cmu.edu", role = c("aut")),
     person("Michael", "Friendly", , "friendly@yorku.ca", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3237-0941")),
     person("Aghasi", "Tavadyan", ,  "a.tavadyan@gmail.com", role = "ctb")
            )
-Description: A ggplot2 based implementation of biplots, giving a representation of a dataset in
+Description: A 'ggplot2' based implementation of biplots, giving a representation of a dataset in
     a two dimensional space accounting for the greatest variance, together with variable vectors
     showing how the data variables relate to this space. It provides a 
     replacement for stats::biplot(), but with many enhancements to control the analysis and
     graphical display. It implements 
     biplot and scree plot methods using ggplot2 which can be used with the results of prcomp(), princomp(),
-    FactoMineR::PCA() or MASS::lda() and can be customized using ggplot2 techniques.
+    FactoMineR::PCA() or MASS::lda() and can be customized using 'ggplot2' techniques.
 Depends: R (>= 3.5.0)
 Imports:
     ggplot2, scales
