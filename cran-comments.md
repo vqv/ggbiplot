@@ -1,7 +1,7 @@
 ## Test environments
 
 * Windows 10, R version 4.2.3 (2023-03-15 ucrt)
-* win-builder, R Under development (unstable) (2023-09-12 r85134 ucrt)
+* win-builder, R Under development (unstable) (2023-12-13 r85679 ucrt)
 
 ## R CMD check results
 
@@ -16,5 +16,5 @@
  
 These are all spurious false alarms, owing to win-builder not recognizing the spelling WORDFILE.
 
-I also updated the Date: field in DESCRIPTION
+I also updated the Date: field in DESCRIPTION.
 
