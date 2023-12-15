@@ -12,8 +12,9 @@
 * Possibly misspelled words in DESCRIPTION:
   Biplots (3:42)
   biplot (17:5)
-  biplots (12:48)
-  ggplot (3:10, 12:16, 17:41, 18:66)
+  biplots (12:50)
+ 
+These are all spurious false alarms, owing to win-builder not recognizing the spelling WORDFILE.
 
-These are all spurious false alarms, owing to win-builder not recognizing the spelling WORDFILE
+I also updated the Date: field in DESCRIPTION
 
