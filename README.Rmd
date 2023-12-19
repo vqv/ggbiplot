@@ -54,7 +54,7 @@ The package provides two main functions: `ggscreeplot()` and `ggbiplot()`.
 
 `ggbiplot` aims to be a drop-in replacement for the standard R function `stats::biplot()` with extended functionality 
 for labeling groups, drawing a correlation circle, and adding data ellipsoids. 
-It also supports PCA-like objects calculated by `FactoMineR::PCA()`, `ade4::dudi.pca()` and `MASS::lda().
+It also supports PCA-like objects calculated by `FactoMineR::PCA()`, `ade4::dudi.pca()` and `MASS::lda()`.
 
 The package was originally developed by Vince Q. Yu at [https://github.com/vqv/ggbiplot](https://github.com/vqv/ggbiplot).
 That development  was supported in part by NSF Postdoctoral Fellowship DMS-0903120 from 2009-2012.

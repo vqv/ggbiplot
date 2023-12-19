@@ -10,9 +10,9 @@
     showing how the data variables relate to this space. It provides a 
     replacement for stats::biplot(), but with many enhancements to control the analysis and
     graphical display. It implements 
-    biplot and scree plot methods using ggplot2 which can be used with the results of prcomp(), princomp(),
+    biplot and scree plot methods which can be used with the results of prcomp(), princomp(),
     FactoMineR::PCA() or MASS::lda() and can be customized using ggplot2 techniques.">
-<title>A ggplot2 Based Implementation of Biplots • ggbiplot</title>
+<title>A Grammar of Graphics Implementation of Biplots • ggbiplot</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -26,13 +26,13 @@
 <link href="deps/Roboto_Slab-0.4.8/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A ggplot2 Based Implementation of Biplots">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A Grammar of Graphics Implementation of Biplots">
 <meta property="og:description" content="A ggplot2 based implementation of biplots, giving a representation of a dataset in
     a two dimensional space accounting for the greatest variance, together with variable vectors
     showing how the data variables relate to this space. It provides a 
     replacement for stats::biplot(), but with many enhancements to control the analysis and
     graphical display. It implements 
-    biplot and scree plot methods using ggplot2 which can be used with the results of prcomp(), princomp(),
+    biplot and scree plot methods which can be used with the results of prcomp(), princomp(),
     FactoMineR::PCA() or MASS::lda() and can be customized using ggplot2 techniques.">
 <meta property="og:image" content="http://friendly.github.io/ggbiplot/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -83,28 +83,54 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9">
-<p>This repo for the <strong>ggbiplot</strong> package <!-- [ggbiplot package](https://CRAN.R-project.org/package=ggbiplot) --> was forked from <a href="https://github.com/vqv/ggbiplot" class="external-link uri">https://github.com/vqv/ggbiplot</a> by Vince Yu, which has been dormant since 2015.</p>
-<p>The goal is to complete that development and publish a new version on CRAN with Vince Yu as the principal author. There is also an <a href="https://github.com/friendly/ggbiplot/tree/experimental" class="external-link">experimental branch</a> which attempts to simplify the code, but this has some unresolved problems.</p>
+<!-- This repo for the **ggbiplot** package -->
+<!-- was forked from [https://github.com/vqv/ggbiplot](https://github.com/vqv/ggbiplot) by Vince Yu, which has been dormant -->
+<!-- since 2015.   -->
+<!-- The goal is to complete that development and publish a new version on CRAN with Vince Yu as the principal author. -->
+<!-- There is also an [experimental branch](https://github.com/friendly/ggbiplot/tree/experimental) which attempts to -->
+<!-- simplify the code, but this has some unresolved problems. -->
 <div class="section level1">
 <div class="page-header">
 <img src="logo.png" class="logo" alt=""><h1 id="ggbiplot-">ggbiplot <a class="anchor" aria-label="anchor" href="#ggbiplot-"></a>
 </h1>
 </div>
+<p><strong>Version</strong> 0.6.1 ( master branch )</p>
 <p>This package provides a <code>ggplot2</code> implementation of the biplot, a simultaneous plot of scores for observations and vectors for variables for principal component-like analyses.<br>
 The package provides two main functions: <code><a href="reference/ggscreeplot.html">ggscreeplot()</a></code> and <code><a href="reference/ggbiplot.html">ggbiplot()</a></code>.</p>
-<p><code>ggbiplot</code> aims to be a drop-in replacement for the built-in R function <code>biplot.princomp()</code> with extended functionality for labeling groups, drawing a correlation circle, and adding data ellipsoids.</p>
+<p><code>ggbiplot</code> aims to be a drop-in replacement for the standard R function <code><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">stats::biplot()</a></code> with extended functionality for labeling groups, drawing a correlation circle, and adding data ellipsoids. It also supports PCA-like objects calculated by <code><a href="https://rdrr.io/pkg/FactoMineR/man/PCA.html" class="external-link">FactoMineR::PCA()</a></code>, <code><a href="https://rdrr.io/pkg/ade4/man/dudi.pca.html" class="external-link">ade4::dudi.pca()</a></code> and <code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code>.</p>
+<p>The package was originally developed by Vince Q. Yu at <a href="https://github.com/vqv/ggbiplot" class="external-link uri">https://github.com/vqv/ggbiplot</a>. That development was supported in part by NSF Postdoctoral Fellowship DMS-0903120 from 2009-2012. The current version, now on CRAN, will be the locus of further development.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Install the current master branch with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"friendly/ggbiplot"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the latest CRAN version, or install from GitHub as shown below.</p>
+<table class="table">
+<colgroup>
+<col width="21%">
+<col width="78%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>CRAN version</td>
+<td><code>install.packages("ggbiplot")</code></td>
+</tr>
+<tr class="even">
+<td>GitHub <code>master</code>
+</td>
+<td><code>remotes::install_github("friendly/ggbiplot")</code></td>
+</tr>
+<tr class="odd">
+<td>GitHub <code>devel</code>
+</td>
+<td><code>remotes::install_github("friendly/ggbiplot", ref = "devel")</code></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <p>Load packages:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/ggbiplot" class="external-link">ggbiplot</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -117,7 +143,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 </h3>
 <p>The <code>crime</code> data gives rates of various serious crimes in each of the 50 U. S. states, originally from the United States Statistical Abstracts (1970).</p>
 <p>Let’s take a quick look at the correlations among these, using <code><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html" class="external-link">corrplot::corrplot()</a></code> and showing each correlation by an ellipse whose eccentricity and shading represents the value of the correlation.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">crime</span><span class="op">)</span></span>
 <span><span class="va">crime</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -126,7 +152,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <p><img src="reference/figures/README-crime-corrplot-1.png"><!-- --></p>
 <p>The correlations are all positive. Note also that the variables in the dataset are ordered in seriousness or violence, ranging from murder to auto theft.</p>
 <p>Carry out a PCA:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">crime.pca</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">crime</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -146,7 +172,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <span><span class="co">#&gt; larceny  -0.357  0.4023 -0.5392 -0.2349  0.0301  0.0394  0.6017</span></span>
 <span><span class="co">#&gt; auto     -0.295  0.5024  0.5684  0.4192  0.3698 -0.0573  0.1470</span></span></code></pre></div>
 <p>The biplot, using default scaling (standardized components), and labeling the states by their state abbreviation:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/ggbiplot.html">ggbiplot</a></span><span class="op">(</span><span class="va">crime.pca</span>,</span>
 <span>         labels <span class="op">=</span> <span class="va">crime</span><span class="op">$</span><span class="va">st</span> ,</span>
 <span>         circle <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -154,7 +180,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <span>         varname.color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="reference/figures/README-crime-biplot0-1.png"><!-- --></p>
 <p>The directions of the principal components are arbitrary; we are free to reflect the variable vectors and component scores to facilitate interpretation. Also, there seem to be differences among regions of the U.S., which can be visualized using data ellipses for the component scores. The <code>groups</code> argument allows the observations to colored by group and to summarized by groups.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">crime.pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/reflect.html">reflect</a></span><span class="op">(</span><span class="va">crime.pca</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/ggbiplot.html">ggbiplot</a></span><span class="op">(</span><span class="va">crime.pca</span>,</span>
 <span>         groups <span class="op">=</span> <span class="va">crime</span><span class="op">$</span><span class="va">region</span>,</span>
@@ -181,7 +207,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 </h3>
 <p>The <code>wine</code> data contains results of a chemical analysis of wines grown in the same region in Italy, derived from three different cultivars. The analysis determined the quantities of 13 chemical constituents found in each of the three types of wines. The grape varieties (cultivars), <strong>barolo</strong>, <strong>barbera</strong>, and <strong>grignolino</strong>, are given in <code>wine.class</code>.</p>
 <p>What can we understand about the differences among these wines from a biplot?</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/ggbiplot" class="external-link">ggbiplot</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -192,7 +218,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <p><img src="reference/figures/README-wine-screeplot-1.png"><!-- --></p>
 <p>Hmm. The screeplot shows that more than two dimensions are necessary to account for most of the variance.</p>
 <p>Plot the first two PCA dimensions, accounting for 55% of the variance.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/ggbiplot.html">ggbiplot</a></span><span class="op">(</span><span class="va">wine.pca</span>, </span>
 <span>  obs.scale <span class="op">=</span> <span class="fl">1</span>, var.scale <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  groups <span class="op">=</span> <span class="va">wine.class</span>, </span>
@@ -208,7 +234,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <h3 id="iris-data">Iris data<a class="anchor" aria-label="anchor" href="#iris-data"></a>
 </h3>
 <p>The classic iris data is widely used for examples of multivariate analysis and biplots, so let’s use it here.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">iris.pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></span> <span class="op">(</span><span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="va">Petal.Width</span>,</span>
 <span>                    data<span class="op">=</span><span class="va">iris</span>,</span>
@@ -220,7 +246,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <span><span class="co">#&gt; Proportion of Variance 0.73 0.229 0.0367 0.00518</span></span>
 <span><span class="co">#&gt; Cumulative Proportion  0.73 0.958 0.9948 1.00000</span></span></code></pre></div>
 <p>Plot the first two dimensions:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris.gg</span> <span class="op">&lt;-</span></span>
 <span><span class="fu"><a href="reference/ggbiplot.html">ggbiplot</a></span><span class="op">(</span><span class="va">iris.pca</span>, obs.scale <span class="op">=</span> <span class="fl">1</span>, var.scale <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>         groups <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>, point.size<span class="op">=</span><span class="fl">2</span>,</span>
@@ -236,7 +262,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <span><span class="va">iris.gg</span></span></code></pre></div>
 <p><img src="reference/figures/README-iris-biplot0-1.png"><!-- --></p>
 <p>It is possible to add annotations to the biplot by making use of the fact that <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> returns a lot of information in the <code>"gg"</code> object. In particular, the <code>$data</code> component contains the scores on the principal components that are plotted as points here. Here we add direct labels for the groups and suppress the legend.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get means of coordinates by group</span></span>
 <span><span class="va">group.labs</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">iris.gg</span><span class="op">$</span><span class="va">data</span> <span class="op">|&gt;</span></span>
@@ -249,7 +275,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <span><span class="co">#&gt; 2 versicolor  0.495  0.548</span></span>
 <span><span class="co">#&gt; 3  virginica  1.723 -0.260</span></span></code></pre></div>
 <p>Now, just use <code>geom_label</code> to draw labels for the groups.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris.gg</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_label</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">group.labs</span>,</span>
 <span>                     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">xvar</span>, y<span class="op">=</span><span class="va">yvar</span>, label<span class="op">=</span><span class="va">groups</span><span class="op">)</span>,</span>
 <span>                     size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
@@ -262,6 +288,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=ggbiplot" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/friendly/ggbiplot/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/friendly/ggbiplot/issues" class="external-link">Report a bug</a></li>
 </ul>
@@ -296,6 +323,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <ul class="list-unstyled">
 <li><a href="https://CRAN.R-project.org/package=ggbiplot" class="external-link"><img src="https://www.r-pkg.org/badges/version/ggbiplot" alt="CRAN status"></a></li>
 <li><a href="https://github.com/friendly/ggbiplot" class="external-link"><img src="https://img.shields.io/github/last-commit/friendly/ggbiplot" alt="Last Commit"></a></li>
+<li><a href="https://cran.r-project.org/package=ggbiplot" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/ggbiplot" alt="Downloads"></a></li>
 </ul>
 </div>
 

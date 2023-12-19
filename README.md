@@ -30,7 +30,7 @@ The package provides two main functions: `ggscreeplot()` and
 `stats::biplot()` with extended functionality for labeling groups,
 drawing a correlation circle, and adding data ellipsoids. It also
 supports PCA-like objects calculated by `FactoMineR::PCA()`,
-`ade4::dudi.pca()` and \`MASS::lda().
+`ade4::dudi.pca()` and `MASS::lda()`.
 
 The package was originally developed by Vince Q. Yu at
 <https://github.com/vqv/ggbiplot>. That development was supported in
