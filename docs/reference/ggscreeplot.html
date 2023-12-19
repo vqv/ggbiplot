@@ -12,7 +12,7 @@ various dimension reduction techniques"><meta property="og:image" content="http:
     
     <a class="navbar-brand me-2" href="../index.html">ggbiplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@ various dimension reduction techniques"><meta property="og:image" content="http:
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Screeplot for Principal Components</h1>
-      <small class="dont-index">Source: <a href="https://github.com/friendly/ggbiplot/blob/HEAD/R/ggscreeplot.R" class="external-link"><code>R/ggscreeplot.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/friendly/ggbiplot/blob/HEAD/R/ggscreeplot.r" class="external-link"><code>R/ggscreeplot.r</code></a></small>
       <div class="d-none name"><code>ggscreeplot.Rd</code></div>
     </div>
 
@@ -54,14 +54,22 @@ various dimension reduction techniques</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ggscreeplot</span><span class="op">(</span><span class="va">pcobj</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pev"</span>, <span class="st">"cev"</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ggscreeplot</span><span class="op">(</span></span>
+<span>  <span class="va">pcobj</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pev"</span>, <span class="st">"cev"</span><span class="op">)</span>,</span>
+<span>  size <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  shape <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  linetype <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  linewidth <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>pcobj</dt>
-<dd><p>an object representing a linear dimension technique, such a returned by <code><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></code> 
-or <code><a href="https://rdrr.io/r/stats/princomp.html" class="external-link">princomp</a></code> or <code><a href="https://rdrr.io/pkg/FactoMineR/man/PCA.html" class="external-link">PCA</a></code> or <code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">lda</a></code></p></dd>
+<dd><p>an object returned by <code><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></code>, <code><a href="https://rdrr.io/r/stats/princomp.html" class="external-link">princomp</a></code>, 
+<code><a href="https://rdrr.io/pkg/FactoMineR/man/PCA.html" class="external-link">PCA</a></code>, <code><a href="https://rdrr.io/pkg/ade4/man/dudi.pca.html" class="external-link">dudi.pca</a></code>, or <code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">lda</a></code></p></dd>
 
 
 <dt>type</dt>
@@ -72,6 +80,22 @@ or <code><a href="https://rdrr.io/r/stats/princomp.html" class="external-link">p
 
 <dt>size</dt>
 <dd><p>point size</p></dd>
+
+
+<dt>shape</dt>
+<dd><p>shape of the points</p></dd>
+
+
+<dt>color</dt>
+<dd><p>color for points and line</p></dd>
+
+
+<dt>linetype</dt>
+<dd><p>type of line</p></dd>
+
+
+<dt>linewidth</dt>
+<dd><p>width of line</p></dd>
 
 </dl></div>
     <div class="section level2">

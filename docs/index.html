@@ -11,7 +11,7 @@
     replacement for stats::biplot(), but with many enhancements to control the analysis and
     graphical display. It implements 
     biplot and scree plot methods which can be used with the results of prcomp(), princomp(),
-    FactoMineR::PCA() or MASS::lda() and can be customized using ggplot2 techniques.">
+    FactoMineR::PCA(), ade4::dudi.pca() or MASS::lda() and can be customized using ggplot2 techniques.">
 <title>A Grammar of Graphics Implementation of Biplots • ggbiplot</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -33,7 +33,7 @@
     replacement for stats::biplot(), but with many enhancements to control the analysis and
     graphical display. It implements 
     biplot and scree plot methods which can be used with the results of prcomp(), princomp(),
-    FactoMineR::PCA() or MASS::lda() and can be customized using ggplot2 techniques.">
+    FactoMineR::PCA(), ade4::dudi.pca() or MASS::lda() and can be customized using ggplot2 techniques.">
 <meta property="og:image" content="http://friendly.github.io/ggbiplot/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -48,7 +48,7 @@
     
     <a class="navbar-brand me-2" href="index.html">ggbiplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,7 +94,7 @@
 <img src="logo.png" class="logo" alt=""><h1 id="ggbiplot-">ggbiplot <a class="anchor" aria-label="anchor" href="#ggbiplot-"></a>
 </h1>
 </div>
-<p><strong>Version</strong> 0.6.1 ( master branch )</p>
+<p><strong>Version</strong> 0.6.2 ( master branch )</p>
 <p>This package provides a <code>ggplot2</code> implementation of the biplot, a simultaneous plot of scores for observations and vectors for variables for principal component-like analyses.<br>
 The package provides two main functions: <code><a href="reference/ggscreeplot.html">ggscreeplot()</a></code> and <code><a href="reference/ggbiplot.html">ggbiplot()</a></code>.</p>
 <p><code>ggbiplot</code> aims to be a drop-in replacement for the standard R function <code><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">stats::biplot()</a></code> with extended functionality for labeling groups, drawing a correlation circle, and adding data ellipsoids. It also supports PCA-like objects calculated by <code><a href="https://rdrr.io/pkg/FactoMineR/man/PCA.html" class="external-link">FactoMineR::PCA()</a></code>, <code><a href="https://rdrr.io/pkg/ade4/man/dudi.pca.html" class="external-link">ade4::dudi.pca()</a></code> and <code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code>.</p>

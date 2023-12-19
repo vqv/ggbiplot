@@ -13,6 +13,7 @@ reference:
       - ggbiplot
       - ggscreeplot
       - reflect
+      - get_SVD
   
   - title: "Data sets"
     contents:
