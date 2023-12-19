@@ -1,16 +1,16 @@
 #' Screeplot for Principal Components
 #' 
 #' Produces scree plots (Cattell, 1966) of the variance proportions explained by each dimension against dimension number from 
-#' various dimension reduction techniques
+#' various PCA-like dimension reduction techniques.
 #'
 #' @param pcobj   an object returned by \code{\link[stats]{prcomp}}, \code{\link[stats]{princomp}}, 
 #'                \code{\link[FactoMineR]{PCA}}, \code{\link[ade4]{dudi.pca}}, or \code{\link[MASS]{lda}}
-#' @param type    the type of scree plot.  
-#'                'pev' corresponds proportion of explained variance, i.e. the eigenvalues divided by the trace. 
-#'                'cev' corresponds to the cumulative proportion of explained variance, i.e. the partial sum of the first k eigenvalues divided by the trace.
+#' @param type    the type of scree plot, one of \code{c('pev', 'cev')}.
+#'                \code{'pev'} plots the proportion of explained variance, i.e. the eigenvalues divided by the trace. 
+#'                \code{'cev'} plots the cumulative proportion of explained variance, i.e. the partial sum of the first k eigenvalues divided by the trace.
 #' @param size    point size
-#' @param shape   shape of the points
-#' @param color   color for points and line
+#' @param shape   shape of the points. Default: 19, a filled circle.
+#' @param color   color for points and line. Default: \code{"black"}.
 #' @param linetype type of line
 #' @param linewidth width of line
 #' 
@@ -26,7 +26,7 @@
 ggscreeplot <- function(pcobj, 
                         type = c('pev', 'cev'),
                         size = 4,
-                        shape = 1,
+                        shape = 19,
                         color = "black",
                         linetype = 1,
                         linewidth = 1) 

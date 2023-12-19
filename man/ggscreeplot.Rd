@@ -8,7 +8,7 @@ ggscreeplot(
   pcobj,
   type = c("pev", "cev"),
   size = 4,
-  shape = 1,
+  shape = 19,
   color = "black",
   linetype = 1,
   linewidth = 1
@@ -18,15 +18,15 @@ ggscreeplot(
 \item{pcobj}{an object returned by \code{\link[stats]{prcomp}}, \code{\link[stats]{princomp}}, 
 \code{\link[FactoMineR]{PCA}}, \code{\link[ade4]{dudi.pca}}, or \code{\link[MASS]{lda}}}
 
-\item{type}{the type of scree plot.
-'pev' corresponds proportion of explained variance, i.e. the eigenvalues divided by the trace. 
-'cev' corresponds to the cumulative proportion of explained variance, i.e. the partial sum of the first k eigenvalues divided by the trace.}
+\item{type}{the type of scree plot, one of \code{c('pev', 'cev')}.
+\code{'pev'} plots the proportion of explained variance, i.e. the eigenvalues divided by the trace. 
+\code{'cev'} plots the cumulative proportion of explained variance, i.e. the partial sum of the first k eigenvalues divided by the trace.}
 
 \item{size}{point size}
 
-\item{shape}{shape of the points}
+\item{shape}{shape of the points. Default: 19, a filled circle.}
 
-\item{color}{color for points and line}
+\item{color}{color for points and line. Default: \code{"black"}.}
 
 \item{linetype}{type of line}
 
@@ -37,7 +37,7 @@ A ggplot2 object
 }
 \description{
 Produces scree plots (Cattell, 1966) of the variance proportions explained by each dimension against dimension number from 
-various dimension reduction techniques
+various PCA-like dimension reduction techniques.
 }
 \examples{
   data(wine)
