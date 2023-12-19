@@ -6,20 +6,19 @@
 status](https://www.r-pkg.org/badges/version/ggbiplot)](https://CRAN.R-project.org/package=ggbiplot)
 [![Last
 Commit](https://img.shields.io/github/last-commit/friendly/ggbiplot)](https://github.com/friendly/ggbiplot)
+[![Downloads](https://cranlogs.r-pkg.org/badges/ggbiplot)](https://cran.r-project.org/package=ggbiplot)
 <!-- badges: end -->
 
-This repo for the **ggbiplot** package
-<!-- [ggbiplot package](https://CRAN.R-project.org/package=ggbiplot) -->
-was forked from <https://github.com/vqv/ggbiplot> by Vince Yu, which has
-been dormant since 2015.
-
-The goal is to complete that development and publish a new version on
-CRAN with Vince Yu as the principal author. There is also an
-[experimental
-branch](https://github.com/friendly/ggbiplot/tree/experimental) which
-attempts to simplify the code, but this has some unresolved problems.
+<!-- This repo for the **ggbiplot** package -->
+<!-- was forked from [https://github.com/vqv/ggbiplot](https://github.com/vqv/ggbiplot) by Vince Yu, which has been dormant -->
+<!-- since 2015.   -->
+<!-- The goal is to complete that development and publish a new version on CRAN with Vince Yu as the principal author. -->
+<!-- There is also an [experimental branch](https://github.com/friendly/ggbiplot/tree/experimental) which attempts to -->
+<!-- simplify the code, but this has some unresolved problems. -->
 
 # ggbiplot <img src="man/figures/logo.png" height="200" style="float:right; height:200px;"/>
+
+**Version** 0.6.1 ( master branch )
 
 This package provides a `ggplot2` implementation of the biplot, a
 simultaneous plot of scores for observations and vectors for variables
@@ -27,17 +26,27 @@ for principal component-like analyses.
 The package provides two main functions: `ggscreeplot()` and
 `ggbiplot()`.
 
-`ggbiplot` aims to be a drop-in replacement for the built-in R function
-`biplot.princomp()` with extended functionality for labeling groups,
-drawing a correlation circle, and adding data ellipsoids.
+`ggbiplot` aims to be a drop-in replacement for the standard R function
+`stats::biplot()` with extended functionality for labeling groups,
+drawing a correlation circle, and adding data ellipsoids. It also
+supports PCA-like objects calculated by `FactoMineR::PCA()`,
+`ade4::dudi.pca()` and \`MASS::lda().
+
+The package was originally developed by Vince Q. Yu at
+<https://github.com/vqv/ggbiplot>. That development was supported in
+part by NSF Postdoctoral Fellowship DMS-0903120 from 2009-2012. The
+current version, now on CRAN, will be the locus of further development.
 
 ## Installation
 
-Install the current master branch with:
+You can install the latest CRAN version, or install from GitHub as shown
+below.
 
-``` r
-remotes::install_github("friendly/ggbiplot")
-```
+|                 |                                                               |
+|-----------------|---------------------------------------------------------------|
+| CRAN version    | `install.packages("ggbiplot")`                                |
+| GitHub `master` | `remotes::install_github("friendly/ggbiplot")`                |
+| GitHub `devel`  | `remotes::install_github("friendly/ggbiplot", ref = "devel")` |
 
 ## Examples
 
