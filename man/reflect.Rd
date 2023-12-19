@@ -24,7 +24,9 @@ reflected (multiplied by -1) without changing the fit.
 }
 \details{
 This function allows one to reflect any columns of the variable
-loadings (and corresponding observation scores). This is often
+loadings (and corresponding observation scores). Coordinates for quantitative
+supplementary variables are also reflected if present.
+This is often
 useful for interpreting a biplot, for example when a component (often the first) has all negative signs.
 }
 \examples{

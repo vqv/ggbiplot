@@ -6,6 +6,9 @@ library(ggplot2)
 library(ggbiplot)
 library(dplyr)
 library(corrplot)
+library(FactoMineR)
+library(factoextra)
+
 data(crime)
 
 crime |> 
@@ -20,13 +23,9 @@ crime.pca <-
 
 biplot(crime.pca)
 
-# reflect dims 1:2
-crime.pca$rotation[,1:2] <- -1 * crime.pca$rotation[,1:2]
-crime.pca$x[,1:2] <- -1 * crime.pca$x[,1:2]
-
 crime.pca <- reflect(crime.pca)
 
-biplot(crime.pca)
+#biplot(crime.pca)
 
 
 # default scaling: standardized components
@@ -60,7 +59,6 @@ ggbiplot(crime.pca,
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
 
-library(FactoMiner)
 
 crime.PCA <- 
   crime |> 
@@ -68,3 +66,38 @@ crime.PCA <-
   PCA()
 
 crime.PCA$var$cor
+
+# -----------------------------
+# Supplementary variables
+supp_data <- state.x77 |>
+  as.data.frame() |>
+  tibble::rownames_to_column(var = "state") |>
+  select(state, Income:`Life Exp`, `HS Grad`) |>
+  rename(Life_Exp = `Life Exp`,
+         HS_Grad = `HS Grad`)
+
+crime_joined <-
+  dplyr::left_join(crime[, 1:8], supp_data, by = "state")
+names(crime_joined)
+
+row.names(crime_joined) <- crime$st
+crime.PCA_sup <- PCA(crime_joined[,c(2:8, 9:12)], 
+                     quanti.sup = 8:11,
+                     scale.unit=TRUE, 
+                     ncp=3, 
+                     graph = FALSE)
+
+crime.PCA_sup$var$coord
+crime.PCA_sup$quanti.sup$coord
+
+# reflect Dim 2
+crime.PCA_sup <- ggbiplot::reflect(crime.PCA_sup, columns = 2)
+
+crime.PCA_sup$var$coord
+crime.PCA_sup$quanti.sup$coord
+
+## NB: This is now handled in ggbiplot
+crime.PCA_sup$quanti.sup$coord[, 2] <- -1 * crime.PCA_sup$quanti.sup$coord[, 2]
+
+plot(crime.PCA_sup, choix = "var")
+

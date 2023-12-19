@@ -19,6 +19,10 @@
 #' Gower et al. (2011) is the most up to date
 #' exposition of biplot methodology.
 #' 
+#' This implementation handles the results of a principal components analysis using 
+#' \code{\link[stats]{prcomp}}, \code{\link[stats]{princomp}}, \code{\link[FactoMineR]{PCA}} and \code{\link[ade4]{dudi.pca}};
+#' also handles a discriminant analysis using \code{\link[MASS]{lda}}.
+#' 
 #' @details
 #' The biplot is constructed by using the singular value decomposition (SVD) to obtain a low-rank 
 #' approximation to the data matrix \eqn{\mathbf{X}_{n \times p}} (centered, and optionally scaled to unit variances)
@@ -74,8 +78,8 @@
 #' values equal to 1.0. 
 #' 
 #' @param pcobj           an object returned by \code{\link[stats]{prcomp}}, \code{\link[stats]{princomp}}, 
-#'                        \code{\link[FactoMineR]{PCA}}, or \code{\link[MASS]{lda}}
-#' @param choices         Which components to plot? A vector of length 2.
+#'                        \code{\link[FactoMineR]{PCA}}, \code{\link[ade4]{dudi.pca}}, or \code{\link[MASS]{lda}}
+#' @param choices         Which components to plot? An integer vector of length 2.
 #' @param scale           Covariance biplot (\code{scale = 1}), form biplot (\code{scale = 0}). 
 #'                        When \code{scale = 1} (the default), the inner product 
 #'                        between the variables approximates the covariance and the distance between the points 
@@ -87,7 +91,7 @@
 #'                        \code{\link{reflect}} provides a simpler way to reflect the variables.
 #' @param pc.biplot       Logical, for compatibility with \code{biplot.princomp()}. If \code{TRUE}, use what Gabriel (1971) 
 #'                        refers to as a "principal component biplot", with \eqn{\alpha = 1} and observations scaled 
-#'                        up by sqrt(n) and variables scaled down by sqrt(n). Then inner products between 
+#'                        up by \eqn{sqrt(n)} and variables scaled down by \eqn{sqrt(n)}. Then inner products between 
 #'                        variables approximate covariances and distances between observations approximate 
 #'                        Mahalanobis distance.
 #' @param groups          Optional factor variable indicating the groups that the observations belong to. 
@@ -111,6 +115,7 @@
 #' @param varname.color   Color for the variable vectors and names
 #' @param varname.adjust  Adjustment factor the placement of the variable names, >= 1 means farther from the arrow
 #' @param varname.abbrev  logical; whether or not to abbreviate the variable names, using \code{\link{abbreviate}}.
+#' @param axis.title      character; the prefix used as the axis labels. Default: \code{"PC"}.
 #' @param ...             other arguments passed down
 #'
 #' @import     ggplot2
@@ -190,7 +195,9 @@ ggbiplot <- function(pcobj,
                      varname.size = 3, 
                      varname.adjust = 1.25, 
                      varname.color = "black",
-                     varname.abbrev = FALSE, ...)
+                     varname.abbrev = FALSE,
+                     axis.title = "PC",
+                     ...)
 {
 
   if(length(choices) > 2) {
@@ -213,15 +220,21 @@ ggbiplot <- function(pcobj,
     nobs.factor <- sqrt(nrow(pcobj$call$X))
     d <- unlist(sqrt(pcobj$eig)[1])
     u <- sweep(pcobj$ind$coord, 2, 1 / (d * nobs.factor), FUN = '*')
-    v <- sweep(pcobj$var$coord,2,sqrt(pcobj$eig[1:ncol(pcobj$var$coord),1]),FUN="/")
+    v <- sweep(pcobj$var$coord, 2, sqrt(pcobj$eig[1:ncol(pcobj$var$coord),1]), FUN="/")
   } else if(inherits(pcobj, "lda")) {
       nobs.factor <- sqrt(pcobj$N)
       d <- pcobj$svd
       u <- predict(pcobj)$x/nobs.factor
       v <- pcobj$scaling
-      d.total <- sum(d^2)
-  } else {
-    stop('Expected a object of class "prcomp", "princomp", "PCA", or "lda"')
+#      d.total <- sum(d^2)
+  } else if(inherits(pcobj, 'pca') & inherits(pcobj, 'dudi')){
+      nobs.factor <- sqrt(nrow(pcobj$tab))
+      d <- sqrt(pcobj$eig)
+      u <- pcobj$li
+      v <- pcobj$co
+  }
+  else {
+    stop('Expected a object of class "prcomp", "princomp", "PCA", c("pca", "dudi") or "lda"')
   }
 
   # shutup 'no visible binding...'
@@ -248,23 +261,23 @@ ggbiplot <- function(pcobj,
   # a data ellipse for the standardized PC scores
   r <- sqrt(qchisq(circle.prob, df = 2)) * prod(colMeans(df.u^2))^(1/4)
 
-  # Scale directions
+  # Scale the variable directions
   v.scale <- rowSums(v^2)
   df.v <- r * df.v / sqrt(max(v.scale))
 
-  # Change the labels for the axes
+  # Change the title labels for the axes
   if(obs.scale == 0) {
-    u.axis.labs <- paste('standardized PC', choices, sep='')
+    u.axis.labs <- paste('standardized', axis.title, choices, sep='')
   } else {
-    u.axis.labs <- paste('PC', choices, sep='')
+    u.axis.labs <- paste(axis.title, choices, sep='')
   }
 
   # Append the proportion of explained variance to the axis labels
   u.axis.labs <- paste(u.axis.labs, 
                        sprintf('(%0.1f%%)', 
-                               100 * pcobj$sdev[choices]^2/sum(pcobj$sdev^2)))
+                               100 * d[choices]^2 / sum(d^2)))
 
-  # Score Labels
+  # Score labels for the observations
   if(!is.null(labels)) {
     df.u$labels <- labels
   }

@@ -6,7 +6,9 @@
 #' reflected (multiplied by -1) without changing the fit.
 #' 
 #' This function allows one to reflect any columns of the variable
-#' loadings (and corresponding observation scores). This is often
+#' loadings (and corresponding observation scores). Coordinates for quantitative
+#' supplementary variables are also reflected if present.
+#' This is often
 #' useful for interpreting a biplot, for example when a component (often the first) has all negative signs.
 #'
 #' @param pcobj     an object returned by \code{\link[stats]{prcomp}}, \code{\link[stats]{princomp}}, 
@@ -51,10 +53,11 @@ reflect <- function(pcobj, columns = 1:2){
     pcobj$scores[, columns]   <- -1 * pcobj$scores[, columns]
   } 
   else if(inherits(pcobj, 'PCA')) {
-    # TODO: reflect quanti.sup$coords if that is present
     check(pcobj$var$coord, columns)
     pcobj$var$coord[, columns] <- -1 * pcobj$var$coord[, columns]
     pcobj$ind$coord[, columns]   <- -1 * pcobj$ind$coord[, columns]
+    # reflect quanti.sup$coord if that is present
+    if ("quanti.sup" %in% names(pcobj)) pcobj$quanti.sup$coord[, columns] <- -1 * pcobj$quanti.sup$coord[, columns]
   } 
   else if(inherits(pcobj, "lda")) {
     warning("Can't reflect an 'lda' object")               # Why not???

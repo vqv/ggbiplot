@@ -1,3 +1,12 @@
+## Version 0.6.2
+
+- corrected small bugs in `ggbiplot() and `ggscreeplot()`
+- `reflect()` now also reflects supplementary variables from `FactoMineR::PCA()`
+- added support for `ade4::dudi.pca()`
+- `ggbiplot()` gains an `axis.title` argument
+- `ggscreeplot()` gains `color`, `shape`, `linetype` and `linewidth` arguments
+- Added `get_SVD()` intended the simplify the interface to various PCA functions.
+
 ## Version 0.6.1
 
 - Revised documentation for `ggscreeplot()`
