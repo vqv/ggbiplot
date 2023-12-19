@@ -10,9 +10,9 @@ Commit](https://img.shields.io/github/last-commit/friendly/ggbiplot)](https://gi
 <!-- badges: end -->
 
 <!-- This repo for the **ggbiplot** package -->
-<!-- was forked from [https://github.com/vqv/ggbiplot](https://github.com/vqv/ggbiplot) by Vince Yu, which has been dormant -->
+<!-- was forked from [https://github.com/vqv/ggbiplot](https://github.com/vqv/ggbiplot) by Vince Vu, which has been dormant -->
 <!-- since 2015.   -->
-<!-- The goal is to complete that development and publish a new version on CRAN with Vince Yu as the principal author. -->
+<!-- The goal is to complete that development and publish a new version on CRAN with Vince Vu as the principal author. -->
 <!-- There is also an [experimental branch](https://github.com/friendly/ggbiplot/tree/experimental) which attempts to -->
 <!-- simplify the code, but this has some unresolved problems. -->
 
@@ -32,7 +32,7 @@ drawing a correlation circle, and adding data ellipsoids. It also
 supports PCA-like objects calculated by `FactoMineR::PCA()`,
 `ade4::dudi.pca()` and `MASS::lda()`.
 
-The package was originally developed by Vince Q. Yu at
+The package was originally developed by Vince Vu at
 <https://github.com/vqv/ggbiplot>. That development was supported in
 part by NSF Postdoctoral Fellowship DMS-0903120 from 2009-2012. The
 current version, now on CRAN, will be the locus of further development.
