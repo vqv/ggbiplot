@@ -206,36 +206,43 @@ ggbiplot <- function(pcobj,
   }
 
   # Recover the SVD
- if(inherits(pcobj, 'prcomp')){
-    nobs.factor <- sqrt(nrow(pcobj$x) - 1)
-    d <- pcobj$sdev
-    u <- sweep(pcobj$x, 2, 1 / (d * nobs.factor), FUN = '*')
-    v <- pcobj$rotation
-  } else if(inherits(pcobj, 'princomp')) {
-    nobs.factor <- sqrt(pcobj$n.obs)
-    d <- pcobj$sdev
-    u <- sweep(pcobj$scores, 2, 1 / (d * nobs.factor), FUN = '*')
-    v <- pcobj$loadings
-  } else if(inherits(pcobj, 'PCA')) {
-    nobs.factor <- sqrt(nrow(pcobj$call$X))
-    d <- unlist(sqrt(pcobj$eig)[1])
-    u <- sweep(pcobj$ind$coord, 2, 1 / (d * nobs.factor), FUN = '*')
-    v <- sweep(pcobj$var$coord, 2, sqrt(pcobj$eig[1:ncol(pcobj$var$coord),1]), FUN="/")
-  } else if(inherits(pcobj, "lda")) {
-      nobs.factor <- sqrt(pcobj$N)
-      d <- pcobj$svd
-      u <- predict(pcobj)$x/nobs.factor
-      v <- pcobj$scaling
-#      d.total <- sum(d^2)
-  } else if(inherits(pcobj, 'pca') & inherits(pcobj, 'dudi')){
-      nobs.factor <- sqrt(nrow(pcobj$tab))
-      d <- sqrt(pcobj$eig)
-      u <- pcobj$li
-      v <- pcobj$co
-  }
-  else {
-    stop('Expected a object of class "prcomp", "princomp", "PCA", c("pca", "dudi") or "lda"')
-  }
+#  if(inherits(pcobj, 'prcomp')){
+#     nobs.factor <- sqrt(nrow(pcobj$x) - 1)
+#     d <- pcobj$sdev
+#     u <- sweep(pcobj$x, 2, 1 / (d * nobs.factor), FUN = '*')
+#     v <- pcobj$rotation
+#   } else if(inherits(pcobj, 'princomp')) {
+#     nobs.factor <- sqrt(pcobj$n.obs)
+#     d <- pcobj$sdev
+#     u <- sweep(pcobj$scores, 2, 1 / (d * nobs.factor), FUN = '*')
+#     v <- pcobj$loadings
+#   } else if(inherits(pcobj, 'PCA')) {
+#     nobs.factor <- sqrt(nrow(pcobj$call$X))
+#     d <- unlist(sqrt(pcobj$eig)[1])
+#     u <- sweep(pcobj$ind$coord, 2, 1 / (d * nobs.factor), FUN = '*')
+#     v <- sweep(pcobj$var$coord, 2, sqrt(pcobj$eig[1:ncol(pcobj$var$coord),1]), FUN="/")
+#   } else if(inherits(pcobj, "lda")) {
+#       nobs.factor <- sqrt(pcobj$N)
+#       d <- pcobj$svd
+#       u <- predict(pcobj)$x/nobs.factor
+#       v <- pcobj$scaling
+# #      d.total <- sum(d^2)
+#   } else if(inherits(pcobj, 'pca') & inherits(pcobj, 'dudi')){
+#       nobs.factor <- sqrt(nrow(pcobj$tab))
+#       d <- sqrt(pcobj$eig)
+#       u <- pcobj$li
+#       v <- pcobj$co
+#   }
+#   else {
+#     stop('Expected a object of class "prcomp", "princomp", "PCA", c("pca", "dudi") or "lda"')
+#   }
+  
+  svd <- get_SVD(pcobj)
+  n <- svd$n
+  d <- svd$D
+  u <- svd$U
+  v <- svd$V
+  nobs.factor <- ifelse (inherits(pcobj, 'prcomp'), sqrt(n-1), sqrt(n))
 
   # shutup 'no visible binding...'
 #  utils::globalVariables(c("xvar", "yvar", "varname", "angle", "hjust"))

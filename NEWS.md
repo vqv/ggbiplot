@@ -6,6 +6,8 @@
 - `ggbiplot()` gains an `axis.title` argument
 - `ggscreeplot()` gains `color`, `shape`, `linetype` and `linewidth` arguments
 - Added `get_SVD()` intended the simplify the interface to various PCA functions.
+- Now use `get_SVD()` in `ggbiplot()` and `ggscreeplot()`
+- Extend some examples, requiring Depends:ggplot2
 
 ## Version 0.6.1
 

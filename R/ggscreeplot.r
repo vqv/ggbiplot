@@ -19,6 +19,7 @@
 #' @references 
 #' Cattell, R. B. (1966). The Scree Test For The Number Of Factors. \emph{Multivariate Behavioral Research}, 1, 245–276.
 #' @examples
+#' library(ggplot2)
 #' data(wine)
 #' wine.pca <- prcomp(wine, scale. = TRUE)
 #' ggscreeplot(wine.pca)
