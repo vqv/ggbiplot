@@ -84,9 +84,9 @@
 <div class="row">
   <main id="main" class="col-md-9">
 <!-- This repo for the **ggbiplot** package -->
-<!-- was forked from [https://github.com/vqv/ggbiplot](https://github.com/vqv/ggbiplot) by Vince Yu, which has been dormant -->
+<!-- was forked from [https://github.com/vqv/ggbiplot](https://github.com/vqv/ggbiplot) by Vince Vu, which has been dormant -->
 <!-- since 2015.   -->
-<!-- The goal is to complete that development and publish a new version on CRAN with Vince Yu as the principal author. -->
+<!-- The goal is to complete that development and publish a new version on CRAN with Vince Vu as the principal author. -->
 <!-- There is also an [experimental branch](https://github.com/friendly/ggbiplot/tree/experimental) which attempts to -->
 <!-- simplify the code, but this has some unresolved problems. -->
 <div class="section level1">
@@ -98,17 +98,12 @@
 <p>This package provides a <code>ggplot2</code> implementation of the biplot, a simultaneous plot of scores for observations and vectors for variables for principal component-like analyses.<br>
 The package provides two main functions: <code><a href="reference/ggscreeplot.html">ggscreeplot()</a></code> and <code><a href="reference/ggbiplot.html">ggbiplot()</a></code>.</p>
 <p><code>ggbiplot</code> aims to be a drop-in replacement for the standard R function <code><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">stats::biplot()</a></code> with extended functionality for labeling groups, drawing a correlation circle, and adding data ellipsoids. It also supports PCA-like objects calculated by <code><a href="https://rdrr.io/pkg/FactoMineR/man/PCA.html" class="external-link">FactoMineR::PCA()</a></code>, <code><a href="https://rdrr.io/pkg/ade4/man/dudi.pca.html" class="external-link">ade4::dudi.pca()</a></code> and <code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code>.</p>
-<p>The package was originally developed by Vince Q. Yu at <a href="https://github.com/vqv/ggbiplot" class="external-link uri">https://github.com/vqv/ggbiplot</a>. That development was supported in part by NSF Postdoctoral Fellowship DMS-0903120 from 2009-2012. The current version, now on CRAN, will be the locus of further development.</p>
+<p>The package was originally developed by Vince Vu at <a href="https://github.com/vqv/ggbiplot" class="external-link uri">https://github.com/vqv/ggbiplot</a>. That development was supported in part by NSF Postdoctoral Fellowship DMS-0903120 from 2009-2012. The current version, now on CRAN, will be the locus of further development.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the latest CRAN version, or install from GitHub as shown below.</p>
-<table class="table">
-<colgroup>
-<col width="21%">
-<col width="78%">
-</colgroup>
-<tbody>
+<table class="table"><tbody>
 <tr class="odd">
 <td>CRAN version</td>
 <td><code>install.packages("ggbiplot")</code></td>
@@ -118,13 +113,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 </td>
 <td><code>remotes::install_github("friendly/ggbiplot")</code></td>
 </tr>
-<tr class="odd">
-<td>GitHub <code>devel</code>
-</td>
-<td><code>remotes::install_github("friendly/ggbiplot", ref = "devel")</code></td>
-</tr>
-</tbody>
-</table>
+</tbody></table>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
@@ -164,13 +153,13 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Rotation (n x k) = (7 x 7):</span></span>
 <span><span class="co">#&gt;             PC1     PC2     PC3     PC4     PC5     PC6     PC7</span></span>
-<span><span class="co">#&gt; murder   -0.300 -0.6292  0.1782 -0.2321  0.5381  0.2591  0.2676</span></span>
-<span><span class="co">#&gt; rape     -0.432 -0.1694 -0.2442  0.0622  0.1885 -0.7733 -0.2965</span></span>
-<span><span class="co">#&gt; robbery  -0.397  0.0422  0.4959 -0.5580 -0.5200 -0.1144 -0.0039</span></span>
-<span><span class="co">#&gt; assault  -0.397 -0.3435 -0.0695  0.6298 -0.5067  0.1724  0.1917</span></span>
-<span><span class="co">#&gt; burglary -0.440  0.2033 -0.2099 -0.0576  0.1010  0.5360 -0.6481</span></span>
-<span><span class="co">#&gt; larceny  -0.357  0.4023 -0.5392 -0.2349  0.0301  0.0394  0.6017</span></span>
-<span><span class="co">#&gt; auto     -0.295  0.5024  0.5684  0.4192  0.3698 -0.0573  0.1470</span></span></code></pre></div>
+<span><span class="co">#&gt; murder   -0.300 -0.6292 -0.1782  0.2321  0.5381  0.2591  0.2676</span></span>
+<span><span class="co">#&gt; rape     -0.432 -0.1694  0.2442 -0.0622  0.1885 -0.7733 -0.2965</span></span>
+<span><span class="co">#&gt; robbery  -0.397  0.0422 -0.4959  0.5580 -0.5200 -0.1144 -0.0039</span></span>
+<span><span class="co">#&gt; assault  -0.397 -0.3435  0.0695 -0.6298 -0.5067  0.1724  0.1917</span></span>
+<span><span class="co">#&gt; burglary -0.440  0.2033  0.2099  0.0576  0.1010  0.5360 -0.6481</span></span>
+<span><span class="co">#&gt; larceny  -0.357  0.4023  0.5392  0.2349  0.0301  0.0394  0.6017</span></span>
+<span><span class="co">#&gt; auto     -0.295  0.5024 -0.5684 -0.4192  0.3698 -0.0573  0.1470</span></span></code></pre></div>
 <p>The biplot, using default scaling (standardized components), and labeling the states by their state abbreviation:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/ggbiplot.html">ggbiplot</a></span><span class="op">(</span><span class="va">crime.pca</span>,</span>
@@ -208,11 +197,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <p>The <code>wine</code> data contains results of a chemical analysis of wines grown in the same region in Italy, derived from three different cultivars. The analysis determined the quantities of 13 chemical constituents found in each of the three types of wines. The grape varieties (cultivars), <strong>barolo</strong>, <strong>barbera</strong>, and <strong>grignolino</strong>, are given in <code>wine.class</code>.</p>
 <p>What can we understand about the differences among these wines from a biplot?</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/friendly/ggbiplot" class="external-link">ggbiplot</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">wine</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">wine</span><span class="op">)</span></span>
 <span><span class="va">wine.pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></span><span class="op">(</span><span class="va">wine</span>, scale. <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/ggscreeplot.html">ggscreeplot</a></span><span class="op">(</span><span class="va">wine.pca</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="reference/figures/README-wine-screeplot-1.png"><!-- --></p>
@@ -312,7 +297,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Vincent Vu <br><small class="roles"> Author </small>  </li>
+<li>Vincent Q. Vu <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-4689-0497" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Michael Friendly <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-3237-0941" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
@@ -333,7 +318,7 @@ The package provides two main functions: <code><a href="reference/ggscreeplot.ht
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Vincent Vu, Michael Friendly.</p>
+<p>Developed by Vincent Q. Vu, Michael Friendly.</p>
 </div>
 
 <div class="pkgdown-footer-right">

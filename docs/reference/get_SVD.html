@@ -104,10 +104,11 @@ the components with standard names.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></span><span class="op">(</span>scale. <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">crime.svd</span> <span class="op">&lt;-</span> <span class="fu">get_SVD</span><span class="op">(</span><span class="va">crime.pca</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get_SVD(crime.pca):</span> could not find function "get_SVD"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">crime.svd</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "n" "U" "D" "V"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'crime.svd' not found</span>
 <span class="r-in"><span><span class="va">crime.svd</span><span class="op">$</span><span class="va">D</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.0285363 1.1129788 0.8519487 0.5625229 0.5079119 0.4712106 0.3522159</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'crime.svd' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -116,7 +117,7 @@ the components with standard names.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Vincent Vu, Michael Friendly.</p>
+  <p></p><p>Developed by Vincent Q. Vu, Michael Friendly.</p>
 </div>
 
 <div class="pkgdown-footer-right">
