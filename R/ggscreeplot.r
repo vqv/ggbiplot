@@ -14,15 +14,35 @@
 #' @param linetype type of line
 #' @param linewidth width of line
 #' 
-#' @returns A ggplot2 object
+#' @returns A ggplot2 object with the aesthetics \code{x = PC, y = yvar}
 #' @export
 #' @references 
 #' Cattell, R. B. (1966). The Scree Test For The Number Of Factors. \emph{Multivariate Behavioral Research}, 1, 245–276.
 #' @examples
-#'   data(wine)
-#'   wine.pca <- prcomp(wine, scale. = TRUE)
-#'   ggscreeplot(wine.pca)
+#' data(wine)
+#' wine.pca <- prcomp(wine, scale. = TRUE)
+#' ggscreeplot(wine.pca)
+#' 
+#' # show horizontal lines for 80, 90% of cumulative variance
+#' ggscreeplot(wine.pca, type = "cev") +
+#'   geom_hline(yintercept = c(0.8, 0.9), color = "blue") 
 #'
+#' # Make a fancy screeplot, higlighting the scree starting at component 4
+#' data(crime)
+#' crime.pca <- 
+#'   crime |> 
+#'   dplyr::select(where(is.numeric)) |>
+#'   prcomp(scale. = TRUE)
+#'   
+#' (crime.eig <- crime.pca |> 
+#'    broom::tidy(matrix = "eigenvalues"))
+#'
+#' ggscreeplot(crime.pca) +
+#'   stat_smooth(data = crime.eig |> dplyr::filter(PC>=4), 
+#'               aes(x=PC, y=percent), method = "lm", 
+#'               se = FALSE,
+#'               fullrange = TRUE) 
+#' 
 ggscreeplot <- function(pcobj, 
                         type = c('pev', 'cev'),
                         size = 4,
@@ -32,24 +52,24 @@ ggscreeplot <- function(pcobj,
                         linewidth = 1) 
 {
   # Recover the SVD
-  if(inherits(pcobj, 'prcomp')){
-    nobs.factor <- sqrt(nrow(pcobj$x) - 1)
-    d <- pcobj$sdev
-  } else if(inherits(pcobj, 'princomp')) {
-    nobs.factor <- sqrt(pcobj$n.obs)
-    d <- pcobj$sdev
-  } else if(inherits(pcobj, 'PCA')) {
-    nobs.factor <- sqrt(nrow(pcobj$call$X))
-    d <- unlist(sqrt(pcobj$eig)[1])
-  } else if(inherits(pcobj, "lda")) {
-    d <- pcobj$svd
-  } else if(inherits(pcobj, 'pca') & inherits(pcobj, 'dudi')){
-    d <- sqrt(pcobj$eig)
-  }
-  else {
-    stop('Expected a object of class "prcomp", "princomp", "PCA", c("pca", "dudi") or "lda"')
-  }
-  
+  # if(inherits(pcobj, 'prcomp')){
+  #   nobs.factor <- sqrt(nrow(pcobj$x) - 1)
+  #   d <- pcobj$sdev
+  # } else if(inherits(pcobj, 'princomp')) {
+  #   nobs.factor <- sqrt(pcobj$n.obs)
+  #   d <- pcobj$sdev
+  # } else if(inherits(pcobj, 'PCA')) {
+  #   nobs.factor <- sqrt(nrow(pcobj$call$X))
+  #   d <- unlist(sqrt(pcobj$eig)[1])
+  # } else if(inherits(pcobj, "lda")) {
+  #   d <- pcobj$svd
+  # } else if(inherits(pcobj, 'pca') & inherits(pcobj, 'dudi')){
+  #   d <- sqrt(pcobj$eig)
+  # }
+  # else {
+  #   stop('Expected a object of class "prcomp", "princomp", "PCA", c("pca", "dudi") or "lda"')
+  # }
+  d <- get_SVD(pcobj)$D  
 
   type <- match.arg(type)
   dsq <- d^2

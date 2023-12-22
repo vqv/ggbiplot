@@ -33,16 +33,36 @@ ggscreeplot(
 \item{linewidth}{width of line}
 }
 \value{
-A ggplot2 object
+A ggplot2 object with the aesthetics \code{x = PC, y = yvar}
 }
 \description{
 Produces scree plots (Cattell, 1966) of the variance proportions explained by each dimension against dimension number from 
 various PCA-like dimension reduction techniques.
 }
 \examples{
-  data(wine)
-  wine.pca <- prcomp(wine, scale. = TRUE)
-  ggscreeplot(wine.pca)
+data(wine)
+wine.pca <- prcomp(wine, scale. = TRUE)
+ggscreeplot(wine.pca)
+
+# show horizontal lines for 80, 90\% of cumulative variance
+ggscreeplot(wine.pca, type = "cev") +
+  geom_hline(yintercept = c(0.8, 0.9), color = "blue") 
+
+# Make a fancy screeplot, higlighting the scree starting at component 4
+data(crime)
+crime.pca <- 
+  crime |> 
+  dplyr::select(where(is.numeric)) |>
+  prcomp(scale. = TRUE)
+  
+(crime.eig <- crime.pca |> 
+   broom::tidy(matrix = "eigenvalues"))
+
+ggscreeplot(crime.pca) +
+  stat_smooth(data = crime.eig |> dplyr::filter(PC>=4), 
+              aes(x=PC, y=percent), method = "lm", 
+              se = FALSE,
+              fullrange = TRUE) 
 
 }
 \references{

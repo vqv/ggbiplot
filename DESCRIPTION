@@ -23,7 +23,9 @@ Imports:
 Suggests: 
     corrplot,
     dplyr,
-    MASS
+    MASS,
+    broom,
+    tidyr
 License: GPL-2
 Encoding: UTF-8
 Language: en-US
