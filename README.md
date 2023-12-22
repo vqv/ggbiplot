@@ -42,11 +42,10 @@ current version, now on CRAN, will be the locus of further development.
 You can install the latest CRAN version, or install from GitHub as shown
 below.
 
-|                 |                                                               |
-|-----------------|---------------------------------------------------------------|
-| CRAN version    | `install.packages("ggbiplot")`                                |
-| GitHub `master` | `remotes::install_github("friendly/ggbiplot")`                |
-| GitHub `devel`  | `remotes::install_github("friendly/ggbiplot", ref = "devel")` |
+|                 |                                                |
+|-----------------|------------------------------------------------|
+| CRAN version    | `install.packages("ggbiplot")`                 |
+| GitHub `master` | `remotes::install_github("friendly/ggbiplot")` |
 
 ## Examples
 
@@ -100,13 +99,13 @@ crime.pca
 #> 
 #> Rotation (n x k) = (7 x 7):
 #>             PC1     PC2     PC3     PC4     PC5     PC6     PC7
-#> murder   -0.300 -0.6292  0.1782 -0.2321  0.5381  0.2591  0.2676
-#> rape     -0.432 -0.1694 -0.2442  0.0622  0.1885 -0.7733 -0.2965
-#> robbery  -0.397  0.0422  0.4959 -0.5580 -0.5200 -0.1144 -0.0039
-#> assault  -0.397 -0.3435 -0.0695  0.6298 -0.5067  0.1724  0.1917
-#> burglary -0.440  0.2033 -0.2099 -0.0576  0.1010  0.5360 -0.6481
-#> larceny  -0.357  0.4023 -0.5392 -0.2349  0.0301  0.0394  0.6017
-#> auto     -0.295  0.5024  0.5684  0.4192  0.3698 -0.0573  0.1470
+#> murder   -0.300 -0.6292 -0.1782  0.2321  0.5381  0.2591  0.2676
+#> rape     -0.432 -0.1694  0.2442 -0.0622  0.1885 -0.7733 -0.2965
+#> robbery  -0.397  0.0422 -0.4959  0.5580 -0.5200 -0.1144 -0.0039
+#> assault  -0.397 -0.3435  0.0695 -0.6298 -0.5067  0.1724  0.1917
+#> burglary -0.440  0.2033  0.2099  0.0576  0.1010  0.5360 -0.6481
+#> larceny  -0.357  0.4023  0.5392  0.2349  0.0301  0.0394  0.6017
+#> auto     -0.295  0.5024 -0.5684 -0.4192  0.3698 -0.0573  0.1470
 ```
 
 The biplot, using default scaling (standardized components), and
@@ -181,10 +180,6 @@ What can we understand about the differences among these wines from a
 biplot?
 
 ``` r
-library(ggbiplot)
-library(ggplot2)
-library(dplyr)
-
 data(wine)
 wine.pca <- prcomp(wine, scale. = TRUE)
 ggscreeplot(wine.pca) 

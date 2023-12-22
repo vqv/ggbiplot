@@ -71,9 +71,6 @@ You can install the latest CRAN version, or install from GitHub as shown below.
 | GitHub            | `remotes::install_github("friendly/ggbiplot")`                  |
 | `master`          |                                                                 |
 +-------------------+-----------------------------------------------------------------+
-| GitHub            | `remotes::install_github("friendly/ggbiplot", ref = "devel")`   |
-| `devel`           |                                                                 |
-+-------------------+-----------------------------------------------------------------+
 
 
 ## Examples
@@ -185,10 +182,6 @@ The grape varieties (cultivars), **barolo**, **barbera**, and **grignolino**, ar
 What can we understand about the differences among these wines from a biplot?
 
 ```{r wine-screeplot}
-library(ggbiplot)
-library(ggplot2)
-library(dplyr)
-
 data(wine)
 wine.pca <- prcomp(wine, scale. = TRUE)
 ggscreeplot(wine.pca) 
