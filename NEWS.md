@@ -1,5 +1,7 @@
 ## Version 0.6.2
 
+This is a modest upgrade to the initial release, adding a number of features.
+
 - corrected small bugs in `ggbiplot() and `ggscreeplot()`
 - `reflect()` now also reflects supplementary variables from `FactoMineR::PCA()`
 - added support for `ade4::dudi.pca()`
