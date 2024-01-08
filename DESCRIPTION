@@ -2,7 +2,7 @@ Package: ggbiplot
 Type: Package
 Title: A Grammar of Graphics Implementation of Biplots
 Version: 0.6.2
-Date: 2023-12-31
+Date: 2024-01-06
 Authors@R: c(
     person(c("Vincent", "Q."), "Vu", , "vqv@stat.osu.edu", role = c("aut"),
             comment = c(ORCID = "0000-0002-4689-0497")),
